@@ -1,0 +1,12 @@
+{
+  "name": "json-server",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "serve": "json-server --watch db.json --port 3333"
+  },
+  "dependencies": {
+    "json-server": "1.0.0-alpha.23"
+  }
+}

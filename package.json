@@ -4,14 +4,14 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "dev2": "turbo dev --filter 2-vite-reactquery",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.1",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=18"
   }

@@ -1,3 +1,5 @@
+// pages/home.tsx
+import { GetServerSideProps } from "next";
 import {
   Alert,
   Card,
@@ -9,28 +11,19 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
 import { IconAlertCircle } from "@tabler/icons-react";
+import Link from "next/link";
+import { useState } from "react";
 import { type IPost } from "../api-types";
-import { useQuery } from "@tanstack/react-query";
 
-export function HomePage() {
+interface HomePageProps {
+  posts: IPost[];
+  error: boolean;
+}
+
+const HomePage = ({ posts, error }: HomePageProps) => {
   //posts states
-  const {
-    data: posts,
-    isError: isErrorLoadingPosts,
-    isFetching: isFetchingPosts,
-    isLoading: isLoadingPosts,
-  } = useQuery({
-    queryKey: ["posts"],
-    queryFn: async () => {
-      const fetchUrl = new URL(`https://jsonplaceholder.typicode.com/posts`);
-
-      const response = await fetch(fetchUrl.href);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate slow network
-      return response.json() as Promise<IPost[]>;
-    },
-  });
+  const [isFetchingPosts, setIsFetchingPosts] = useState(false);
 
   return (
     <Stack>
@@ -41,7 +34,7 @@ export function HomePage() {
         </Collapse>
       </Flex>
       <Stack gap="md">
-        {isErrorLoadingPosts ? (
+        {error ? (
           <Alert
             icon={<IconAlertCircle size="1rem" />}
             title="Bummer!"
@@ -49,7 +42,7 @@ export function HomePage() {
           >
             There was an error fetching posts
           </Alert>
-        ) : isLoadingPosts ? (
+        ) : !posts.length ? (
           [...Array(5)].map((_, index) => (
             <Card withBorder shadow="md" key={index}>
               <Skeleton animate height="20px" width="50%" mb="md" />
@@ -57,10 +50,10 @@ export function HomePage() {
             </Card>
           ))
         ) : (
-          posts?.map((post) => (
+          posts.map((post) => (
             <Link
               key={post.id}
-              to={`/posts/${post.id}`}
+              href={`/posts/${post.id}`}
               style={{ textDecoration: "none" }}
             >
               <Card
@@ -79,4 +72,31 @@ export function HomePage() {
       </Stack>
     </Stack>
   );
-}
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const fetchUrl = new URL(`https://jsonplaceholder.typicode.com/posts`);
+    const response = await fetch(fetchUrl.href);
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate slow network
+    const fetchedPosts = (await response.json()) as IPost[];
+
+    return {
+      props: {
+        posts: fetchedPosts,
+        error: false,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      props: {
+        posts: [],
+        error: true,
+      },
+    };
+  }
+};
+
+export default HomePage;

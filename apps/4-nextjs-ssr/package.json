@@ -1,5 +1,5 @@
 {
-  "name": "3-nextjs-ssr",
+  "name": "4-nextjs-ssr",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/core": "7.11.2",
+    "@mantine/hooks": "7.11.2",
+    "@tabler/icons-react": "^3.10.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.3"
+    "next": "14.2.5"
   },
   "devDependencies": {
     "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^9",
-    "eslint-config-next": "14.2.3"
+    "postcss": "^8.4.39",
+    "postcss-preset-mantine": "1.15.0",
+    "postcss-simple-vars": "^7.0.1"
   }
 }

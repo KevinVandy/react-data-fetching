@@ -1,7 +1,7 @@
 import { Anchor, AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconHome, IconUsersGroup } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -39,7 +39,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       </AppShell.Header>
       <AppShell.Navbar p="md">
         {links.map((link) => (
-          <Anchor component={Link} key={link.label} to={link.href}>
+          <Anchor component={Link} key={link.label} href={link.href}>
             {link.label}
           </Anchor>
         ))}

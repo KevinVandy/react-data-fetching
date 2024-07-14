@@ -1,10 +1,10 @@
 {
-  "name": "2-vite-useeffect",
+  "name": "1-vite-componentdidmount",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3302",
+    "dev": "vite --port 3301",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

@@ -3,8 +3,9 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "serve": "turbo serve --filter json-server",
     "dev": "turbo dev",
-    "dev1": "turbo dev --filter 1-cra-componentdidmount",
+    "dev1": "turbo dev --filter 1-vite-componentdidmount",
     "dev2": "turbo dev --filter 2-vite-useeffect",
     "dev3": "turbo dev --filter 3-vite-reactquery",
     "dev4": "turbo dev --filter 4-nextjs-ssr",
@@ -19,5 +20,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "packageManager": "pnpm@9.3.0"
 }

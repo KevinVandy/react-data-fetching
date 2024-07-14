@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "serve": "json-server --watch db.json --port 3333"
+    "serve": "json-server --watch db.json --delay 3000 --port 3333"
   },
   "dependencies": {
-    "json-server": "1.0.0-alpha.23"
+    "json-server": "0.17.4"
   }
 }

@@ -56,9 +56,8 @@ const HomePage = ({ posts, error }: HomePageProps) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const fetchUrl = new URL(`https://jsonplaceholder.typicode.com/posts`);
+    const fetchUrl = new URL(`http://localhost:3333/posts`);
     const response = await fetch(fetchUrl.href);
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate slow network
     const fetchedPosts = (await response.json()) as IPost[];
 
     return {

@@ -12,17 +12,19 @@
     "@mantine/core": "7.11.2",
     "@mantine/hooks": "7.11.2",
     "@tabler/icons-react": "^3.10.0",
+    "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.5"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@tanstack/react-query": "^5.51.1",
+    "@tanstack/react-query-devtools": "^5.51.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "postcss": "^8.4.39",
     "postcss-preset-mantine": "1.15.0",
-    "postcss-simple-vars": "^7.0.1"
+    "postcss-simple-vars": "^7.0.1",
+    "typescript": "^5"
   }
 }

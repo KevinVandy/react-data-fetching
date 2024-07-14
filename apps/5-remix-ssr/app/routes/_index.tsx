@@ -2,7 +2,7 @@ import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { Alert, Card, Skeleton, Stack, Text, Title } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { IPost } from "../api-types";
 
 interface LoaderData {
@@ -28,6 +28,10 @@ export const loader: LoaderFunction = async () => {
       error: true,
     });
   }
+};
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Remix SSR" }];
 };
 
 export default function HomePage() {

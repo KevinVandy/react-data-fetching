@@ -4,12 +4,37 @@ import { IconAlertCircle } from "@tabler/icons-react";
 import Link from "next/link";
 import { type IPost } from "../api-types";
 
+//Load posts on server side for SEO
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const fetchUrl = new URL(`http://localhost:3333/posts`);
+    const response = await fetch(fetchUrl.href);
+    const fetchedPosts = (await response.json()) as IPost[];
+
+    return {
+      props: {
+        posts: fetchedPosts,
+        error: false,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      props: {
+        posts: [],
+        error: true,
+      },
+    };
+  }
+};
+
 interface HomePageProps {
   posts: IPost[];
   error: boolean;
 }
 
-const HomePage = ({ posts, error }: HomePageProps) => {
+export default function HomePage({ posts, error }: HomePageProps) {
   return (
     <Stack>
       <Title order={2}>Your Home Feed</Title>
@@ -52,30 +77,4 @@ const HomePage = ({ posts, error }: HomePageProps) => {
       </Stack>
     </Stack>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const fetchUrl = new URL(`http://localhost:3333/posts`);
-    const response = await fetch(fetchUrl.href);
-    const fetchedPosts = (await response.json()) as IPost[];
-
-    return {
-      props: {
-        posts: fetchedPosts,
-        error: false,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      props: {
-        posts: [],
-        error: true,
-      },
-    };
-  }
-};
-
-export default HomePage;
+}

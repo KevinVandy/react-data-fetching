@@ -1,15 +1,39 @@
-import { GetServerSideProps } from "next";
+import { json } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import { Alert, Card, Skeleton, Stack, Text, Title } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
-import Link from "next/link";
-import { type IPost } from "../api-types";
+import type { LoaderFunction } from "@remix-run/node";
+import { IPost } from "../api-types";
 
-interface HomePageProps {
+interface LoaderData {
   posts: IPost[];
   error: boolean;
 }
 
-const HomePage = ({ posts, error }: HomePageProps) => {
+export const loader: LoaderFunction = async () => {
+  try {
+    const fetchUrl = new URL(`https://jsonplaceholder.typicode.com/posts`);
+    const response = await fetch(fetchUrl.href);
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate slow network
+    const fetchedPosts = (await response.json()) as IPost[];
+
+    return json<LoaderData>({
+      posts: fetchedPosts,
+      error: false,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return json<LoaderData>({
+      posts: [],
+      error: true,
+    });
+  }
+};
+
+export default function HomePage() {
+  const { posts, error } = useLoaderData<LoaderData>();
+
   return (
     <Stack>
       <Title order={2}>Your Home Feed</Title>
@@ -33,7 +57,7 @@ const HomePage = ({ posts, error }: HomePageProps) => {
           posts.map((post) => (
             <Link
               key={post.id}
-              href={`/posts/${post.id}`}
+              to={`/posts/${post.id}`}
               style={{ textDecoration: "none" }}
             >
               <Card
@@ -52,31 +76,4 @@ const HomePage = ({ posts, error }: HomePageProps) => {
       </Stack>
     </Stack>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const fetchUrl = new URL(`https://jsonplaceholder.typicode.com/posts`);
-    const response = await fetch(fetchUrl.href);
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate slow network
-    const fetchedPosts = (await response.json()) as IPost[];
-
-    return {
-      props: {
-        posts: fetchedPosts,
-        error: false,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      props: {
-        posts: [],
-        error: true,
-      },
-    };
-  }
-};
-
-export default HomePage;
+}

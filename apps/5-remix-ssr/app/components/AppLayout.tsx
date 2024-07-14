@@ -1,7 +1,7 @@
 import { Anchor, AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconHome, IconUsersGroup } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link } from "@remix-run/react";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -34,7 +34,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          Vite with useEffect
+          Remix SSR
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">

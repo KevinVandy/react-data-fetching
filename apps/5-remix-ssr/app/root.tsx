@@ -10,8 +10,21 @@ import {
 
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { AppLayout } from "./components/AppLayout";
+import { ReactNode, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: ReactNode }) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 1000 * 10, // 10 seconds
+          },
+        },
+      }),
+  );
+
   return (
     <html lang="en">
       <head>
@@ -22,9 +35,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>
-          <AppLayout>{children}</AppLayout>
-        </MantineProvider>
+        <QueryClientProvider client={queryClient}>
+          <MantineProvider>
+            <AppLayout>{children}</AppLayout>
+          </MantineProvider>
+        </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

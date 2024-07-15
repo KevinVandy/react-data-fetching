@@ -12,7 +12,9 @@ const ReactQueryDevtoolsProduction = lazy(() =>
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: {},
+    queries: {
+      staleTime: 1000 * 10, // 10 seconds
+    },
   },
 });
 

@@ -1,4 +1,7 @@
 import { useCallback, useState } from "react";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { Link, useLoaderData, useParams } from "@remix-run/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ActionIcon,
   Alert,
@@ -16,15 +19,10 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { IconAlertCircle, IconRefresh, IconTrash } from "@tabler/icons-react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { IComment, IPost, IUser } from "../../api-types";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { GetServerSideProps } from "next";
+import type { IComment, IPost, IUser } from "../api-types";
 
-//Load post and comments on server side for SEO
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id: postId } = context.params!;
+export const loader: LoaderFunction = async ({ params }) => {
+  const { id: postId } = params;
 
   try {
     const [postResponse, commentsResponse] = await Promise.all([
@@ -37,22 +35,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       commentsResponse.json(),
     ]);
 
-    return {
-      props: {
-        initialPost,
-        initialComments,
-        error: false,
-      },
-    };
+    return json({
+      initialPost,
+      initialComments,
+      error: false,
+    });
   } catch (error) {
     console.error(error);
 
-    return {
-      props: {
-        initialPost: null,
-        error: true,
-      },
-    };
+    return json({
+      initialPost: null,
+      initialComments: null,
+      error: true,
+    });
   }
 };
 
@@ -62,15 +57,21 @@ interface IPostPageProps {
   error: boolean;
 }
 
-export default function PostPage({
-  initialPost,
-  initialComments,
-  error: pageError,
-}: IPostPageProps) {
+export const meta: MetaFunction = () => {
+  return [{ title: "Remix SSR (and React Query)" }];
+};
+
+export default function PostPage() {
+  const {
+    initialPost,
+    initialComments,
+    error: pageError,
+  } = useLoaderData<IPostPageProps>();
+
   const queryClient = useQueryClient();
   const { id: postId } = useParams();
 
-  //load post - with initial data from SSR
+  // Load post - with initial data from SSR
   const {
     data: post,
     isLoading: isLoadingPost,
@@ -81,10 +82,10 @@ export default function PostPage({
       const response = await fetch(`http://localhost:3333/posts/${postId}`);
       return response.json() as Promise<IPost>;
     },
-    initialData: initialPost, //SSR, with refresh
+    initialData: initialPost, // SSR, with refresh
   });
 
-  //load comments - with initial data from SSR
+  // Load comments - with initial data from SSR
   const {
     data: comments,
     isLoading: isLoadingComments,
@@ -99,7 +100,7 @@ export default function PostPage({
       );
       return response.json() as Promise<IComment[]>;
     },
-    initialData: initialComments, //SSR, with refresh
+    initialData: initialComments, // SSR, with refresh
     refetchInterval: 10000, // 10 seconds
   });
 
@@ -184,7 +185,7 @@ export default function PostPage({
       // Optimistically update to the new value
       queryClient.setQueryData(
         ["comments", newComment.postId.toString()],
-        (oldComments: any) => [...oldComments, newComment],
+        (oldComments: Array<IComment>) => [...oldComments, newComment],
       );
 
       // Return a context object with the snapshot value
@@ -221,7 +222,7 @@ export default function PostPage({
   if (pageError) {
     return (
       <Alert icon={<IconAlertCircle size="1rem" />} title="Bummer!" color="red">
-        There was an error loading this post
+        There was an error loading this page
       </Alert>
     );
   }
@@ -249,7 +250,7 @@ export default function PostPage({
             <Title order={3}>
               By:{" "}
               <Link
-                href={`/users/${user?.id}`}
+                to={`/users/${user?.id}`}
                 style={{ textDecoration: "none" }}
               >
                 {user?.name}

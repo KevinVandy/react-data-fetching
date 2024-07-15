@@ -39,7 +39,7 @@ export const PostPage = () => {
   const [isErrorLoadingComments, setIsErrorLoadingComments] = useState(false);
   const [isDeletingComment, setIsDeletingComment] = useState(false);
   const [deletingCommentId, setDeletingCommentId] = useState<number | null>(
-    null
+    null,
   );
   const [isPostingComment, setIsPostingComment] = useState(false);
 
@@ -85,7 +85,7 @@ export const PostPage = () => {
     }
     try {
       const fetchUrl = new URL(
-        `http://localhost:3333/posts/${postId}/comments`
+        `http://localhost:3333/posts/${postId}/comments`,
       );
       const response = await fetch(fetchUrl.href);
       const fetchedComments = (await response.json()) as IComment[];
@@ -133,7 +133,7 @@ export const PostPage = () => {
     async (commentId: number) => {
       await deleteComment(commentId);
     },
-    [deleteComment]
+    [deleteComment],
   );
 
   //post comment
@@ -142,7 +142,7 @@ export const PostPage = () => {
       setIsPostingComment(true);
       try {
         const postUrl = new URL(
-          `http://localhost:3333/posts/${postId}/comments`
+          `http://localhost:3333/posts/${postId}/comments`,
         );
         const response = await fetch(postUrl.href, {
           method: "POST",
@@ -161,7 +161,7 @@ export const PostPage = () => {
         fetchComments(); // Refresh comments after posting
       }
     },
-    [postId]
+    [postId],
   );
 
   const handleSubmitComment = useCallback(async () => {

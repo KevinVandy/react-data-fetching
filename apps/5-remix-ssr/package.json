@@ -13,10 +13,12 @@
   "dependencies": {
     "@mantine/core": "7.11.2",
     "@mantine/hooks": "7.11.2",
-    "@tabler/icons-react": "^3.10.0",
     "@remix-run/node": "^2.10.2",
     "@remix-run/react": "^2.10.2",
     "@remix-run/serve": "^2.10.2",
+    "@tabler/icons-react": "^3.10.0",
+    "@tanstack/react-query": "^5.51.1",
+    "@tanstack/react-query-devtools": "^5.51.1",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

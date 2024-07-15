@@ -15,6 +15,12 @@ importers:
         specifier: 2.0.6
         version: 2.0.6
 
+  apps/0-json-server:
+    dependencies:
+      json-server:
+        specifier: 0.17.4
+        version: 0.17.4
+
   apps/1-vite-componentdidmount:
     dependencies:
       '@mantine/core':
@@ -204,7 +210,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@20.14.10)(sugarss@4.0.1(postcss@8.4.39))(terser@5.31.2)
 
-  apps/4-nextjs-ssr:
+  apps/4-nextjs-ssg:
     dependencies:
       '@mantine/core':
         specifier: 7.11.2
@@ -253,7 +259,56 @@ importers:
         specifier: ^5
         version: 5.5.3
 
-  apps/5-remix-ssr:
+  apps/5-nextjs-ssr:
+    dependencies:
+      '@mantine/core':
+        specifier: 7.11.2
+        version: 7.11.2(@mantine/hooks@7.11.2(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@mantine/hooks':
+        specifier: 7.11.2
+        version: 7.11.2(react@18.3.1)
+      '@tabler/icons-react':
+        specifier: ^3.10.0
+        version: 3.10.0(react@18.3.1)
+      next:
+        specifier: 14.2.5
+        version: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18
+        version: 18.3.1
+      react-dom:
+        specifier: ^18
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@tanstack/react-query':
+        specifier: ^5.51.1
+        version: 5.51.1(react@18.3.1)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.51.1
+        version: 5.51.1(@tanstack/react-query@5.51.1(react@18.3.1))(react@18.3.1)
+      '@types/node':
+        specifier: ^20
+        version: 20.14.10
+      '@types/react':
+        specifier: ^18
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.3.0
+      postcss:
+        specifier: ^8.4.39
+        version: 8.4.39
+      postcss-preset-mantine:
+        specifier: 1.15.0
+        version: 1.15.0(postcss@8.4.39)
+      postcss-simple-vars:
+        specifier: ^7.0.1
+        version: 7.0.1(postcss@8.4.39)
+      typescript:
+        specifier: ^5
+        version: 5.5.3
+
+  apps/6-remix-ssr:
     dependencies:
       '@mantine/core':
         specifier: 7.11.2
@@ -347,7 +402,7 @@ importers:
         specifier: ^4.2.1
         version: 4.3.2(typescript@5.5.3)(vite@5.3.3(@types/node@20.14.10)(sugarss@4.0.1(postcss@8.4.39))(terser@5.31.2))
 
-  apps/6-nextjs-rsc:
+  apps/7-nextjs-rsc:
     dependencies:
       '@mantine/core':
         specifier: 7.11.2
@@ -373,7 +428,7 @@ importers:
         version: 14.2.5
       '@types/node':
         specifier: ^20
-        version: 20.10.6
+        version: 20.14.10
       '@types/react':
         specifier: ^18
         version: 18.3.3
@@ -391,13 +446,7 @@ importers:
         version: 7.0.1(postcss@8.4.39)
       typescript:
         specifier: ^5
-        version: 5.4.5
-
-  apps/json-server:
-    dependencies:
-      json-server:
-        specifier: 0.17.4
-        version: 0.17.4
+        version: 5.5.3
 
 packages:
 
@@ -1340,9 +1389,6 @@ packages:
 
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
-
-  '@types/node@20.10.6':
-    resolution: {integrity: sha512-Vac8H+NlRNNlAmDfGUP7b5h/KA+AtWIzuXy0E6OyP8f1tCLYAtPvKRRDJjAPqhpCb0t6U2j7/xqAuLEebW2kiw==}
 
   '@types/node@20.14.10':
     resolution: {integrity: sha512-MdiXf+nDuMvY0gJKxyfZ7/6UFsETO7mGKF54MVD/ekJS6HdFtpZFBgrh6Pseu64XTb2MLyFPlbW6hj8HYRQNOQ==}
@@ -4111,11 +4157,6 @@ packages:
   typed-array-length@1.0.4:
     resolution: {integrity: sha512-KjZypGq+I/H7HI5HlOoGHkWUUGq+Q0TPhQurLbyrVrvnKTBgzLhIJ7j6J/XTQOi0d1RjyZ0wdas8bKs2p0x3Ng==}
 
-  typescript@5.4.5:
-    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   typescript@5.5.3:
     resolution: {integrity: sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==}
     engines: {node: '>=14.17'}
@@ -4452,7 +4493,7 @@ snapshots:
 
   '@babel/helper-annotate-as-pure@7.24.7':
     dependencies:
-      '@babel/types': 7.24.7
+      '@babel/types': 7.24.8
 
   '@babel/helper-compilation-targets@7.24.7':
     dependencies:
@@ -4528,7 +4569,7 @@ snapshots:
 
   '@babel/helper-optimise-call-expression@7.24.7':
     dependencies:
-      '@babel/types': 7.24.7
+      '@babel/types': 7.24.8
 
   '@babel/helper-plugin-utils@7.24.7': {}
 
@@ -4552,8 +4593,8 @@ snapshots:
 
   '@babel/helper-skip-transparent-expression-wrappers@7.24.7':
     dependencies:
-      '@babel/traverse': 7.24.7
-      '@babel/types': 7.24.7
+      '@babel/traverse': 7.24.8
+      '@babel/types': 7.24.8
     transitivePeerDependencies:
       - supports-color
 
@@ -4592,17 +4633,17 @@ snapshots:
   '@babel/plugin-syntax-decorators@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
+      '@babel/helper-plugin-utils': 7.24.8
 
   '@babel/plugin-syntax-jsx@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
+      '@babel/helper-plugin-utils': 7.24.8
 
   '@babel/plugin-syntax-typescript@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
+      '@babel/helper-plugin-utils': 7.24.8
 
   '@babel/plugin-transform-modules-commonjs@7.24.8(@babel/core@7.24.7)':
     dependencies:
@@ -4636,7 +4677,7 @@ snapshots:
   '@babel/preset-typescript@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
+      '@babel/helper-plugin-utils': 7.24.8
       '@babel/helper-validator-option': 7.24.7
       '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.24.7)
       '@babel/plugin-transform-modules-commonjs': 7.24.8(@babel/core@7.24.7)
@@ -5093,13 +5134,13 @@ snapshots:
   '@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@20.14.10)(sugarss@4.0.1(postcss@8.4.39))(terser@5.31.2)(typescript@5.5.3)(vite@5.3.3(@types/node@20.14.10)(sugarss@4.0.1(postcss@8.4.39))(terser@5.31.2))':
     dependencies:
       '@babel/core': 7.24.7
-      '@babel/generator': 7.24.7
-      '@babel/parser': 7.24.7
+      '@babel/generator': 7.24.8
+      '@babel/parser': 7.24.8
       '@babel/plugin-syntax-decorators': 7.24.7(@babel/core@7.24.7)
       '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.24.7)
       '@babel/preset-typescript': 7.24.7(@babel/core@7.24.7)
-      '@babel/traverse': 7.24.7
-      '@babel/types': 7.24.7
+      '@babel/traverse': 7.24.8
+      '@babel/types': 7.24.8
       '@mdx-js/mdx': 2.3.0
       '@npmcli/package-json': 4.0.1
       '@remix-run/node': 2.10.2(typescript@5.5.3)
@@ -5378,10 +5419,6 @@ snapshots:
   '@types/mdx@2.0.13': {}
 
   '@types/ms@0.7.34': {}
-
-  '@types/node@20.10.6':
-    dependencies:
-      undici-types: 5.26.5
 
   '@types/node@20.14.10':
     dependencies:
@@ -8758,8 +8795,6 @@ snapshots:
       call-bind: 1.0.5
       for-each: 0.3.3
       is-typed-array: 1.1.12
-
-  typescript@5.4.5: {}
 
   typescript@5.5.3: {}
 

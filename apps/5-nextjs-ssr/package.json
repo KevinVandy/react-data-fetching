@@ -1,9 +1,9 @@
 {
-  "name": "4-nextjs-ssr",
+  "name": "5-nextjs-ssr",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3304",
+    "dev": "next dev -p 3305",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

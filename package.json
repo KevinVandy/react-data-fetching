@@ -8,9 +8,10 @@
     "dev1": "turbo dev --filter 1-vite-componentdidmount",
     "dev2": "turbo dev --filter 2-vite-useeffect",
     "dev3": "turbo dev --filter 3-vite-reactquery",
-    "dev4": "turbo dev --filter 4-nextjs-ssr",
-    "dev5": "turbo dev --filter 5-remix-ssr",
-    "dev6": "turbo dev --filter 6-nextjs-rsc",
+    "dev4": "turbo dev --filter 4-nextjs-ssg",
+    "dev5": "turbo dev --filter 5-nextjs-ssr",
+    "dev6": "turbo dev --filter 6-remix-ssr",
+    "dev7": "turbo dev --filter 7-nextjs-rsc",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

@@ -1,11 +1,11 @@
 {
-  "name": "6-nextjs-rsc",
+  "name": "4-nextjs-ssg",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3306",
+    "dev": "next dev -p 3304",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3304",
     "lint": "next lint"
   },
   "dependencies": {
@@ -17,7 +17,8 @@
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^14.2.5",
+    "@tanstack/react-query": "^5.51.1",
+    "@tanstack/react-query-devtools": "^5.51.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

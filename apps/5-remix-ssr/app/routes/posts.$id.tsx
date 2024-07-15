@@ -1,6 +1,18 @@
-import { useCallback, useState } from "react";
-import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useParams } from "@remix-run/react";
+import { useCallback, useEffect, useState } from "react";
+import {
+  ActionFunction,
+  json,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
+import {
+  Form,
+  Link,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useParams,
+} from "@remix-run/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ActionIcon,
@@ -51,6 +63,34 @@ export const loader: LoaderFunction = async ({ params }) => {
   }
 };
 
+//post comment endpoint
+export const action: ActionFunction = async ({ request }) => {
+  const returnData = { data: {}, errors: {}, success: false };
+
+  const data = Object.fromEntries(await request.formData()) as unknown as Omit<
+    IComment,
+    "id"
+  >;
+
+  try {
+    const response = await fetch(`http://localhost:3333/comments`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    returnData.data = await response.json();
+    returnData.success = true;
+  } catch (error) {
+    console.error(error);
+    returnData.errors = {
+      comment: "Error posting comment",
+    };
+  }
+  return json(returnData);
+};
+
 interface IPostPageProps {
   initialPost: IPost;
   initialComments: IComment[];
@@ -68,8 +108,22 @@ export default function PostPage() {
     error: pageError,
   } = useLoaderData<IPostPageProps>();
 
-  const queryClient = useQueryClient();
+  const actionData = useActionData<typeof action>();
+
+  useEffect(() => {
+    refetchComments(); //refresh comments after posting
+    if (actionData?.success) {
+      setCommentText(""); //clear comment field
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
+
+  const navigation = useNavigation();
+  const isPostingComment = navigation.state === "submitting";
+
   const { id: postId } = useParams();
+
+  const queryClient = useQueryClient();
 
   // Load post - with initial data from SSR
   const {
@@ -96,7 +150,7 @@ export default function PostPage() {
     queryKey: ["comments", postId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/posts/${postId}/comments`,
+        `http://localhost:3333/posts/${postId}/comments`
       );
       return response.json() as Promise<IComment[]>;
     },
@@ -114,7 +168,7 @@ export default function PostPage() {
     queryKey: ["user", post?.userId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/users/${post?.userId}`,
+        `http://localhost:3333/users/${post?.userId}`
       );
       return response.json() as Promise<IUser>;
     },
@@ -131,7 +185,7 @@ export default function PostPage() {
         `http://localhost:3333/comments/${commentId}`,
         {
           method: "DELETE",
-        },
+        }
       );
       return response.json() as Promise<IComment>;
     },
@@ -140,7 +194,7 @@ export default function PostPage() {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err,
+        err
       );
       alert("Error deleting comment");
     },
@@ -153,71 +207,11 @@ export default function PostPage() {
     (commentId: number) => {
       deleteComment(commentId);
     },
-    [deleteComment],
+    [deleteComment]
   );
 
   // Post new comment - with optimistic updates!
   const [commentText, setCommentText] = useState("");
-
-  const { mutate: postComment, isPending: isPostingComment } = useMutation({
-    mutationFn: async (comment: Omit<IComment, "id">) => {
-      const response = await fetch(`http://localhost:3333/comments`, {
-        method: "POST",
-        body: JSON.stringify(comment),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      return response.json() as Promise<IComment>;
-    },
-    //optimistic client-side update
-    onMutate: async (newComment) => {
-      await queryClient.cancelQueries({
-        queryKey: ["comments", newComment.postId.toString()],
-      });
-
-      // Snapshot the previous value
-      const previousComments = queryClient.getQueryData([
-        "comments",
-        newComment.postId.toString(),
-      ]);
-
-      // Optimistically update to the new value
-      queryClient.setQueryData(
-        ["comments", newComment.postId.toString()],
-        (oldComments: Array<IComment>) => [...oldComments, newComment],
-      );
-
-      // Return a context object with the snapshot value
-      return { previousComments };
-    },
-    // If the mutation fails,
-    // use the context returned from onMutate to roll back
-    onError: (err, newComment, context) => {
-      queryClient.setQueryData(
-        ["comments", newComment.postId.toString()],
-        context?.previousComments,
-      );
-      console.error("Error posting comment. Rolling UI back", err);
-    },
-    onSuccess: () => {
-      setCommentText(""); //clear comment text
-    },
-    // Always refetch after error or success:
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
-    },
-  });
-
-  const handleSubmitComment = useCallback(async () => {
-    const newComment: Omit<IComment, "id"> = {
-      body: commentText,
-      email: "user@mailinator.com",
-      name: "User",
-      postId: Number(postId),
-    };
-    postComment(newComment);
-  }, [commentText, postId, postComment]);
 
   if (pageError) {
     return (
@@ -325,28 +319,29 @@ export default function PostPage() {
             </Card>
           ))
         )}
-        <Textarea
-          disabled={isPostingComment}
-          label="Post a Comment"
-          onChange={(e) => setCommentText(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleSubmitComment();
+        <Form method="post">
+          <input type="hidden" name="postId" value={postId} />
+          <input type="hidden" name="email" value="user@mailinator.com" />
+          <input type="hidden" name="name" value="User" />
+          <Textarea
+            name="body"
+            disabled={isPostingComment}
+            label="Post a Comment"
+            onChange={(e) => setCommentText(e.target.value)}
+            value={commentText}
+          />
+          <Button
+            type="submit"
+            disabled={isPostingComment || commentText.length === 0}
+            leftSection={
+              isPostingComment ? (
+                <Loader variant="oval" color="white" size="xs" />
+              ) : null
             }
-          }}
-          value={commentText}
-        />
-        <Button
-          disabled={isPostingComment || commentText.length === 0}
-          leftSection={
-            isPostingComment ? (
-              <Loader variant="oval" color="white" size="xs" />
-            ) : null
-          }
-          onClick={handleSubmitComment}
-        >
-          Post Comment
-        </Button>
+          >
+            Post Comment
+          </Button>
+        </Form>
       </Stack>
     </Stack>
   );

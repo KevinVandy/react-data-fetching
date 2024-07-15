@@ -150,7 +150,7 @@ export default function PostPage() {
     queryKey: ["comments", postId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/posts/${postId}/comments`
+        `http://localhost:3333/posts/${postId}/comments`,
       );
       return response.json() as Promise<IComment[]>;
     },
@@ -168,7 +168,7 @@ export default function PostPage() {
     queryKey: ["user", post?.userId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/users/${post?.userId}`
+        `http://localhost:3333/users/${post?.userId}`,
       );
       return response.json() as Promise<IUser>;
     },
@@ -185,7 +185,7 @@ export default function PostPage() {
         `http://localhost:3333/comments/${commentId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       return response.json() as Promise<IComment>;
     },
@@ -194,7 +194,7 @@ export default function PostPage() {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err
+        err,
       );
       alert("Error deleting comment");
     },
@@ -207,7 +207,7 @@ export default function PostPage() {
     (commentId: number) => {
       deleteComment(commentId);
     },
-    [deleteComment]
+    [deleteComment],
   );
 
   // Post new comment - with optimistic updates!
@@ -323,24 +323,26 @@ export default function PostPage() {
           <input type="hidden" name="postId" value={postId} />
           <input type="hidden" name="email" value="user@mailinator.com" />
           <input type="hidden" name="name" value="User" />
-          <Textarea
-            name="body"
-            disabled={isPostingComment}
-            label="Post a Comment"
-            onChange={(e) => setCommentText(e.target.value)}
-            value={commentText}
-          />
-          <Button
-            type="submit"
-            disabled={isPostingComment || commentText.length === 0}
-            leftSection={
-              isPostingComment ? (
-                <Loader variant="oval" color="white" size="xs" />
-              ) : null
-            }
-          >
-            Post Comment
-          </Button>
+          <Stack gap="md">
+            <Textarea
+              name="body"
+              disabled={isPostingComment}
+              label="Post a Comment"
+              onChange={(e) => setCommentText(e.target.value)}
+              value={commentText}
+            />
+            <Button
+              type="submit"
+              disabled={isPostingComment || commentText.length === 0}
+              leftSection={
+                isPostingComment ? (
+                  <Loader variant="oval" color="white" size="xs" />
+                ) : null
+              }
+            >
+              Post Comment
+            </Button>
+          </Stack>
         </Form>
       </Stack>
     </Stack>

@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     ]);
 
     const userResponse = await fetch(
-      `http://localhost:3333/users/${post.userId}`
+      `http://localhost:3333/users/${post.userId}`,
     );
 
     const user = await userResponse.json();

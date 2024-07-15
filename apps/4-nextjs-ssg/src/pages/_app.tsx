@@ -4,8 +4,14 @@ import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "@/theme";
 import { AppLayout } from "@/components/AppLayout";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const ReactQueryDevtoolsProduction = lazy(() =>
+  import("@tanstack/react-query-devtools/production").then((d) => ({
+    default: d.ReactQueryDevtools,
+  })),
+);
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
@@ -22,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Next JS SSR (and React Query)</title>
+        <title>Next JS SSG</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
@@ -33,6 +39,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <MantineProvider theme={theme}>
           <AppLayout>
             <Component {...pageProps} />
+            <Suspense fallback={null}>
+              <ReactQueryDevtoolsProduction />
+            </Suspense>
           </AppLayout>
         </MantineProvider>
       </QueryClientProvider>

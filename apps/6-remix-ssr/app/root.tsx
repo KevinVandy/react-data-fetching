@@ -1,5 +1,4 @@
 import "@mantine/core/styles.css";
-
 import {
   Links,
   Meta,
@@ -7,11 +6,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { AppLayout } from "./components/AppLayout";
-import { ReactNode, useState } from "react";
+import { lazy, ReactNode, Suspense, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const ReactQueryDevtoolsProduction = lazy(() =>
+  import("@tanstack/react-query-devtools/production").then((d) => ({
+    default: d.ReactQueryDevtools,
+  })),
+);
 
 export function Layout({ children }: { children: ReactNode }) {
   const [queryClient] = useState(
@@ -39,6 +43,9 @@ export function Layout({ children }: { children: ReactNode }) {
           <MantineProvider>
             <AppLayout>{children}</AppLayout>
           </MantineProvider>
+          <Suspense fallback={null}>
+            <ReactQueryDevtoolsProduction />
+          </Suspense>
         </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />

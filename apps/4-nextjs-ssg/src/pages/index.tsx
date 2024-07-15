@@ -1,6 +1,5 @@
 import { GetStaticProps } from "next";
-import { Alert, Card, Skeleton, Stack, Text, Title } from "@mantine/core";
-import { IconAlertCircle } from "@tabler/icons-react";
+import { Card, Flex, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { type IPost } from "../api-types";
 
@@ -39,43 +38,31 @@ export default function HomePage({ posts, error }: HomePageProps) {
   return (
     <Stack>
       <Title order={2}>Your Home Feed</Title>
-      <Stack gap="md">
-        {error ? (
-          <Alert
-            icon={<IconAlertCircle size="1rem" />}
-            title="Bummer!"
-            color="red"
+      <Flex gap="md" wrap="wrap">
+        {posts?.map((post) => (
+          <Link
+            key={post.id}
+            href={`/posts/${post.id}`}
+            style={{ textDecoration: "none" }}
           >
-            There was an error fetching posts
-          </Alert>
-        ) : !posts.length ? (
-          [...Array(5)].map((_, index) => (
-            <Card withBorder shadow="md" key={index}>
-              <Skeleton animate height="20px" width="50%" mb="md" />
-              <Skeleton animate height="40px" width="100%" mb="md" />
-            </Card>
-          ))
-        ) : (
-          posts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/posts/${post.id}`}
-              style={{ textDecoration: "none" }}
+            <Card
+              mih={320}
+              shadow="md"
+              w={300}
+              withBorder
+              style={{
+                cursor: "pointer",
+              }}
             >
-              <Card
-                withBorder
-                shadow="md"
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                <Title order={3}>{post.title}</Title>
-                <Text>{post.body}</Text>
-              </Card>
-            </Link>
-          ))
-        )}
-      </Stack>
+              <Title order={3}>{post.title}</Title>
+              <Text>{post.body}</Text>
+              <Text c="blue" pt="md">
+                Go to post
+              </Text>
+            </Card>
+          </Link>
+        ))}
+      </Flex>
     </Stack>
   );
 }

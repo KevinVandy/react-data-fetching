@@ -66,7 +66,7 @@ export class HomePage extends Component<{}, HomePageState> {
             <Loader />
           </Collapse>
         </Flex>
-        <Stack gap="md">
+        <Flex gap="md" wrap="wrap">
           {isErrorLoadingPosts ? (
             <Alert
               icon={<IconAlertCircle size="1rem" />}
@@ -77,7 +77,7 @@ export class HomePage extends Component<{}, HomePageState> {
             </Alert>
           ) : isLoadingPosts ? (
             [...Array(5)].map((_, index) => (
-              <Card withBorder shadow="md" key={index}>
+              <Card w={300} mih={300} withBorder shadow="md" key={index}>
                 <Skeleton animate height="20px" width="50%" mb="md" />
                 <Skeleton animate height="40px" width="100%" mb="md" />
               </Card>
@@ -90,19 +90,24 @@ export class HomePage extends Component<{}, HomePageState> {
                 style={{ textDecoration: "none" }}
               >
                 <Card
-                  withBorder
+                  mih={320}
                   shadow="md"
+                  w={300}
+                  withBorder
                   style={{
                     cursor: "pointer",
                   }}
                 >
                   <Title order={3}>{post.title}</Title>
                   <Text>{post.body}</Text>
+                  <Text c="blue" pt="md">
+                    Go to post
+                  </Text>
                 </Card>
               </Link>
             ))
           )}
-        </Stack>
+        </Flex>
       </Stack>
     );
   }

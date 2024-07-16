@@ -1,7 +1,8 @@
 import "@mantine/core/styles.css";
-import React from "react";
+import React, { Suspense } from "react";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { theme } from "../theme";
+import { AppLayout } from "@/components/AppLayout";
 
 export const metadata = {
   title: "Next JS RSC",
@@ -19,7 +20,9 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <AppLayout>{children}</AppLayout>
+        </MantineProvider>
       </body>
     </html>
   );

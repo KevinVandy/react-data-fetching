@@ -1,4 +1,5 @@
 import { IPost } from "@/api-types";
+import { Card, Flex, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -13,9 +14,9 @@ export default async function HomePage() {
   const posts = await fetchPosts();
 
   return (
-    <div>
-      <h2>Your Home Feed</h2>
-      <div style={{ padding: "1rem" }}>
+    <Stack>
+      <Title order={2}>Your Home Feed</Title>
+      <Flex gap="md" wrap="wrap">
         <Suspense fallback={<div>Loading...</div>}>
           {posts.map((post) => (
             <Link
@@ -23,23 +24,25 @@ export default async function HomePage() {
               href={`/posts/${post.id}`}
               style={{ textDecoration: "none" }}
             >
-              <div
+              <Card
+                mih={320}
+                shadow="md"
+                w={300}
+                withBorder
                 style={{
-                  boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
                   cursor: "pointer",
-                  borderRadius: "0.5rem",
-                  padding: "1rem",
-                  margin: "1rem 0",
-                  border: "1px solid #e1e1e1",
                 }}
               >
-                <h3>{post.title}</h3>
-                <p>{post.body}</p>
-              </div>
+                <Title order={3}>{post.title}</Title>
+                <Text>{post.body}</Text>
+                <Text c="blue" pt="md">
+                  Go to post
+                </Text>
+              </Card>
             </Link>
           ))}
         </Suspense>
-      </div>
-    </div>
+      </Flex>
+    </Stack>
   );
 }

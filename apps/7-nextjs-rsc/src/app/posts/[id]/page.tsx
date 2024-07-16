@@ -2,6 +2,7 @@ import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { IComment, IPost, IUser } from "../../../api-types";
 import Link from "next/link";
 import CommentForm from "./CommentForm";
+import DeleteCommentButton from "./DeleteCommentButton";
 
 const fetchPostAndComments = async (postId: number) => {
   const [post, comments] = await Promise.all([
@@ -49,6 +50,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       <Stack gap="xl">
         {comments?.map((comment) => (
           <Card withBorder key={comment.id + comment.email}>
+            <DeleteCommentButton comment={comment} />
             <Title order={4}>{comment.name}</Title>
             <Title order={5}>{comment.email}</Title>
             <Text>{comment.body}</Text>

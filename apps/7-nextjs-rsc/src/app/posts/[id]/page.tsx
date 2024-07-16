@@ -14,7 +14,7 @@ const fetchPostAndComments = async (postId: number) => {
   const user = await fetch(`http://localhost:3333/users/${post.userId}`).then(
     (res) => res.json()
   );
-  console.log({ post, user, comments });
+
   return { post, user, comments } as {
     post: IPost;
     user: IUser;

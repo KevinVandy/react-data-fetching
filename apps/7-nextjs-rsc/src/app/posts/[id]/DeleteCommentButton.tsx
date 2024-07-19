@@ -1,21 +1,9 @@
 "use client";
 
-import { use, useActionState, useCallback, useState } from "react";
-import {
-  ActionIcon,
-  Alert,
-  Box,
-  Button,
-  Loader,
-  Stack,
-  Textarea,
-} from "@mantine/core";
-import { IconAlertCircle, IconRefresh, IconTrash } from "@tabler/icons-react";
-import { IComment, IPost, IUser } from "../../../api-types";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { deleteComment, submitPostComment } from "./actions";
-import { useFormStatus } from "react-dom";
+import { ActionIcon } from "@mantine/core";
+import { IconTrash } from "@tabler/icons-react";
+import { IComment } from "../../../api-types";
+import { deleteComment } from "./actions";
 
 interface DeleteCommentButtonProps {
   comment: IComment;

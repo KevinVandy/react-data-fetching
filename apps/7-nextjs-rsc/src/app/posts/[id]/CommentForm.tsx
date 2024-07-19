@@ -1,19 +1,7 @@
 "use client";
 
-import { use, useActionState, useCallback, useState } from "react";
-import {
-  ActionIcon,
-  Alert,
-  Box,
-  Button,
-  Loader,
-  Stack,
-  Textarea,
-} from "@mantine/core";
-import { IconAlertCircle, IconRefresh, IconTrash } from "@tabler/icons-react";
-import { IComment, IPost, IUser } from "../../../api-types";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useState } from "react";
+import { Button, Loader, Stack, Textarea } from "@mantine/core";
 import { submitPostComment } from "./actions";
 import { useFormStatus } from "react-dom";
 

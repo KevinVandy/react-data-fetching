@@ -20,7 +20,6 @@ export const UsersPage = () => {
     try {
       const fetchUrl = new URL(`http://localhost:3333/users`);
       const response = await fetch(fetchUrl.href);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate slow network
       const newUsers = (await response.json()) as IUser[];
       setUsers(newUsers);
     } catch (error) {
@@ -30,7 +29,6 @@ export const UsersPage = () => {
       setIsLoadingUser(false);
       setIsFetchingUser(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -3,10 +3,11 @@ import { MRT_ColumnDef, MantineReactTable } from "mantine-react-table";
 import { Anchor } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { IUser } from "../api-types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const UsersPage = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   //load users
   const {
@@ -18,7 +19,6 @@ export const UsersPage = () => {
     queryKey: ["users"],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3333/users`);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       return response.json() as Promise<IUser[]>;
     },
   });
@@ -72,6 +72,17 @@ export const UsersPage = () => {
           : undefined
       }
       mantineTableBodyRowProps={({ row }) => ({
+        onMouseEnter: () => {
+          queryClient.prefetchQuery({
+            queryKey: ["user", +row.original.id],
+            queryFn: async () => {
+              const response = await fetch(
+                `http://localhost:3333/users/${row.original.id}`
+              );
+              return response.json() as Promise<IUser>;
+            },
+          });
+        },
         onClick: () => navigate(`/users/${row.original.id}`),
         style: {
           cursor: "pointer",

@@ -70,21 +70,37 @@ export default function PostPage({
   const queryClient = useQueryClient();
   const { id: postId } = useParams();
 
-  //load post - with initial data from SSR
+  //load post - with initial data from server
   const {
     data: post,
     isLoading: isLoadingPost,
     isError: isErrorLoadingPosts,
   } = useQuery({
-    queryKey: ["post", postId],
+    initialData: initialPost,
+    queryKey: [`/posts/${postId}`],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3333/posts/${postId}`);
       return response.json() as Promise<IPost>;
     },
-    initialData: initialPost, //SSR, with refresh
   });
 
-  //load comments - with initial data from SSR
+  //load user - depends on user id from post
+  const {
+    data: user,
+    isLoading: isLoadingUser,
+    isError: isErrorLoadingUser,
+  } = useQuery({
+    enabled: !!post?.userId,
+    queryKey: [`/users/${post?.userId}`],
+    queryFn: async () => {
+      const response = await fetch(
+        `http://localhost:3333/users/${post?.userId}`
+      );
+      return response.json() as Promise<IUser>;
+    },
+  });
+
+  //load comments - with initial data from server
   const {
     data: comments,
     isLoading: isLoadingComments,
@@ -92,31 +108,15 @@ export default function PostPage({
     isError: isErrorLoadingComments,
     refetch: refetchComments,
   } = useQuery({
-    queryKey: ["comments", postId],
+    initialData: initialComments,
+    queryKey: [`/posts/${postId}/comments`],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/posts/${postId}/comments`,
+        `http://localhost:3333/posts/${postId}/comments`
       );
       return response.json() as Promise<IComment[]>;
     },
-    initialData: initialComments, //SSR, with refresh
     refetchInterval: 10000, // 10 seconds
-  });
-
-  //load user - depends on user id from post so client-side only
-  const {
-    data: user,
-    isLoading: isLoadingUser,
-    isError: isErrorLoadingUser,
-  } = useQuery({
-    enabled: !!post?.userId,
-    queryKey: ["user", post?.userId],
-    queryFn: async () => {
-      const response = await fetch(
-        `http://localhost:3333/users/${post?.userId}`,
-      );
-      return response.json() as Promise<IUser>;
-    },
   });
 
   //delete comment, refresh comments after delete
@@ -130,7 +130,7 @@ export default function PostPage({
         `http://localhost:3333/comments/${commentId}`,
         {
           method: "DELETE",
-        },
+        }
       );
       return response.json() as Promise<IComment>;
     },
@@ -139,7 +139,7 @@ export default function PostPage({
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err,
+        err
       );
       alert("Error deleting comment");
     },
@@ -152,7 +152,7 @@ export default function PostPage({
     (commentId: number) => {
       deleteComment(commentId);
     },
-    [deleteComment],
+    [deleteComment]
   );
 
   // Post new comment - with optimistic updates!
@@ -184,7 +184,7 @@ export default function PostPage({
       // Optimistically update to the new value
       queryClient.setQueryData(
         ["comments", newComment.postId.toString()],
-        (oldComments: any) => [...oldComments, newComment],
+        (oldComments: any) => [...oldComments, newComment]
       );
 
       // Return a context object with the snapshot value
@@ -195,7 +195,7 @@ export default function PostPage({
     onError: (err, newComment, context) => {
       queryClient.setQueryData(
         ["comments", newComment.postId.toString()],
-        context?.previousComments,
+        context?.previousComments
       );
       console.error("Error posting comment. Rolling UI back", err);
     },

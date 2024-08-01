@@ -15,14 +15,14 @@ import { type IPost } from "../api-types";
 import { useQuery } from "@tanstack/react-query";
 
 export function HomePage() {
-  //posts states
+  //load posts
   const {
     data: posts,
     isError: isErrorLoadingPosts,
     isFetching: isFetchingPosts,
     isLoading: isLoadingPosts,
   } = useQuery({
-    queryKey: ["posts"],
+    queryKey: ["/posts"],
     queryFn: async () => {
       const fetchUrl = new URL(`http://localhost:3333/posts`);
 

@@ -1,7 +1,15 @@
-import { Anchor, AppShell, Burger, Group } from "@mantine/core";
+import {
+  Anchor,
+  AppShell,
+  Breadcrumbs,
+  Burger,
+  Group,
+  Stack,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconHome, IconUsersGroup } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { useMemo } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -23,6 +31,25 @@ const links = [
 ];
 
 export function AppLayout({ children }: AppLayoutProps) {
+  const { pathname } = useLocation();
+
+  const breadCrumbLinks = useMemo(() => {
+    const routes = pathname.split("/");
+    routes.shift();
+    const links: string[] = [];
+    for (let i = 0; i < routes.length + 1; i++) {
+      if (routes[i] && routes[i] !== "/")
+        if (routes[i] === "posts") {
+          links.push(`/`);
+        } else links.push(`/${routes.slice(0, i + 1).join("/")}`);
+    }
+    return links;
+  }, [pathname]);
+
+  if (breadCrumbLinks.length === 1) {
+    breadCrumbLinks.unshift("/");
+  }
+
   const [opened, { toggle }] = useDisclosure();
 
   return (
@@ -44,7 +71,28 @@ export function AppLayout({ children }: AppLayoutProps) {
           </Anchor>
         ))}
       </AppShell.Navbar>
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main>
+        <Stack gap="md" mt="lg">
+          <Breadcrumbs aria-label="breadcrumb" pb="md">
+            {breadCrumbLinks.map((link, index) => (
+              <Anchor
+                c="inherit"
+                component={Link}
+                key={index}
+                td="none"
+                to={link}
+                tt="capitalize"
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                {link === "/" ? "Home Feed" : link.split("/").pop()}
+              </Anchor>
+            ))}
+          </Breadcrumbs>
+          {children}
+        </Stack>
+      </AppShell.Main>
     </AppShell>
   );
 }

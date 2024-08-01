@@ -30,7 +30,7 @@ export const PostPage = () => {
     isLoading: isLoadingPost,
     isError: isErrorLoadingPosts,
   } = useQuery({
-    queryKey: ["post", +postId!],
+    queryKey: [`/posts/${postId}`],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3333/posts/${postId}`);
       return response.json() as Promise<IPost>;
@@ -44,7 +44,7 @@ export const PostPage = () => {
     isError: isErrorLoadingUser,
   } = useQuery({
     enabled: !!post?.userId,
-    queryKey: ["user", +post?.userId!],
+    queryKey: [`/users/${post?.userId}`],
     queryFn: async () => {
       const response = await fetch(
         `http://localhost:3333/users/${post?.userId}`
@@ -61,7 +61,7 @@ export const PostPage = () => {
     isError: isErrorLoadingComments,
     refetch: refetchComments,
   } = useQuery({
-    queryKey: ["comments", +postId!],
+    queryKey: [`/posts/${postId}/comments`],
     queryFn: async () => {
       const response = await fetch(
         `http://localhost:3333/posts/${postId}/comments`
@@ -99,13 +99,6 @@ export const PostPage = () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] }); //refresh comments
     },
   });
-
-  const handleDeleteComment = useCallback(
-    (commentId: number) => {
-      deleteComment(commentId);
-    },
-    [deleteComment]
-  );
 
   // Post new comment - with optimistic updates!
   const [commentText, setCommentText] = useState("");
@@ -256,7 +249,7 @@ export const PostPage = () => {
                   right={10}
                   top={10}
                   variant="subtle"
-                  onClick={() => handleDeleteComment(comment.id)}
+                  onClick={() => deleteComment(comment.id)}
                 >
                   <IconTrash />
                 </ActionIcon>

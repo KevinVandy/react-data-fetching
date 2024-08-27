@@ -22,6 +22,7 @@ const fetchPostAndComments = async (postId: number) => {
   };
 };
 
+// Server Component
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { id: postId } = params;
 
@@ -50,6 +51,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       <Stack gap="xl">
         {comments?.map((comment) => (
           <Card withBorder key={comment.id + comment.email}>
+            {/* Client Component */}
             <DeleteCommentButton comment={comment} />
             <Title order={4}>{comment.name}</Title>
             <Title order={5}>{comment.email}</Title>

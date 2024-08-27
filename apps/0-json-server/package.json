@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev0": "pnpm serve",
     "serve": "json-server --watch db.json --delay 500 --port 3333"
   },
   "dependencies": {

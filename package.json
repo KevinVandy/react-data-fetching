@@ -5,9 +5,11 @@
     "build": "turbo build",
     "serve": "turbo serve --filter json-server",
     "dev": "turbo dev",
+    "dev0": "turbo dev --filter 0-json-server",
     "dev1": "turbo dev --filter 1-vite-componentdidmount",
     "dev2": "turbo dev --filter 2-vite-useeffect",
     "dev3": "turbo dev --filter 3-vite-reactquery",
+    "dev31": "turbo dev --filter 3.1-vite-reactquery-refactor",
     "dev4": "turbo dev --filter 4-nextjs-ssg",
     "dev5": "turbo dev --filter 5-nextjs-ssr",
     "dev6": "turbo dev --filter 6-remix-ssr",
@@ -17,7 +19,7 @@
   },
   "devDependencies": {
     "prettier": "^3.3.3",
-    "turbo": "2.0.6"
+    "turbo": "2.0.14"
   },
   "engines": {
     "node": ">=18"

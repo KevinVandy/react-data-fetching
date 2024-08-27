@@ -10,29 +10,29 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mantine/core": "7.11.2",
-    "@mantine/hooks": "7.11.2",
-    "@tabler/icons-react": "^3.10.0",
-    "@tanstack/react-query": "^5.51.1",
-    "@tanstack/react-query-devtools": "^5.51.1",
+    "@mantine/core": "7.12.1",
+    "@mantine/hooks": "7.12.1",
+    "@tabler/icons-react": "^3.13.0",
+    "@tanstack/react-query": "^5.52.2",
+    "@tanstack/react-query-devtools": "^5.52.2",
     "mantine-react-table": "^2.0.0-beta.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.24.1"
+    "react-router-dom": "^6.26.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
-    "@typescript-eslint/parser": "^7.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
     "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^9.7.0",
+    "eslint": "^9.9.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.8",
-    "postcss": "^8.4.39",
-    "postcss-preset-mantine": "1.15.0",
+    "eslint-plugin-react-refresh": "^0.4.11",
+    "postcss": "^8.4.41",
+    "postcss-preset-mantine": "1.17.0",
     "postcss-simple-vars": "^7.0.1",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.3"
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
   }
 }

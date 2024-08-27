@@ -14,14 +14,14 @@
     "@tabler/icons-react": "^3.13.0",
     "mantine-react-table": "^2.0.0-beta.6",
     "next": "14.2.6",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "19.0.0-rc-b57d2823-20240822",
+    "react-dom": "19.0.0-rc-b57d2823-20240822"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.2.6",
     "@types/node": "^22",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
     "postcss": "^8.4.41",
     "postcss-preset-mantine": "1.17.0",
     "postcss-simple-vars": "^7.0.1",

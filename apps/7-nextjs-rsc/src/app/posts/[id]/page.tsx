@@ -1,8 +1,7 @@
-import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
+import { Box, Flex, Stack, Text, Title } from "@mantine/core";
 import { IComment, IPost, IUser } from "../../../api-types";
 import Link from "next/link";
-import CommentForm from "./CommentForm";
-import DeleteCommentButton from "./DeleteCommentButton";
+import CommentSection from "./CommentSection";
 
 const fetchPostAndComments = async (postId: number) => {
   const [post, comments] = await Promise.all([
@@ -22,14 +21,18 @@ const fetchPostAndComments = async (postId: number) => {
   };
 };
 
+interface PostPageProps {
+  params: { id: string };
+}
+
 // Server Component
-export default async function PostPage({ params }: { params: { id: string } }) {
+export default async function PostPage({ params }: PostPageProps) {
   const { id: postId } = params;
 
   const { post, user, comments } = await fetchPostAndComments(+postId);
 
   return (
-    <Stack>
+    <Stack mb="500px">
       <Box>
         <Title order={1}>Post: {post?.id}</Title>
         <Title order={2}>{post?.title}</Title>
@@ -48,19 +51,8 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           Comments on this Post
         </Title>
       </Flex>
-      <Stack gap="xl">
-        {comments?.map((comment) => (
-          <Card withBorder key={comment.id + comment.email}>
-            {/* Client Component */}
-            <DeleteCommentButton comment={comment} />
-            <Title order={4}>{comment.name}</Title>
-            <Title order={5}>{comment.email}</Title>
-            <Text>{comment.body}</Text>
-          </Card>
-        ))}
-        {/* Client Component */}
-        <CommentForm postId={+postId} />
-      </Stack>
+      {/* Client Component */}
+      <CommentSection comments={comments} postId={post.id} />
     </Stack>
   );
 }

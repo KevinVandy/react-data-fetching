@@ -16,7 +16,7 @@ export const UsersPage = () => {
     isFetching: isFetchingUser,
     isLoading: isLoadingUser,
   } = useQuery({
-    queryKey: [`/users`],
+    queryKey: ["users"],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3333/users`);
       return response.json() as Promise<IUser[]>;
@@ -75,7 +75,7 @@ export const UsersPage = () => {
         onMouseEnter: () => {
           //same fetch as in UserPage.tsx
           queryClient.prefetchQuery({
-            queryKey: [`/users/${row.original.id}`],
+            queryKey: ["users", row.original.id.toString()],
             queryFn: async () => {
               const response = await fetch(
                 `http://localhost:3333/users/${row.original.id}`

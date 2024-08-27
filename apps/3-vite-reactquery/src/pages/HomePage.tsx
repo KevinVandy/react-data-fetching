@@ -22,7 +22,7 @@ export function HomePage() {
     isFetching: isFetchingPosts,
     isLoading: isLoadingPosts,
   } = useQuery({
-    queryKey: ["/posts"],
+    queryKey: ["posts"],
     queryFn: async () => {
       const fetchUrl = new URL(`http://localhost:3333/posts`);
 

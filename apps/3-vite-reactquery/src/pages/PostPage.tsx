@@ -30,7 +30,7 @@ export const PostPage = () => {
     isLoading: isLoadingPost,
     isError: isErrorLoadingPosts,
   } = useQuery({
-    queryKey: [`/posts/${postId}`],
+    queryKey: ["posts", postId],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3333/posts/${postId}`);
       return response.json() as Promise<IPost>;
@@ -44,7 +44,7 @@ export const PostPage = () => {
     isError: isErrorLoadingUser,
   } = useQuery({
     enabled: !!post?.userId,
-    queryKey: [`/users/${post?.userId}`],
+    queryKey: ["users", post?.userId],
     queryFn: async () => {
       const response = await fetch(
         `http://localhost:3333/users/${post?.userId}`
@@ -61,7 +61,7 @@ export const PostPage = () => {
     isError: isErrorLoadingComments,
     refetch: refetchComments,
   } = useQuery({
-    queryKey: [`/posts/${postId}/comments`],
+    queryKey: ["posts", postId, "comments"],
     queryFn: async () => {
       const response = await fetch(
         `http://localhost:3333/posts/${postId}/comments`

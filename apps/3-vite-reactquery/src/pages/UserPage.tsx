@@ -25,7 +25,7 @@ export const UserPage = () => {
     isError: isErrorLoadingUser,
   } = useQuery({
     enabled: !!userId,
-    queryKey: [`/users/${userId}`],
+    queryKey: ["users", userId],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3333/users/${userId}`);
       return response.json() as Promise<IUser>;
@@ -39,7 +39,7 @@ export const UserPage = () => {
     isFetching: isFetchingPosts,
     isError: isErrorLoadingPosts,
   } = useQuery({
-    queryKey: [`/posts?userId=${userId}`],
+    queryKey: ["posts", userId],
     queryFn: async () => {
       const fetchUrl = new URL(`http://localhost:3333/posts?userId=${userId}`);
       const response = await fetch(fetchUrl.href);

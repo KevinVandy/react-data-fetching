@@ -12,6 +12,7 @@
     "dev31": "turbo dev --filter 3.1-vite-reactquery-refactor",
     "dev4": "turbo dev --filter 4-nextjs-ssg",
     "dev5": "turbo dev --filter 5-nextjs-ssr",
+    "dev51": "turbo dev --filter 5.1-sveltekit-ssr",
     "dev6": "turbo dev --filter 6-remix-ssr",
     "dev7": "turbo dev --filter 7-nextjs-rsc",
     "lint": "turbo lint",

@@ -410,6 +410,15 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.41)
+      flowbite:
+        specifier: ^2.5.1
+        version: 2.5.1(rollup@4.21.1)
+      flowbite-svelte:
+        specifier: ^0.46.16
+        version: 0.46.16(rollup@4.21.1)(svelte@5.0.0-next.246)
+      flowbite-svelte-icons:
+        specifier: ^1.6.1
+        version: 1.6.1(svelte@5.0.0-next.246)(tailwind-merge@2.5.2)(tailwindcss@3.4.11)
       prettier:
         specifier: ^3.1.1
         version: 3.3.3
@@ -1083,6 +1092,9 @@ packages:
   '@floating-ui/core@1.6.0':
     resolution: {integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g==}
 
+  '@floating-ui/dom@1.6.10':
+    resolution: {integrity: sha512-fskgCFv8J8OamCmyun8MfjB1Olfn+uZKjOKZ0vhYF3gRmEUXcGOjxWL8bBr7i4kIuPZ2KD2S3EUIOxnjC8kl2A==}
+
   '@floating-ui/dom@1.6.3':
     resolution: {integrity: sha512-RnDthu3mzPlQ31Ss/BTwQ1zjzIhr3lk1gZB1OC56h/1vEtaXkESrOqL5fQVMfXpwGtRwX+YsZBdyHtJMQnkArw==}
 
@@ -1100,6 +1112,9 @@ packages:
 
   '@floating-ui/utils@0.2.1':
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
+
+  '@floating-ui/utils@0.2.7':
+    resolution: {integrity: sha512-X8R8Oj771YRl/w+c1HqAC1szL8zWQRwFvgDwT129k9ACdBoud/+/rX9V0qiMl6LWUdP9voC2nDVZYPMQQsb6eA==}
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -1259,6 +1274,9 @@ packages:
   '@polka/url@1.0.0-next.24':
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
 
+  '@popperjs/core@2.11.8':
+    resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+
   '@remix-run/dev@2.11.2':
     resolution: {integrity: sha512-9DGb2UOIO4jOdws04Z+KmCeEBqbP36XvJZdcd4w16wDGI0I1ZY1c5ro58tB/7zPwN40s9MD9UzCYm6P+EkdeAg==}
     engines: {node: '>=18.0.0'}
@@ -1342,6 +1360,24 @@ packages:
 
   '@remix-run/web-stream@1.1.0':
     resolution: {integrity: sha512-KRJtwrjRV5Bb+pM7zxcTJkhIqWWSy+MYsIxHK+0m5atcznsf15YwUBWHWulZerV2+vvHH1Lp1DD7pw6qKW8SgA==}
+
+  '@rollup/plugin-node-resolve@15.2.3':
+    resolution: {integrity: sha512-j/lym8nf5E21LwBT4Df1VD6hRO2L2iwUeUmP7litikRsVp1H6NWx20NEp0Y7su+7XGc476GnXXc4kFeZNGmaSQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.78.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+
+  '@rollup/pluginutils@5.1.0':
+    resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
 
   '@rollup/rollup-android-arm-eabi@4.21.1':
     resolution: {integrity: sha512-2thheikVEuU7ZxFXubPDOtspKn1x0yqaYQwvALVtEcvFhMifPADBrgRPyHV0TF3b+9BgvgjgagVyvA/UqPZHmg==}
@@ -1569,6 +1605,9 @@ packages:
   '@types/react@18.3.4':
     resolution: {integrity: sha512-J7W30FTdfCxDDjmfRM+/JqLHBIyl7xUIp9kwK637FGmY7+mkSFSe6L4jpZzhj5QMfLssSDP4/i75AKkrdC7/Jw==}
 
+  '@types/resolve@1.20.2':
+    resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
+
   '@types/unist@2.0.10':
     resolution: {integrity: sha512-IfYcSBWE3hLpBg8+X2SEa8LVkJdJEkT2Ese2aaLs3ptGdVtABxndrMaxuFlQ1qdFf9Q5rDvDpxI3WwgvKFAsQA==}
 
@@ -1650,6 +1689,9 @@ packages:
   '@web3-storage/multipart-parser@1.0.0':
     resolution: {integrity: sha512-BEO6al7BYqcnfX15W2cnGR+Q566ACXAT9UQykORCWW80lmkpWsnEob6zJS1ZVBKsSJC8+7vJkHwlp+lXG1UCdw==}
 
+  '@yr/monotone-cubic-spline@1.0.3':
+    resolution: {integrity: sha512-FQXkOta0XBSUPHndIKON2Y9JeQz5ZeMqLYZVVK93FliNBFm7LNMIZmY6FrMEB9XPcDbE2bekMbZD6kzDkxwYjA==}
+
   '@zxing/text-encoding@0.9.0':
     resolution: {integrity: sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==}
 
@@ -1713,6 +1755,9 @@ packages:
   anymatch@3.1.3:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
+
+  apexcharts@3.53.0:
+    resolution: {integrity: sha512-QESZHZY3w9LPQ64PGh1gEdfjYjJ5Jp+Dfy0D/CLjsLOPTpXzdxwlNMqRj+vPbTcP0nAHgjWv1maDqcEq6u5olw==}
 
   arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
@@ -1798,6 +1843,10 @@ packages:
 
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
+
+  builtin-modules@3.3.0:
+    resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
+    engines: {node: '>=6'}
 
   busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
@@ -2246,6 +2295,9 @@ packages:
   estree-util-visit@1.2.1:
     resolution: {integrity: sha512-xbgqcrkIVbIG+lI/gzbvd9SGTJL4zqJKBFttUl5pP27KhAjtMKbX/mQXJ7qgyXpMgVy/zvpm0xoQQaGL8OloOw==}
 
+  estree-walker@2.0.2:
+    resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
+
   estree-walker@3.0.3:
     resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
 
@@ -2336,6 +2388,25 @@ packages:
 
   flatted@3.3.1:
     resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
+
+  flowbite-datepicker@1.3.0:
+    resolution: {integrity: sha512-CLVqzuoE2vkUvWYK/lJ6GzT0be5dlTbH3uuhVwyB67+PjqJWABm2wv68xhBf5BqjpBxvTSQ3mrmLHpPJ2tvrSQ==}
+
+  flowbite-svelte-icons@1.6.1:
+    resolution: {integrity: sha512-Kw/7BzA6fqlFq7tBNudwX0KVU4cbyyXcMcgHTraMwGBtvBQan0RKMbvWwqm4JZNvLGAvRv1BM2EF7rzo/oam1Q==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0
+      tailwind-merge: ^2.0.0
+      tailwindcss: ^3.3.2
+
+  flowbite-svelte@0.46.16:
+    resolution: {integrity: sha512-NkyMS/d1EwuL1cqstSUflnG9vhhBiNyUiAw51D8lfPKDfUG1iXc4+HueQw01zhHv3uSXRJRToFBrg6npxeJ3jw==}
+    engines: {node: '>=18.0.0', pnpm: '>=8.0.0'}
+    peerDependencies:
+      svelte: ^3.55.1 || ^4.0.0 || ^5.0.0
+
+  flowbite@2.5.1:
+    resolution: {integrity: sha512-7jP1jy9c3QP7y+KU9lc8ueMkTyUdMDvRP+lteSWgY5TigSZjf9K1kqZxmqjhbx2gBnFQxMl1GAjVThCa8cEpKA==}
 
   for-each@0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -2563,6 +2634,10 @@ packages:
     resolution: {integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==}
     engines: {node: '>=4'}
 
+  is-builtin-module@3.2.1:
+    resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
+    engines: {node: '>=6'}
+
   is-callable@1.2.7:
     resolution: {integrity: sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==}
     engines: {node: '>= 0.4'}
@@ -2602,6 +2677,9 @@ packages:
   is-interactive@1.0.0:
     resolution: {integrity: sha512-2HvIEKRoqS62guEC+qBjpvRubdX910WCMuJTZ+I9yvqKU2/12eSL549HMwtabb4oupdj2sMP50k+XJfB/8JE6w==}
     engines: {node: '>=8'}
+
+  is-module@1.0.0:
+    resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
 
   is-number@7.0.0:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
@@ -2982,6 +3060,10 @@ packages:
   mimic-fn@2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
+
+  mini-svg-data-uri@1.4.4:
+    resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
+    hasBin: true
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -3874,8 +3956,42 @@ packages:
     resolution: {integrity: sha512-FRfq6W17mOHiSbY9nen6/skCV7AHQJdB9yaS9DA4x4mKXR/RIGMDLlxxU3jhQsMiLoqmUFHXJc6Rqe1o6HWlow==}
     engines: {node: '>=18'}
 
+  svg.draggable.js@2.2.2:
+    resolution: {integrity: sha512-JzNHBc2fLQMzYCZ90KZHN2ohXL0BQJGQimK1kGk6AvSeibuKcIdDX9Kr0dT9+UJ5O8nYA0RB839Lhvk4CY4MZw==}
+    engines: {node: '>= 0.8.0'}
+
+  svg.easing.js@2.0.0:
+    resolution: {integrity: sha512-//ctPdJMGy22YoYGV+3HEfHbm6/69LJUTAqI2/5qBvaNHZ9uUFVC82B0Pl299HzgH13rKrBgi4+XyXXyVWWthA==}
+    engines: {node: '>= 0.8.0'}
+
+  svg.filter.js@2.0.2:
+    resolution: {integrity: sha512-xkGBwU+dKBzqg5PtilaTb0EYPqPfJ9Q6saVldX+5vCRy31P6TlRCP3U9NxH3HEufkKkpNgdTLBJnmhDHeTqAkw==}
+    engines: {node: '>= 0.8.0'}
+
+  svg.js@2.7.1:
+    resolution: {integrity: sha512-ycbxpizEQktk3FYvn/8BH+6/EuWXg7ZpQREJvgacqn46gIddG24tNNe4Son6omdXCnSOaApnpZw6MPCBA1dODA==}
+
+  svg.pathmorphing.js@0.1.3:
+    resolution: {integrity: sha512-49HWI9X4XQR/JG1qXkSDV8xViuTLIWm/B/7YuQELV5KMOPtXjiwH4XPJvr/ghEDibmLQ9Oc22dpWpG0vUDDNww==}
+    engines: {node: '>= 0.8.0'}
+
+  svg.resize.js@1.4.3:
+    resolution: {integrity: sha512-9k5sXJuPKp+mVzXNvxz7U0uC9oVMQrrf7cFsETznzUDDm0x8+77dtZkWdMfRlmbkEEYvUn9btKuZ3n41oNA+uw==}
+    engines: {node: '>= 0.8.0'}
+
+  svg.select.js@2.1.2:
+    resolution: {integrity: sha512-tH6ABEyJsAOVAhwcCjF8mw4crjXSI1aa7j2VQR8ZuJ37H2MBUbyeqYr5nEO7sSN3cy9AR9DUwNg0t/962HlDbQ==}
+    engines: {node: '>= 0.8.0'}
+
+  svg.select.js@3.0.1:
+    resolution: {integrity: sha512-h5IS/hKkuVCbKSieR9uQCj9w+zLHoPh+ce19bBYyqF53g6mnPB8sAtIbe1s9dh2S2fCmYX2xel1Ln3PJBbK4kw==}
+    engines: {node: '>= 0.8.0'}
+
   tabbable@6.2.0:
     resolution: {integrity: sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==}
+
+  tailwind-merge@2.5.2:
+    resolution: {integrity: sha512-kjEBm+pvD+6eAwzJL2Bi+02/9LFLal1Gs61+QB7HvTfQQ0aXwC5LGT8PEt1gS0CWKktKe6ysPTAy3cBC5MeiIg==}
 
   tailwindcss@3.4.11:
     resolution: {integrity: sha512-qhEuBcLemjSJk5ajccN9xJFtM/h0AVCPaA6C92jNP+M2J8kX+eMJHI7R2HFKUvvAsMpcfLILMCFYSeDwpMmlUg==}
@@ -4787,6 +4903,11 @@ snapshots:
     dependencies:
       '@floating-ui/utils': 0.2.1
 
+  '@floating-ui/dom@1.6.10':
+    dependencies:
+      '@floating-ui/core': 1.6.0
+      '@floating-ui/utils': 0.2.7
+
   '@floating-ui/dom@1.6.3':
     dependencies:
       '@floating-ui/core': 1.6.0
@@ -4821,6 +4942,8 @@ snapshots:
       tabbable: 6.2.0
 
   '@floating-ui/utils@0.2.1': {}
+
+  '@floating-ui/utils@0.2.7': {}
 
   '@humanwhocodes/module-importer@1.0.1': {}
 
@@ -5047,6 +5170,8 @@ snapshots:
 
   '@polka/url@1.0.0-next.24': {}
 
+  '@popperjs/core@2.11.8': {}
+
   '@remix-run/dev@2.11.2(@remix-run/react@2.11.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4))(@remix-run/serve@2.11.2(typescript@5.5.4))(@types/node@22.5.0)(sugarss@4.0.1(postcss@8.4.41))(terser@5.31.2)(typescript@5.5.4)(vite@5.4.2(@types/node@22.5.0)(sugarss@4.0.1(postcss@8.4.41))(terser@5.31.2))':
     dependencies:
       '@babel/core': 7.24.7
@@ -5209,6 +5334,25 @@ snapshots:
   '@remix-run/web-stream@1.1.0':
     dependencies:
       web-streams-polyfill: 3.3.3
+
+  '@rollup/plugin-node-resolve@15.2.3(rollup@4.21.1)':
+    dependencies:
+      '@rollup/pluginutils': 5.1.0(rollup@4.21.1)
+      '@types/resolve': 1.20.2
+      deepmerge: 4.3.1
+      is-builtin-module: 3.2.1
+      is-module: 1.0.0
+      resolve: 1.22.8
+    optionalDependencies:
+      rollup: 4.21.1
+
+  '@rollup/pluginutils@5.1.0(rollup@4.21.1)':
+    dependencies:
+      '@types/estree': 1.0.5
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+    optionalDependencies:
+      rollup: 4.21.1
 
   '@rollup/rollup-android-arm-eabi@4.21.1':
     optional: true
@@ -5445,6 +5589,8 @@ snapshots:
       '@types/prop-types': 15.7.5
       csstype: 3.1.2
 
+  '@types/resolve@1.20.2': {}
+
   '@types/unist@2.0.10': {}
 
   '@typescript-eslint/eslint-plugin@8.3.0(@typescript-eslint/parser@8.3.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)':
@@ -5592,6 +5738,8 @@ snapshots:
 
   '@web3-storage/multipart-parser@1.0.0': {}
 
+  '@yr/monotone-cubic-spline@1.0.3': {}
+
   '@zxing/text-encoding@0.9.0':
     optional: true
 
@@ -5650,6 +5798,16 @@ snapshots:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
+
+  apexcharts@3.53.0:
+    dependencies:
+      '@yr/monotone-cubic-spline': 1.0.3
+      svg.draggable.js: 2.2.2
+      svg.easing.js: 2.0.0
+      svg.filter.js: 2.0.2
+      svg.pathmorphing.js: 0.1.3
+      svg.resize.js: 1.4.3
+      svg.select.js: 3.0.1
 
   arg@5.0.2: {}
 
@@ -5747,6 +5905,8 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  builtin-modules@3.3.0: {}
 
   busboy@1.6.0:
     dependencies:
@@ -6198,6 +6358,8 @@ snapshots:
       '@types/estree-jsx': 1.0.5
       '@types/unist': 2.0.10
 
+  estree-walker@2.0.2: {}
+
   estree-walker@3.0.3:
     dependencies:
       '@types/estree': 1.0.5
@@ -6335,6 +6497,37 @@ snapshots:
       keyv: 4.5.4
 
   flatted@3.3.1: {}
+
+  flowbite-datepicker@1.3.0(rollup@4.21.1):
+    dependencies:
+      '@rollup/plugin-node-resolve': 15.2.3(rollup@4.21.1)
+      flowbite: 2.5.1(rollup@4.21.1)
+    transitivePeerDependencies:
+      - rollup
+
+  flowbite-svelte-icons@1.6.1(svelte@5.0.0-next.246)(tailwind-merge@2.5.2)(tailwindcss@3.4.11):
+    dependencies:
+      svelte: 5.0.0-next.246
+      tailwind-merge: 2.5.2
+      tailwindcss: 3.4.11
+
+  flowbite-svelte@0.46.16(rollup@4.21.1)(svelte@5.0.0-next.246):
+    dependencies:
+      '@floating-ui/dom': 1.6.10
+      apexcharts: 3.53.0
+      flowbite: 2.5.1(rollup@4.21.1)
+      svelte: 5.0.0-next.246
+      tailwind-merge: 2.5.2
+    transitivePeerDependencies:
+      - rollup
+
+  flowbite@2.5.1(rollup@4.21.1):
+    dependencies:
+      '@popperjs/core': 2.11.8
+      flowbite-datepicker: 1.3.0(rollup@4.21.1)
+      mini-svg-data-uri: 1.4.4
+    transitivePeerDependencies:
+      - rollup
 
   for-each@0.3.3:
     dependencies:
@@ -6549,6 +6742,10 @@ snapshots:
 
   is-buffer@2.0.5: {}
 
+  is-builtin-module@3.2.1:
+    dependencies:
+      builtin-modules: 3.3.0
+
   is-callable@1.2.7: {}
 
   is-core-module@2.13.1:
@@ -6576,6 +6773,8 @@ snapshots:
   is-hexadecimal@2.0.1: {}
 
   is-interactive@1.0.0: {}
+
+  is-module@1.0.0: {}
 
   is-number@7.0.0: {}
 
@@ -7149,6 +7348,8 @@ snapshots:
   mime@1.6.0: {}
 
   mimic-fn@2.1.0: {}
+
+  mini-svg-data-uri@1.4.4: {}
 
   minimatch@3.1.2:
     dependencies:
@@ -8137,7 +8338,40 @@ snapshots:
       magic-string: 0.30.11
       zimmerframe: 1.1.2
 
+  svg.draggable.js@2.2.2:
+    dependencies:
+      svg.js: 2.7.1
+
+  svg.easing.js@2.0.0:
+    dependencies:
+      svg.js: 2.7.1
+
+  svg.filter.js@2.0.2:
+    dependencies:
+      svg.js: 2.7.1
+
+  svg.js@2.7.1: {}
+
+  svg.pathmorphing.js@0.1.3:
+    dependencies:
+      svg.js: 2.7.1
+
+  svg.resize.js@1.4.3:
+    dependencies:
+      svg.js: 2.7.1
+      svg.select.js: 2.1.2
+
+  svg.select.js@2.1.2:
+    dependencies:
+      svg.js: 2.7.1
+
+  svg.select.js@3.0.1:
+    dependencies:
+      svg.js: 2.7.1
+
   tabbable@6.2.0: {}
+
+  tailwind-merge@2.5.2: {}
 
   tailwindcss@3.4.11:
     dependencies:

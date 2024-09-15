@@ -71,7 +71,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           </Anchor>
         ))}
       </AppShell.Navbar>
-      <AppShell.Main>
+      <AppShell.Main mb="xl">
         <Stack gap="md" mt="lg">
           <Breadcrumbs aria-label="breadcrumb" pb="md">
             {breadCrumbLinks.map((link, index) => (

@@ -44,7 +44,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           </Anchor>
         ))}
       </AppShell.Navbar>
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main mb="xl">{children}</AppShell.Main>
     </AppShell>
   );
 }

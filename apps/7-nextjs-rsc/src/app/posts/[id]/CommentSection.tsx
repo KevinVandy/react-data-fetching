@@ -48,7 +48,7 @@ export default function CommentSection({
     comments,
     (currentComments: IComment[], newComment: IComment) => {
       return [...currentComments, newComment];
-    }
+    },
   );
 
   return (

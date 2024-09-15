@@ -1,11 +1,18 @@
 import "@mantine/core/styles.css";
+import { Suspense, useState } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "@/theme";
 import { AppLayout } from "@/components/AppLayout";
-import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
+
+const ReactQueryDevtoolsProduction = dynamic(() =>
+  import("@tanstack/react-query-devtools/production").then((d) => ({
+    default: d.ReactQueryDevtools,
+  })),
+);
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
@@ -16,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
             staleTime: 1000 * 10, // 10 seconds
           },
         },
-      })
+      }),
   );
 
   return (
@@ -33,6 +40,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <MantineProvider theme={theme}>
           <AppLayout>
             <Component {...pageProps} />
+            <Suspense fallback={null}>
+              <ReactQueryDevtoolsProduction />
+            </Suspense>
           </AppLayout>
         </MantineProvider>
       </QueryClientProvider>

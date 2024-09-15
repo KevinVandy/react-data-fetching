@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
             staleTime: 1000 * 10, // 10 seconds
           },
         },
-      })
+      }),
   );
 
   return (

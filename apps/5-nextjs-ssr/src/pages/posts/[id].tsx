@@ -94,7 +94,7 @@ export default function PostPage({
     queryKey: [`/users/${post?.userId}`],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/users/${post?.userId}`
+        `http://localhost:3333/users/${post?.userId}`,
       );
       return response.json() as Promise<IUser>;
     },
@@ -112,7 +112,7 @@ export default function PostPage({
     queryKey: [`/posts/${postId}/comments`],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/posts/${postId}/comments`
+        `http://localhost:3333/posts/${postId}/comments`,
       );
       return response.json() as Promise<IComment[]>;
     },
@@ -130,7 +130,7 @@ export default function PostPage({
         `http://localhost:3333/comments/${commentId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       return response.json() as Promise<IComment>;
     },
@@ -139,7 +139,7 @@ export default function PostPage({
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err
+        err,
       );
       alert("Error deleting comment");
     },
@@ -152,7 +152,7 @@ export default function PostPage({
     (commentId: number) => {
       deleteComment(commentId);
     },
-    [deleteComment]
+    [deleteComment],
   );
 
   // Post new comment - with optimistic updates!
@@ -184,7 +184,7 @@ export default function PostPage({
       // Optimistically update to the new value
       queryClient.setQueryData(
         ["comments", newComment.postId.toString()],
-        (oldComments: any) => [...oldComments, newComment]
+        (oldComments: any) => [...oldComments, newComment],
       );
 
       // Return a context object with the snapshot value
@@ -195,7 +195,7 @@ export default function PostPage({
     onError: (err, newComment, context) => {
       queryClient.setQueryData(
         ["comments", newComment.postId.toString()],
-        context?.previousComments
+        context?.previousComments,
       );
       console.error("Error posting comment. Rolling UI back", err);
     },

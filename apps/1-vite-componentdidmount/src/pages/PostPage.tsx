@@ -131,7 +131,7 @@ class PostPage extends Component<PostPageProps, State> {
     }
     try {
       const fetchUrl = new URL(
-        `http://localhost:3333/posts/${postId}/comments`
+        `http://localhost:3333/posts/${postId}/comments`,
       );
       const response = await fetch(fetchUrl.href);
       const fetchedComments = (await response.json()) as IComment[];
@@ -153,7 +153,7 @@ class PostPage extends Component<PostPageProps, State> {
       });
       this.setState((prevState) => ({
         comments: prevState.comments.filter(
-          (comment) => comment.id !== commentId
+          (comment) => comment.id !== commentId,
         ),
       }));
     } catch (error) {

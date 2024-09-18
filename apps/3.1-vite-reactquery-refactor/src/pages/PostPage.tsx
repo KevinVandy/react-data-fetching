@@ -64,7 +64,7 @@ export const PostPage = () => {
         `http://localhost:3333/comments/${commentId}`,
         {
           method: "DELETE",
-        },
+        }
       );
       return response.json() as Promise<IComment>;
     },
@@ -73,7 +73,7 @@ export const PostPage = () => {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err,
+        err
       );
       alert("Error deleting comment");
     },
@@ -101,7 +101,7 @@ export const PostPage = () => {
     //optimistic client-side update
     onMutate: async (newComment) => {
       await queryClient.cancelQueries({
-        queryKey: ["comments", newComment.postId.toString()],
+        queryKey: getPostCommentsQueryKey(postId!),
       });
 
       // Snapshot the previous value
@@ -112,8 +112,8 @@ export const PostPage = () => {
 
       // Optimistically update to the new value
       queryClient.setQueryData(
-        ["comments", newComment.postId.toString()],
-        (oldComments: any) => [...oldComments, newComment],
+        getPostCommentsQueryKey(postId!),
+        (oldComments: any) => [...oldComments, newComment]
       );
 
       // Return a context object with the snapshot value
@@ -121,10 +121,10 @@ export const PostPage = () => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newComment, context) => {
+    onError: (err, _newComment, context) => {
       queryClient.setQueryData(
-        ["comments", newComment.postId.toString()],
-        context?.previousComments,
+        getPostCommentsQueryKey(postId!),
+        context?.previousComments
       );
       console.error("Error posting comment. Rolling UI back", err);
     },

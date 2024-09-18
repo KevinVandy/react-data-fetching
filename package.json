@@ -10,6 +10,7 @@
     "dev2": "turbo dev --filter 2-vite-useeffect",
     "dev3": "turbo dev --filter 3-vite-reactquery",
     "dev31": "turbo dev --filter 3.1-vite-reactquery-refactor",
+    "dev32": "turbo dev --filter 3.2-vite-reactquery-infinite",
     "dev4": "turbo dev --filter 4-nextjs-ssg",
     "dev5": "turbo dev --filter 5-nextjs-ssr",
     "dev51": "turbo dev --filter 5.1-sveltekit-ssr",

@@ -1,13 +1,13 @@
-// In Next.js, this file would be called: app/providers.tsx
 "use client";
 
-// Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
+import dynamic from "next/dynamic";
 import {
   isServer,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
+import * as React from "react";
+import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 
 const ReactQueryDevtoolsProduction = dynamic(() =>
   import("@tanstack/react-query-devtools/production").then((d) => ({
@@ -43,11 +43,7 @@ function getQueryClient() {
   }
 }
 
-export function ReactQueryProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function ReactQueryProvider(props: { children: React.ReactNode }) {
   // NOTE: Avoid useState when initializing the query client if you don't
   //       have a suspense boundary between this and the code that may
   //       suspend because React will throw away the client on the initial
@@ -56,8 +52,10 @@ export function ReactQueryProvider({
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtoolsProduction />
+      <ReactQueryStreamedHydration>
+        {props.children}
+        <ReactQueryDevtoolsProduction />
+      </ReactQueryStreamedHydration>
     </QueryClientProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MRT_ColumnDef, MantineReactTable } from "mantine-react-table";
 import { Anchor } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ export const UsersPage = () => {
   const [isErrorLoadingUser, setIsErrorLoadingUser] = useState(false);
   const [isFetchingUser, setIsFetchingUser] = useState(false);
 
-  const fetchUsers = useCallback(async () => {
+  const fetchUsers = async () => {
     if (!users.length) {
       setIsLoadingUser(true);
     }
@@ -29,11 +29,11 @@ export const UsersPage = () => {
       setIsLoadingUser(false);
       setIsFetchingUser(false);
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchUsers();
-  }, [fetchUsers]);
+  }, []);
 
   const columns = useMemo<MRT_ColumnDef<IUser>[]>(
     () => [
@@ -63,7 +63,7 @@ export const UsersPage = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return (

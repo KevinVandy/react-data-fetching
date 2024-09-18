@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ActionIcon,
@@ -39,12 +39,12 @@ export const PostPage = () => {
   const [isErrorLoadingComments, setIsErrorLoadingComments] = useState(false);
   const [isDeletingComment, setIsDeletingComment] = useState(false);
   const [deletingCommentId, setDeletingCommentId] = useState<number | null>(
-    null,
+    null
   );
   const [isPostingComment, setIsPostingComment] = useState(false);
 
   //load post
-  const fetchPost = useCallback(async () => {
+  const fetchPost = async () => {
     setIsLoadingPost(true);
     try {
       const fetchUrl = new URL(`http://localhost:3333/posts/${postId}`);
@@ -57,10 +57,10 @@ export const PostPage = () => {
     } finally {
       setIsLoadingPost(false);
     }
-  }, [postId]);
+  };
 
   //load user
-  const fetchUser = useCallback(async () => {
+  const fetchUser = async () => {
     if (!post?.userId) return;
     setIsLoadingUser(true);
     try {
@@ -74,10 +74,10 @@ export const PostPage = () => {
     } finally {
       setIsLoadingUser(false);
     }
-  }, [post?.userId]);
+  };
 
   //load comments
-  const fetchComments = useCallback(async () => {
+  const fetchComments = async () => {
     if (!!comments.length) {
       setIsFetchingComments(true);
     } else {
@@ -85,7 +85,7 @@ export const PostPage = () => {
     }
     try {
       const fetchUrl = new URL(
-        `http://localhost:3333/posts/${postId}/comments`,
+        `http://localhost:3333/posts/${postId}/comments`
       );
       const response = await fetch(fetchUrl.href);
       const fetchedComments = (await response.json()) as IComment[];
@@ -97,20 +97,20 @@ export const PostPage = () => {
       setIsLoadingComments(false);
       setIsFetchingComments(false);
     }
-  }, [postId]);
+  };
 
   //load post, user, and comments on mount
   useEffect(() => {
     fetchPost();
     fetchUser();
     fetchComments();
-  }, [fetchPost, fetchUser, fetchComments]);
+  }, []);
 
   //comment textbox state
   const [commentText, setCommentText] = useState("");
 
   //delete comment
-  const deleteComment = useCallback(async (commentId: number) => {
+  const deleteComment = async (commentId: number) => {
     setIsDeletingComment(true);
     setDeletingCommentId(commentId);
     try {
@@ -127,44 +127,36 @@ export const PostPage = () => {
       setDeletingCommentId(null);
       fetchComments(); // Refresh comments after deleting
     }
-  }, []);
+  };
 
-  const handleDeleteComment = useCallback(
-    async (commentId: number) => {
-      await deleteComment(commentId);
-    },
-    [deleteComment],
-  );
+  const handleDeleteComment = async (commentId: number) => {
+    await deleteComment(commentId);
+  };
 
   //post comment
-  const postComment = useCallback(
-    async (newComment: Omit<IComment, "id">) => {
-      setIsPostingComment(true);
-      try {
-        const postUrl = new URL(
-          `http://localhost:3333/posts/${postId}/comments`,
-        );
-        const response = await fetch(postUrl.href, {
-          method: "POST",
-          body: JSON.stringify(newComment),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        });
-        const postedComment = (await response.json()) as IComment;
-        // Optimistically update the comments client-side
-        setComments((prev) => [...prev, postedComment]);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsPostingComment(false);
-        fetchComments(); // Refresh comments after posting
-      }
-    },
-    [postId],
-  );
+  const postComment = async (newComment: Omit<IComment, "id">) => {
+    setIsPostingComment(true);
+    try {
+      const postUrl = new URL(`http://localhost:3333/posts/${postId}/comments`);
+      const response = await fetch(postUrl.href, {
+        method: "POST",
+        body: JSON.stringify(newComment),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      const postedComment = (await response.json()) as IComment;
+      // Optimistically update the comments client-side
+      setComments((prev) => [...prev, postedComment]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsPostingComment(false);
+      fetchComments(); // Refresh comments after posting
+    }
+  };
 
-  const handleSubmitComment = useCallback(async () => {
+  const handleSubmitComment = async () => {
     const newComment: Omit<IComment, "id"> = {
       body: commentText,
       email: "user@mailinator.com",
@@ -173,7 +165,7 @@ export const PostPage = () => {
     };
     await postComment(newComment);
     setCommentText("");
-  }, [commentText, postId, postComment]);
+  };
 
   return (
     <Stack>

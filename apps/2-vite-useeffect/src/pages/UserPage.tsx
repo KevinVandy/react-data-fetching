@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   Alert,
@@ -12,7 +13,6 @@ import {
   Title,
 } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
-import { useCallback, useEffect, useState } from "react";
 import { IPost, IUser } from "../api-types";
 
 export const UserPage = () => {
@@ -30,7 +30,7 @@ export const UserPage = () => {
   const [isFetchingPosts, setIsFetchingPosts] = useState(false);
 
   //load user
-  const fetchUser = useCallback(async () => {
+  const fetchUser = async () => {
     setIsLoadingUser(true);
     try {
       const fetchUrl = new URL(`http://localhost:3333/users/${userId}`);
@@ -43,10 +43,10 @@ export const UserPage = () => {
     } finally {
       setIsLoadingUser(false);
     }
-  }, [userId]);
+  };
 
   //load user posts
-  const fetchPosts = useCallback(async () => {
+  const fetchPosts = async () => {
     if (!posts.length) {
       setIsLoadingPosts(true);
     }
@@ -63,13 +63,13 @@ export const UserPage = () => {
       setIsLoadingPosts(false);
       setIsFetchingPosts(false);
     }
-  }, []);
+  };
 
   //load user and user posts on mount
   useEffect(() => {
     fetchUser();
     fetchPosts();
-  }, [fetchPosts, fetchUser]);
+  }, []);
 
   if (isErrorLoadingUser) {
     return (

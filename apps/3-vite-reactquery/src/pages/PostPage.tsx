@@ -47,7 +47,7 @@ export const PostPage = () => {
     queryKey: ["users", post?.userId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/users/${post?.userId}`,
+        `http://localhost:3333/users/${post?.userId}`
       );
       return response.json() as Promise<IUser>;
     },
@@ -64,7 +64,7 @@ export const PostPage = () => {
     queryKey: ["posts", postId, "comments"],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/posts/${postId}/comments`,
+        `http://localhost:3333/posts/${postId}/comments`
       );
       return response.json() as Promise<IComment[]>;
     },
@@ -82,7 +82,7 @@ export const PostPage = () => {
         `http://localhost:3333/comments/${commentId}`,
         {
           method: "DELETE",
-        },
+        }
       );
       return response.json() as Promise<IComment>;
     },
@@ -91,12 +91,14 @@ export const PostPage = () => {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err,
+        err
       );
       alert("Error deleting comment");
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] }); //refresh comments
+      queryClient.invalidateQueries({
+        queryKey: ["posts", postId, "comments"],
+      }); //refresh comments
     },
   });
 
@@ -117,19 +119,21 @@ export const PostPage = () => {
     //optimistic client-side update
     onMutate: async (newComment) => {
       await queryClient.cancelQueries({
-        queryKey: ["comments", newComment.postId.toString()],
+        queryKey: ["posts", postId, "comments"],
       });
 
       // Snapshot the previous value
       const previousComments = queryClient.getQueryData([
+        "posts",
+        postId,
         "comments",
         newComment.postId.toString(),
       ]);
 
       // Optimistically update to the new value
       queryClient.setQueryData(
-        ["comments", newComment.postId.toString()],
-        (oldComments: any) => [...oldComments, newComment],
+        ["posts", postId, "comments"],
+        (oldComments: any) => [...oldComments, newComment]
       );
 
       // Return a context object with the snapshot value
@@ -137,10 +141,10 @@ export const PostPage = () => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newComment, context) => {
+    onError: (err, _newComment, context) => {
       queryClient.setQueryData(
-        ["comments", newComment.postId.toString()],
-        context?.previousComments,
+        ["posts", postId, "comments"],
+        context?.previousComments
       );
       console.error("Error posting comment. Rolling UI back", err);
     },

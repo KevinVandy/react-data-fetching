@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Card,
@@ -22,7 +22,7 @@ export function HomePage() {
   const [isFetchingPosts, setIsFetchingPosts] = useState(false);
 
   //load posts
-  const fetchPosts = useCallback(async () => {
+  const fetchPosts = async () => {
     if (!posts.length) {
       setIsLoadingPosts(true);
     }
@@ -39,13 +39,12 @@ export function HomePage() {
       setIsLoadingPosts(false);
       setIsFetchingPosts(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
   //load posts on mount
   useEffect(() => {
     fetchPosts();
-  }, [fetchPosts]);
+  }, []);
 
   return (
     <Stack>

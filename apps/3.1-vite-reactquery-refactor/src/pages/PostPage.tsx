@@ -64,7 +64,7 @@ export const PostPage = () => {
         `http://localhost:3333/comments/${commentId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       return response.json() as Promise<IComment>;
     },
@@ -73,7 +73,7 @@ export const PostPage = () => {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err
+        err,
       );
       alert("Error deleting comment");
     },
@@ -113,7 +113,7 @@ export const PostPage = () => {
       // Optimistically update to the new value
       queryClient.setQueryData(
         getPostCommentsQueryKey(postId!),
-        (oldComments: any) => [...oldComments, newComment]
+        (oldComments: any) => [...oldComments, newComment],
       );
 
       // Return a context object with the snapshot value
@@ -124,7 +124,7 @@ export const PostPage = () => {
     onError: (err, _newComment, context) => {
       queryClient.setQueryData(
         getPostCommentsQueryKey(postId!),
-        context?.previousComments
+        context?.previousComments,
       );
       console.error("Error posting comment. Rolling UI back", err);
     },

@@ -1,11 +1,15 @@
-import { IPost } from "@/api-types";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { Loader, Stack, Title } from "@mantine/core";
+import { IPost } from "@/api-types";
 import { PostsFeed } from "./PostsFeed";
+import { Suspense } from "react";
+
 export const fetchPosts = async () => {
+  console.log("fetching posts");
   const fetchUrl = new URL(`http://localhost:3333/posts`);
   const response = await fetch(fetchUrl.href);
   const fetchedPosts = (await response.json()) as IPost[];
@@ -22,7 +26,12 @@ export default async function HomePage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PostsFeed />
+      <Stack>
+        <Title order={2}>Your Home Feed</Title>
+        <Suspense fallback={<Loader />}>
+          <PostsFeed />
+        </Suspense>
+      </Stack>
     </HydrationBoundary>
   );
 }

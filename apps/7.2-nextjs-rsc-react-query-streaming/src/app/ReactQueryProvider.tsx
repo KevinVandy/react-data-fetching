@@ -1,12 +1,12 @@
 "use client";
 
+import * as React from "react";
 import dynamic from "next/dynamic";
 import {
   isServer,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import * as React from "react";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 
 const ReactQueryDevtoolsProduction = dynamic(() =>

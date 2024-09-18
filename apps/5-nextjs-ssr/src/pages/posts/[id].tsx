@@ -144,7 +144,9 @@ export default function PostPage({
       alert("Error deleting comment");
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] }); //refresh comments
+      queryClient.invalidateQueries({
+        queryKey: [`/posts/${postId}/comments`],
+      }); //refresh comments
     },
   });
 
@@ -172,7 +174,7 @@ export default function PostPage({
     //optimistic client-side update
     onMutate: async (newComment) => {
       await queryClient.cancelQueries({
-        queryKey: ["comments", newComment.postId.toString()],
+        queryKey: [`/posts/${postId}/comments`],
       });
 
       // Snapshot the previous value
@@ -183,7 +185,7 @@ export default function PostPage({
 
       // Optimistically update to the new value
       queryClient.setQueryData(
-        ["comments", newComment.postId.toString()],
+        [`/posts/${postId}/comments`],
         (oldComments: any) => [...oldComments, newComment],
       );
 
@@ -192,9 +194,9 @@ export default function PostPage({
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newComment, context) => {
+    onError: (err, _newComment, context) => {
       queryClient.setQueryData(
-        ["comments", newComment.postId.toString()],
+        [`/posts/${postId}/comments`],
         context?.previousComments,
       );
       console.error("Error posting comment. Rolling UI back", err);
@@ -204,7 +206,9 @@ export default function PostPage({
     },
     // Always refetch after error or success:
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
+      queryClient.invalidateQueries({
+        queryKey: [`/posts/${postId}/comments`],
+      });
     },
   });
 

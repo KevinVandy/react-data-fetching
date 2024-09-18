@@ -1,5 +1,5 @@
 import { IPost } from "@/api-types";
-import { Card, Flex, Stack, Text, Title } from "@mantine/core";
+import { Card, Flex, Loader, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -17,7 +17,7 @@ export default async function HomePage() {
     <Stack>
       <Title order={2}>Your Home Feed</Title>
       <Flex gap="md" wrap="wrap">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loader />}>
           {posts.map((post) => (
             <Link
               key={post.id}

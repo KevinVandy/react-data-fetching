@@ -11,7 +11,7 @@
 	let postId = initialPost?.id;
 	let commentText = '';
 
-	const post = createQuery({
+	const postQuery = createQuery({
 		queryKey: [`/posts/${postId}`],
 		queryFn: async () => {
 			const response = await fetch(`http://localhost:3333/posts/${postId}`);
@@ -20,16 +20,16 @@
 		initialData: initialPost
 	});
 
-	const user = createQuery({
-		queryKey: [`/users/${$post.data?.userId}`],
+	const userQuery = createQuery({
+		queryKey: [`/users/${$postQuery.data?.userId}`],
 		queryFn: async () => {
-			const response = await fetch(`http://localhost:3333/users/${$post.data?.userId}`);
+			const response = await fetch(`http://localhost:3333/users/${$postQuery.data?.userId}`);
 			return response.json() as Promise<IUser>;
 		},
-		enabled: !!$post.data?.userId
+		enabled: !!$postQuery.data?.userId
 	});
 
-	const comments = createQuery({
+	const commentsQuery = createQuery({
 		queryKey: [`/posts/${postId}/comments`],
 		queryFn: async () => {
 			const response = await fetch(`http://localhost:3333/posts/${postId}/comments`);
@@ -108,48 +108,48 @@
 			<span class="font-medium">Bummer!</span>
 			There was an error loading this post
 		</Alert>
-	{:else if $post.isLoading || $user.isLoading}
+	{:else if $postQuery.isLoading || $userQuery.isLoading}
 		<div class="animate-pulse">
 			<div class="mb-4 h-4 w-1/2 rounded-full bg-gray-200"></div>
 			<div class="mb-4 h-8 w-full rounded-full bg-gray-200"></div>
 		</div>
-	{:else if $post.isError || $user.isError}
+	{:else if $postQuery.isError || $userQuery.isError}
 		<Alert color="red">
 			<span class="font-medium">Bummer!</span>
 			There was an error loading this post
 		</Alert>
-	{:else if $post.data}
-		<h1 class="mb-2 text-3xl font-bold">Post: {$post.data.id}</h1>
-		<h2 class="mb-2 text-2xl font-semibold">{$post.data.title}</h2>
+	{:else if $postQuery.data}
+		<h1 class="mb-2 text-3xl font-bold">Post: {$postQuery.data.id}</h1>
+		<h2 class="mb-2 text-2xl font-semibold">{$postQuery.data.title}</h2>
 		<h3 class="mb-4 text-xl">
 			By:
-			{#if $user.isLoading}
+			{#if $userQuery.isLoading}
 				<span class="animate-pulse">Loading...</span>
-			{:else if $user.isError}
+			{:else if $userQuery.isError}
 				<span class="text-red-500">Error loading user</span>
 			{:else}
-				<a href="/users/{$user.data?.id}" class="text-blue-600 hover:underline"
-					>{$user.data?.name}</a
+				<a href="/users/{$userQuery.data?.id}" class="text-blue-600 hover:underline"
+					>{$userQuery.data?.name}</a
 				>
 			{/if}
 		</h3>
-		<p class="mb-8">{$post.data.body}</p>
+		<p class="mb-8">{$postQuery.data.body}</p>
 
 		<h3 class="mb-4 text-xl font-semibold">Comments on this Post</h3>
 
 		<div class="mb-8 w-full space-y-4">
-			{#if $comments.isLoading}
+			{#if $commentsQuery.isLoading}
 				<div class="animate-pulse">
 					<div class="mb-4 h-4 w-1/2 rounded-full bg-gray-200"></div>
 					<div class="mb-4 h-8 w-full rounded-full bg-gray-200"></div>
 				</div>
-			{:else if $comments.isError}
+			{:else if $commentsQuery.isError}
 				<Alert color="red">
 					<span class="font-medium">Bummer!</span>
 					There was an error loading comments
 				</Alert>
 			{:else}
-				{#each $comments.data as comment (comment.id)}
+				{#each $commentsQuery.data as comment (comment.id)}
 					<Card class="w-full" padding="none" size="xl">
 						<div class="flex items-start justify-between w-full p-4">
 							<div>

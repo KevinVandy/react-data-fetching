@@ -14,6 +14,9 @@ import { IconAlertCircle } from "@tabler/icons-react";
 import { type IPost } from "../api-types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
+const numberOfPostsToLoad = 10;
+const maxNumberOfPosts = 100;
+
 export function HomePage() {
   //load posts
   const {
@@ -26,7 +29,7 @@ export function HomePage() {
     queryKey: ["posts"],
     queryFn: async ({ pageParam = 0 }) => {
       const fetchUrl = new URL(
-        `http://localhost:3333/posts?_page=${pageParam}&_limit=10`,
+        `http://localhost:3333/posts?_page=${pageParam}&_limit=${numberOfPostsToLoad}`
       );
 
       const response = await fetch(fetchUrl.href);
@@ -39,7 +42,11 @@ export function HomePage() {
 
   const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-    if (scrollTop + clientHeight >= scrollHeight - 100 && !isFetchingPosts) {
+    if (
+      scrollTop + clientHeight >= scrollHeight - 100 &&
+      !isFetchingPosts &&
+      (posts?.pages?.length ?? 0) * numberOfPostsToLoad < maxNumberOfPosts
+    ) {
       fetchNextPage();
     }
   };
@@ -102,7 +109,7 @@ export function HomePage() {
                   </Text>
                 </Card>
               </Link>
-            )),
+            ))
           )
         )}
       </Flex>

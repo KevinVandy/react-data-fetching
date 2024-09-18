@@ -15,6 +15,7 @@
     "dev51": "turbo dev --filter 5.1-sveltekit-ssr",
     "dev6": "turbo dev --filter 6-remix-ssr",
     "dev7": "turbo dev --filter 7-nextjs-rsc",
+    "dev8": "turbo dev --filter 8-nextjs-react-query-streaming",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

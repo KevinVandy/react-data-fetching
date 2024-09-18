@@ -56,7 +56,7 @@ export const UserPage = () => {
         <Text>Email: {user?.email}</Text>
         <Text>Phone: {user?.phone}</Text>
         <Text>Website: {user?.website}</Text>
-        <Text>
+        <Text component="div">
           Address:
           <address>
             {user?.address.street}, {user?.address.suite},<br />

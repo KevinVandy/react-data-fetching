@@ -12,7 +12,7 @@ import dynamic from "next/dynamic";
 const ReactQueryDevtoolsProduction = dynamic(() =>
   import("@tanstack/react-query-devtools/production").then((d) => ({
     default: d.ReactQueryDevtools,
-  }))
+  })),
 );
 
 function makeQueryClient() {

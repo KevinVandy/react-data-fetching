@@ -26,7 +26,7 @@ export function HomePage() {
     queryKey: ["posts"],
     queryFn: async ({ pageParam = 0 }) => {
       const fetchUrl = new URL(
-        `http://localhost:3333/posts?_page=${pageParam}&_limit=10`
+        `http://localhost:3333/posts?_page=${pageParam}&_limit=10`,
       );
 
       const response = await fetch(fetchUrl.href);
@@ -102,7 +102,7 @@ export function HomePage() {
                   </Text>
                 </Card>
               </Link>
-            ))
+            )),
           )
         )}
       </Flex>

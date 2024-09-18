@@ -1,9 +1,12 @@
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { MRT_ColumnDef, MantineReactTable } from "mantine-react-table";
 import { Anchor } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { IUser } from "../api-types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { prefetchUser } from "../hooks/useGetUser";
+import { useGetUsers } from "../hooks/useGetUsers";
 
 export const UsersPage = () => {
   const navigate = useNavigate();
@@ -15,13 +18,7 @@ export const UsersPage = () => {
     isError: isErrorLoadingUser,
     isFetching: isFetchingUser,
     isLoading: isLoadingUser,
-  } = useQuery({
-    queryKey: [`/users`],
-    queryFn: async () => {
-      const response = await fetch(`http://localhost:3333/users`);
-      return response.json() as Promise<IUser[]>;
-    },
-  });
+  } = useGetUsers();
 
   const columns = useMemo<MRT_ColumnDef<IUser>[]>(
     () => [
@@ -54,6 +51,11 @@ export const UsersPage = () => {
     [],
   );
 
+  const debouncedPrefetchUser = useDebouncedCallback(
+    (userId: number) => prefetchUser(queryClient, userId),
+    100,
+  );
+
   return (
     <MantineReactTable
       data={users}
@@ -72,18 +74,7 @@ export const UsersPage = () => {
           : undefined
       }
       mantineTableBodyRowProps={({ row }) => ({
-        onMouseEnter: () => {
-          //same fetch as in UserPage.tsx
-          queryClient.prefetchQuery({
-            queryKey: [`/users/${row.original.id}`],
-            queryFn: async () => {
-              const response = await fetch(
-                `http://localhost:3333/users/${row.original.id}`,
-              );
-              return response.json() as Promise<IUser>;
-            },
-          });
-        },
+        onMouseEnter: () => debouncedPrefetchUser(row.original.id),
         onClick: () => navigate(`/users/${row.original.id}`),
         style: {
           cursor: "pointer",

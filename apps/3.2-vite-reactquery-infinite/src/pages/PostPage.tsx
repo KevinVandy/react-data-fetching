@@ -47,7 +47,7 @@ export const PostPage = () => {
     queryKey: ["users", post?.userId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/users/${post?.userId}`
+        `http://localhost:3333/users/${post?.userId}`,
       );
       return response.json() as Promise<IUser>;
     },
@@ -64,7 +64,7 @@ export const PostPage = () => {
     queryKey: ["posts", postId, "comments"],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/posts/${postId}/comments`
+        `http://localhost:3333/posts/${postId}/comments`,
       );
       return response.json() as Promise<IComment[]>;
     },
@@ -82,7 +82,7 @@ export const PostPage = () => {
         `http://localhost:3333/comments/${commentId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       return response.json() as Promise<IComment>;
     },
@@ -91,7 +91,7 @@ export const PostPage = () => {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err
+        err,
       );
       alert("Error deleting comment");
     },
@@ -133,7 +133,7 @@ export const PostPage = () => {
       // Optimistically update to the new value
       queryClient.setQueryData(
         ["posts", postId, "comments"],
-        (oldComments: any) => [...oldComments, newComment]
+        (oldComments: any) => [...oldComments, newComment],
       );
 
       // Return a context object with the snapshot value
@@ -144,7 +144,7 @@ export const PostPage = () => {
     onError: (err, _newComment, context) => {
       queryClient.setQueryData(
         ["posts", postId, "comments"],
-        context?.previousComments
+        context?.previousComments,
       );
       console.error("Error posting comment. Rolling UI back", err);
     },

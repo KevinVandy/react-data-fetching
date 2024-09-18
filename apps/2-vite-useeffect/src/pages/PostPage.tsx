@@ -39,7 +39,7 @@ export const PostPage = () => {
   const [isErrorLoadingComments, setIsErrorLoadingComments] = useState(false);
   const [isDeletingComment, setIsDeletingComment] = useState(false);
   const [deletingCommentId, setDeletingCommentId] = useState<number | null>(
-    null
+    null,
   );
   const [isPostingComment, setIsPostingComment] = useState(false);
 
@@ -85,7 +85,7 @@ export const PostPage = () => {
     }
     try {
       const fetchUrl = new URL(
-        `http://localhost:3333/posts/${postId}/comments`
+        `http://localhost:3333/posts/${postId}/comments`,
       );
       const response = await fetch(fetchUrl.href);
       const fetchedComments = (await response.json()) as IComment[];

@@ -10,28 +10,34 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconHome, IconUsersGroup } from "@tabler/icons-react";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { prefetchUsers } from "./hooks/useGetUsers";
+import { useQueryClient } from "@tanstack/react-query";
+import { prefetchPosts } from "./hooks/useGetPosts";
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
-const links = [
-  {
-    icon: <IconHome size="1rem" />,
-    color: "blue",
-    label: "Home Feed",
-    href: "/",
-  },
-  {
-    icon: <IconUsersGroup size="1rem" />,
-    color: "teal",
-    label: "Users",
-    href: "/users",
-  },
-];
-
 export function AppLayout({ children }: AppLayoutProps) {
   const { pathname } = useLocation();
+  const queryClient = useQueryClient();
+
+  const links = [
+    {
+      icon: <IconHome size="1rem" />,
+      color: "blue",
+      label: "Home Feed",
+      href: "/",
+      prefetch: () => prefetchPosts(queryClient),
+    },
+    {
+      icon: <IconUsersGroup size="1rem" />,
+      color: "teal",
+      label: "Users",
+      href: "/users",
+      prefetch: () => prefetchUsers(queryClient),
+    },
+  ];
 
   const breadCrumbLinks = useMemo(() => {
     const routes = pathname.split("/");
@@ -55,7 +61,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   return (
     <AppShell
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
+      navbar={{ width: 200, breakpoint: "sm", collapsed: { mobile: !opened } }}
       padding="xl"
     >
       <AppShell.Header>
@@ -66,7 +72,12 @@ export function AppLayout({ children }: AppLayoutProps) {
       </AppShell.Header>
       <AppShell.Navbar p="md">
         {links.map((link) => (
-          <Anchor component={Link} key={link.label} to={link.href}>
+          <Anchor
+            onMouseEnter={link.prefetch}
+            component={Link}
+            key={link.label}
+            to={link.href}
+          >
             {link.label}
           </Anchor>
         ))}

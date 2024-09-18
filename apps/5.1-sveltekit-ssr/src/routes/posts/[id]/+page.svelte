@@ -47,7 +47,7 @@
 			return response.json() as Promise<IComment>;
 		},
 		onSettled: () => {
-			queryClient.invalidateQueries({ queryKey: ['comments'] });
+			queryClient.invalidateQueries({ queryKey: [`/posts/${postId}/comments`] });
 		}
 	});
 
@@ -63,26 +63,23 @@
 			return response.json() as Promise<IComment>;
 		},
 		onMutate: async (newComment) => {
-			await queryClient.cancelQueries({ queryKey: ['comments', newComment.postId.toString()] });
-			const previousComments = queryClient.getQueryData(['comments', newComment.postId.toString()]);
-			queryClient.setQueryData(['comments', newComment.postId.toString()], (oldComments: any) => [
+			await queryClient.cancelQueries({ queryKey: [`/posts/${postId}/comments`] });
+			const previousComments = queryClient.getQueryData([`/posts/${postId}/comments`]);
+			queryClient.setQueryData([`/posts/${postId}/comments`], (oldComments: any) => [
 				...oldComments,
 				newComment
 			]);
 			return { previousComments };
 		},
-		onError: (err, newComment, context) => {
-			queryClient.setQueryData(
-				['comments', newComment.postId.toString()],
-				context?.previousComments
-			);
+		onError: (err, _newComment, context) => {
+			queryClient.setQueryData([`/posts/${postId}/comments`], context?.previousComments);
 			console.error('Error posting comment. Rolling UI back', err);
 		},
 		onSuccess: () => {
 			commentText = '';
 		},
 		onSettled: () => {
-			queryClient.invalidateQueries({ queryKey: ['comments'] });
+			queryClient.invalidateQueries({ queryKey: [`/posts/${postId}/comments`] });
 		}
 	});
 
@@ -151,7 +148,7 @@
 			{:else}
 				{#each $commentsQuery.data as comment (comment.id)}
 					<Card class="w-full" padding="none" size="xl">
-						<div class="flex items-start justify-between w-full p-4">
+						<div class="flex w-full items-start justify-between p-4">
 							<div>
 								<h4 class="font-semibold">{comment.name}</h4>
 								<h5 class="text-sm text-gray-600">{comment.email}</h5>

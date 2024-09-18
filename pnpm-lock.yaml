@@ -245,6 +245,9 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      react-error-boundary:
+        specifier: ^4.0.13
+        version: 4.0.13(react@18.3.1)
       react-router-dom:
         specifier: ^6.26.2
         version: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -569,7 +572,62 @@ importers:
         specifier: ^5
         version: 5.5.3
 
-  apps/8-nextjs-react-query-streaming:
+  apps/7.1-nextjs-rsc-react-query:
+    dependencies:
+      '@mantine/core':
+        specifier: 7.12.2
+        version: 7.12.2(@mantine/hooks@7.12.2(react@18.3.1))(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@mantine/hooks':
+        specifier: 7.12.2
+        version: 7.12.2(react@18.3.1)
+      '@tabler/icons-react':
+        specifier: ^3.17.0
+        version: 3.17.0(react@18.3.1)
+      '@tanstack/react-query':
+        specifier: ^5.56.2
+        version: 5.56.2(react@18.3.1)
+      mantine-react-table:
+        specifier: ^2.0.0-beta.6
+        version: 2.0.0-beta.6(@mantine/core@7.12.2(@mantine/hooks@7.12.2(react@18.3.1))(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/dates@7.11.2(@mantine/core@7.12.2(@mantine/hooks@7.12.2(react@18.3.1))(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.12.2(react@18.3.1))(dayjs@1.11.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.12.2(react@18.3.1))(@tabler/icons-react@3.17.0(react@18.3.1))(clsx@2.1.1)(dayjs@1.11.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next:
+        specifier: 14.2.12
+        version: 14.2.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@next/bundle-analyzer':
+        specifier: ^14.2.12
+        version: 14.2.12
+      '@tanstack/react-query-devtools':
+        specifier: ^5.56.2
+        version: 5.56.2(@tanstack/react-query@5.56.2(react@18.3.1))(react@18.3.1)
+      '@types/node':
+        specifier: ^22
+        version: 22.5.0
+      '@types/react':
+        specifier: ^18.3.7
+        version: 18.3.7
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      postcss:
+        specifier: ^8.4.47
+        version: 8.4.47
+      postcss-preset-mantine:
+        specifier: 1.17.0
+        version: 1.17.0(postcss@8.4.47)
+      postcss-simple-vars:
+        specifier: ^7.0.1
+        version: 7.0.1(postcss@8.4.47)
+      typescript:
+        specifier: ^5
+        version: 5.6.2
+
+  apps/7.2-nextjs-rsc-react-query-streaming:
     dependencies:
       '@mantine/core':
         specifier: 7.12.2
@@ -3659,6 +3717,11 @@ packages:
     resolution: {integrity: sha512-WZbYsxoOD/aUZyeTIN2J7hJmbVvdZoAaneyGuO/5BILH8gy0dsXlrwj/IB1Ji/HyrxA/QBfBRg/9w2TNjw8RfA==}
     peerDependencies:
       react: 19.0.0-rc-b57d2823-20240822
+
+  react-error-boundary@4.0.13:
+    resolution: {integrity: sha512-b6PwbdSv8XeOSYvjt8LpgpKrZ0yGdtZokYwkwV2wlcZbxgopHX/hgPl5VgpnoVOWd868n1hktM8Qm4b+02MiLQ==}
+    peerDependencies:
+      react: '>=16.13.1'
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -7910,6 +7973,11 @@ snapshots:
     dependencies:
       react: 19.0.0-rc-b57d2823-20240822
       scheduler: 0.25.0-rc-b57d2823-20240822
+
+  react-error-boundary@4.0.13(react@18.3.1):
+    dependencies:
+      '@babel/runtime': 7.23.2
+      react: 18.3.1
 
   react-is@16.13.1: {}
 

@@ -1,9 +1,9 @@
 {
-  "name": "8-nextjs-react-query-streaming",
+  "name": "7.1-nextjs-rsc-react-query",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3308",
+    "dev": "next dev -p 33071",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -13,7 +13,6 @@
     "@mantine/hooks": "7.12.2",
     "@tabler/icons-react": "^3.17.0",
     "@tanstack/react-query": "^5.56.2",
-    "@tanstack/react-query-next-experimental": "^5.56.2",
     "mantine-react-table": "^2.0.0-beta.6",
     "next": "14.2.12",
     "react": "18.3.1",

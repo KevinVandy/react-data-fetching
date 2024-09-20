@@ -10,6 +10,7 @@ A repository to showcase different ways to fetch data in React.
 - [3.2-vite-reactquery-infinite](./apps/3.2-vite-reactquery-infinite/) - `pnpm dev32`
 - [4-nextjs-ssg](./apps/4-nextjs-ssg/) - `pnpm dev4`
 - [5-nextjs-ssr](./apps/5-nextjs-ssr/) - `pnpm dev5`
+- [5.1-sveltekit-ssr](./apps/5.1-sveltekit-ssr/) - `pnpm dev51`
 - [6-remix-ssr](./apps/6-remix-ssr/) - `pnpm dev6`
 - [7-nextjs-rsc](./apps/7-nextjs-rsc/) - `pnpm dev7`
 - [7.1-nextjs-rsc-react-query](./apps/7.1-nextjs-rsc-react-query/) - `pnpm dev71`

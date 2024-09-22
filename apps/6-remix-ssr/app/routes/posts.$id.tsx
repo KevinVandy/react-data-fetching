@@ -115,7 +115,6 @@ export default function PostPage() {
     if (actionData?.success) {
       setCommentText(""); //clear comment field
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData]);
 
   const navigation = useNavigation();

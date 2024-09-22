@@ -4,7 +4,7 @@ A repository to showcase different ways to fetch data in React.
 
 - [0-json-server](./apps/0-json-server) - backend server for the apps - `pnpm serve`
 - [1-vite-componentdidmount](./apps/1-vite-componentdidmount/) - `pnpm dev1`
-- [2-vite-useEffect](./apps/2-vite-useEffect/) - `pnpm dev2`
+- [2-vite-useEffect](./apps/2-vite-useeffect/) - `pnpm dev2`
 - [3-vite-reactquery](./apps/3-vite-reactquery/) - `pnpm dev3`
 - [3.1-vite-reactquery-refactor](./apps/3.1-vite-reactquery-refactor/) - `pnpm dev31`
 - [3.2-vite-reactquery-infinite](./apps/3.2-vite-reactquery-infinite/) - `pnpm dev32`

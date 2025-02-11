@@ -1,11 +1,11 @@
 {
-  "name": "json-server",
+  "name": "0-json-server",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev0": "pnpm serve",
-    "serve": "json-server --watch db.json --delay 800 --port 3333"
+    "serve": "json-server --watch db.json --delay 800 --port 3300"
   },
   "dependencies": {
     "json-server": "0.17.4"

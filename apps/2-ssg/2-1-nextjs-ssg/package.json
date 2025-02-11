@@ -1,0 +1,31 @@
+{
+  "name": "2-1-nextjs-ssg",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3321",
+    "build": "next build",
+    "start": "next start -p 3321",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mantine/core": "7.16.3",
+    "@mantine/hooks": "7.16.3",
+    "@tabler/icons-react": "^3.30.0",
+    "mantine-react-table": "^2.0.0-beta.6",
+    "next": "15.1.7",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@tanstack/react-query": "^5.66.0",
+    "@tanstack/react-query-devtools": "^5.66.0",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "postcss": "^8.5.2",
+    "postcss-preset-mantine": "1.17.0",
+    "postcss-simple-vars": "^7.0.1",
+    "typescript": "^5"
+  }
+}

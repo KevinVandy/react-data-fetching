@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { type IComment, type IPost, type IUser } from "../../api-types";
+
+export async function getStaticPaths() {
+  const response = await fetch(`http://localhost:3300/posts`);
+  const posts = (await response.json()) as IPost[];
+
+  return posts.map((post) => ({
+    params: { id: post.id.toString() },
+  }));
+}
+
+const { id } = Astro.params;
+
+let post: IPost;
+let comments: IComment[];
+let user: IUser;
+
+try {
+  const [postResponse, commentsResponse] = await Promise.all([
+    fetch(`http://localhost:3300/posts/${id}`),
+    fetch(`http://localhost:3300/posts/${id}/comments`),
+  ]);
+
+  [post, comments] = (await Promise.all([
+    postResponse.json(),
+    commentsResponse.json(),
+  ])) as [IPost, IComment[]];
+
+  const userResponse = await fetch(
+    `http://localhost:3300/users/${post.userId}`
+  );
+  user = (await userResponse.json()) as IUser;
+} catch (error) {
+  console.error(error);
+  return Astro.redirect("/error");
+}
+---
+
+<Layout title={`Post ${id}`}>
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-3xl font-bold mb-2">Post: {post.id}</h1>
+      <h2 class="text-2xl font-bold mb-2">{post.title}</h2>
+      <h3 class="text-xl font-bold mb-4">
+        By: <a
+          href={`/users/${user.id}`}
+          class="text-blue-600 hover:text-blue-800 no-underline">{user.name}</a
+        >
+      </h3>
+      <p class="my-6 text-gray-700">
+        {post.body}. {post.body}. {post.body}. {post.body}. {post.body}.
+      </p>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <h3 class="text-xl font-bold">Comments on this Post</h3>
+    </div>
+
+    <div class="space-y-6">
+      {
+        comments.map((comment) => (
+          <div class="p-4 rounded-lg border border-gray-200 shadow-sm">
+            <h4 class="text-lg font-bold mb-1">{comment.name}</h4>
+            <h5 class="text-md font-medium text-gray-600 mb-2">
+              {comment.email}
+            </h5>
+            <p class="text-gray-700">{comment.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

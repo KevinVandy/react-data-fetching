@@ -14,6 +14,8 @@ A repository to showcase different ways to fetch data in React.
 ## Static Site Generation (SSG)
 
 - [2-1-nextjs-ssg](./apps/2-ssg/2-1-nextjs-ssg) - `pnpm dev2-1`
+- [2-2-astro-ssg](./apps/2-ssg/2-2-astro-ssg) - `pnpm dev2-2`
+- [2-3-astro-react-ssg](./apps/2-ssg/2-3-astro-react-ssg) - `pnpm dev2-3`
 
 ## Server-Side Rendering (SSR)
 

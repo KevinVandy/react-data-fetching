@@ -1,0 +1,29 @@
+{
+  "name": "2-3-astro-react-ssg",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --port 3323",
+    "build": "astro build",
+    "preview": "astro preview --port 3323",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.2.0",
+    "@mantine/core": "7.16.3",
+    "@mantine/hooks": "7.16.3",
+    "@tabler/icons-react": "^3.30.0",
+    "@tailwindcss/vite": "^4.0.6",
+    "astro": "^5.2.5",
+    "mantine-react-table": "2.0.0-beta.8",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "postcss": "^8.5.2",
+    "postcss-preset-mantine": "1.17.0",
+    "postcss-simple-vars": "^7.0.1",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3"
+  }
+}

@@ -1,0 +1,45 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { type IComment, type IPost, type IUser } from "../../api-types";
+import PostPage from "../../components/PostPage";
+
+export async function getStaticPaths() {
+  const response = await fetch(`http://localhost:3300/posts`);
+  const posts = (await response.json()) as IPost[];
+
+  return posts.map((post) => ({
+    params: { id: post.id.toString() },
+  }));
+}
+
+const { id } = Astro.params;
+
+let post: IPost;
+let comments: IComment[];
+let user: IUser;
+let error: boolean = false;
+try {
+  const [postResponse, commentsResponse] = await Promise.all([
+    fetch(`http://localhost:3300/posts/${id}`),
+    fetch(`http://localhost:3300/posts/${id}/comments`),
+  ]);
+
+  [post, comments] = (await Promise.all([
+    postResponse.json(),
+    commentsResponse.json(),
+  ])) as [IPost, IComment[]];
+
+  const userResponse = await fetch(
+    `http://localhost:3300/users/${post.userId}`
+  );
+  user = (await userResponse.json()) as IUser;
+} catch (error) {
+  console.error(error);
+  error = true;
+  return Astro.redirect("/error");
+}
+---
+
+<Layout title={`Post ${id}`}>
+  <PostPage comments={comments} error={error} post={post} user={user} />
+</Layout>

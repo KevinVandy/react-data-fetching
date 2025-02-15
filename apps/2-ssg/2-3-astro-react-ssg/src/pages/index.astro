@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import type { IPost } from "../api-types";
+import { HomePage } from "../components/HomePage";
+
+const fetchPosts = async (): Promise<{ posts: IPost[]; error: boolean }> => {
+  try {
+    const response = await fetch("http://localhost:3300/posts");
+    const fetchedPosts = (await response.json()) as IPost[];
+    return { posts: fetchedPosts, error: false };
+  } catch (error) {
+    console.error(error);
+    return { posts: [], error: true };
+  }
+};
+
+const { posts, error } = await fetchPosts();
+---
+
+<Layout>
+  <HomePage posts={posts} error={error} />
+</Layout>

@@ -7,11 +7,11 @@ const fetchPostAndComments = async (postId: number) => {
   const [post, comments] = await Promise.all([
     fetch(`http://localhost:3300/posts/${postId}`).then((res) => res.json()),
     fetch(`http://localhost:3300/posts/${postId}/comments`).then((res) =>
-      res.json(),
+      res.json()
     ),
   ]);
   const user = await fetch(`http://localhost:3300/users/${post.userId}`).then(
-    (res) => res.json(),
+    (res) => res.json()
   );
 
   return { post, user, comments } as {
@@ -27,7 +27,7 @@ interface PostPageProps {
 
 // Server Component
 export default async function PostPage({ params }: PostPageProps) {
-  const { id: postId } = params;
+  const { id: postId } = await params;
 
   const { post, user, comments } = await fetchPostAndComments(+postId);
 

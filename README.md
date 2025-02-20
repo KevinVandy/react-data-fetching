@@ -10,6 +10,7 @@ A repository to showcase different ways to fetch data in React.
 - [1-2-vite-useeffect](./apps/1-spa/1-2-vite-useeffect) - `pnpm dev1-2`
 - [1-3-vite-reactquery](./apps/1-spa/1-3-vite-reactquery) - `pnpm dev1-3`
 - [1-4-vite-reactquery-refactor](./apps/1-spa/1-4-vite-reactquery-refactor) - `pnpm dev1-4`
+- [1-5-astro-react-spa](./apps/1-spa/1-5-astro-react-spa) - `pnpm dev1-5`
 
 ## Static Site Generation (SSG)
 

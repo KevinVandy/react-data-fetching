@@ -1,11 +1,11 @@
 {
-  "name": "2-3-astro-react-ssg",
+  "name": "1-5-astro-react-spa",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev --port 3323",
+    "dev": "astro dev --port 3315",
     "build": "astro build",
-    "preview": "astro preview --port 3323",
+    "preview": "astro preview --port 3315",
     "astro": "astro"
   },
   "dependencies": {
@@ -14,16 +14,20 @@
     "@mantine/hooks": "7.17.0",
     "@tabler/icons-react": "3.17.0",
     "@tailwindcss/vite": "^4.0.7",
+    "@tanstack/react-query": "^5.66.7",
+    "@tanstack/react-query-devtools": "^5.66.7",
+    "@types/react-dom": "^19.0.4",
     "astro": "^5.3.0",
     "mantine-react-table": "2.0.0-beta.8",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.2.0",
+    "tailwindcss": "^4.0.7"
   },
   "devDependencies": {
+    "@types/react": "^19.0.10",
     "postcss": "^8.5.3",
     "postcss-preset-mantine": "1.17.0",
-    "postcss-simple-vars": "^7.0.1",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4"
+    "postcss-simple-vars": "^7.0.1"
   }
 }

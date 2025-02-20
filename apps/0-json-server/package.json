@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev0": "pnpm serve",
-    "serve": "json-server --watch db.json --delay 0 --port 3300"
+    "serve": "json-server --watch db.json --delay 500 --port 3300"
   },
   "dependencies": {
     "json-server": "0.17.4"

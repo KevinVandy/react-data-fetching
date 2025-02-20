@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { App } from "../../spa/App";
+import type { IPost, IUser } from "../../spa/api-types";
+
+export async function getStaticPaths() {
+  const users = await fetch("http://localhost:3300/users");
+  const usersData = (await users.json()) as IUser[];
+  const posts = await fetch("http://localhost:3300/posts");
+  const postsData = (await posts.json()) as IPost[];
+
+  const paths = [
+    { params: { slug: undefined } },
+    { params: { slug: "users" } },
+    ...usersData.map((user) => ({ params: { slug: `users/${user.id}` } })),
+    ...postsData.map((post) => ({ params: { slug: `posts/${post.id}` } })),
+  ];
+
+  return paths;
+}
+
+export const prerender = true;
+---
+
+<Layout>
+  <App client:only />
+</Layout>

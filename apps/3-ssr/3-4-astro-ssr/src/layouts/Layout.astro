@@ -9,7 +9,7 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro SSG</title>
+    <title>Astro SSR</title>
   </head>
   <body class="flex flex-col h-screen">
     <!-- Header -->
@@ -23,7 +23,7 @@ import "../styles/global.css";
           <div class="w-6 h-0.5 bg-gray-800 mb-1"></div>
           <div class="w-6 h-0.5 bg-gray-800"></div>
         </button>
-        <span>Astro SSG</span>
+        <span>Astro SSR</span>
       </div>
     </header>
 
@@ -50,7 +50,7 @@ import "../styles/global.css";
       </nav>
 
       <!-- Main Content -->
-      <main class="flex-1 p-4 max-w-[1400px] mx-auto">
+      <main class="flex-1 p-4 max-w-[1400px] mx-auto mb-32">
         <slot />
       </main>
     </div>

@@ -78,16 +78,21 @@ try {
       </form>
     </div>
 
-    <div class="space-y-6">
+    <div class="space-y-6" id="comments">
       {
         comments.map((comment) => (
-          <div class="p-4 rounded-lg border border-gray-200 shadow-sm relative">
+          <div
+            class="p-4 rounded-lg border border-gray-200 shadow-sm relative"
+            id={`comment-${comment.id}`}
+          >
             {comment.email === "user@mailinator.com" && (
               <form
-                class="absolute right-2 top-2 delete-comment-form"
-                onsubmit="return false;"
-                data-comment-id={comment.id}
+                method="POST"
+                action={`/api/delete-comment?redirectHash=comments`}
+                class="absolute right-2 top-2"
               >
+                <input type="hidden" name="commentId" value={comment.id} />
+                <input type="hidden" name="postId" value={postId} />
                 <button
                   type="submit"
                   class="text-red-600 hover:text-red-800"
@@ -120,8 +125,12 @@ try {
         ))
       }
     </div>
-
-    <form id="comment-form" class="space-y-4" onsubmit="return false;">
+    <form
+      method="POST"
+      action={`/api/add-comment?postId=${postId}&redirectHash=comments`}
+      class="space-y-4"
+      enctype="multipart/form-data"
+    >
       <div>
         <label for="comment" class="block text-sm font-medium text-gray-700"
           >Post a Comment</label
@@ -142,80 +151,3 @@ try {
     </form>
   </div>
 </Layout>
-
-<script is:inline define:vars={{ postId }}>
-  const form = document.getElementById("comment-form");
-  const textarea = document.getElementById("comment");
-
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const button = form.querySelector("button");
-    if (button) {
-      button.disabled = true;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append("body", textarea?.value || "");
-
-      const response = await fetch(`/api/add-comment?postId=${postId}`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to post comment");
-      }
-
-      // Refresh the page to show the new comment
-      window.location.reload();
-    } catch (error) {
-      console.error("Error posting comment:", error);
-      alert("Failed to post comment. Please try again.");
-    } finally {
-      if (button) {
-        button.disabled = false;
-      }
-    }
-  });
-</script>
-
-<script define:vars={{ postId }}>
-  document.querySelectorAll(".delete-comment-form").forEach((form) => {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const button = form.querySelector("button");
-      if (button) {
-        button.disabled = true;
-      }
-
-      try {
-        const commentId = form.getAttribute("data-comment-id");
-        const formData = new FormData();
-        formData.append("commentId", commentId);
-        formData.append("postId", postId);
-
-        const response = await fetch("/api/delete-comment", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to delete comment");
-        }
-
-        // Refresh the page to show the updated comments
-        window.location.reload();
-      } catch (error) {
-        console.error("Error deleting comment:", error);
-        alert("Failed to delete comment. Please try again.");
-      } finally {
-        if (button) {
-          button.disabled = false;
-        }
-      }
-    });
-  });
-</script>

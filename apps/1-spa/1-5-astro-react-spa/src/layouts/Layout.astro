@@ -1,3 +1,7 @@
+---
+import "../styles/global.css";
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,8 +11,11 @@
     <meta name="generator" content={Astro.generator} />
     <title>Astro React SPA</title>
   </head>
-  <body style="display: flex; flex-direction: column; height: 100vh;">
+  <body class="flex flex-col h-screen">
     <slot />
+    <footer class="bg-gray-100 p-4 text-center w-full z-100 sticky bottom-0">
+      <p>&copy; {new Date().getFullYear()} Astro React SPA</p>
+    </footer>
   </body>
 </html>
 

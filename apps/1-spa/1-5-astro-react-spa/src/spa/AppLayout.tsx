@@ -35,20 +35,32 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   const breadCrumbLinks = useMemo(() => {
     const routes = pathname.split("/");
-    routes.shift();
+    routes.shift(); // Remove empty string from start
     const links: string[] = [];
-    for (let i = 0; i < routes.length + 1; i++) {
-      if (routes[i] && routes[i] !== "/spa")
-        if (routes[i] === "posts") {
-          links.push(`/spa`);
-        } else links.push(`/spa/${routes.slice(0, i + 1).join("/")}`);
+
+    // Handle root /spa path
+    if (routes.length === 1 && routes[0] === "spa") {
+      links.push("/spa");
+    } else {
+      // Handle nested paths
+      for (let i = 0; i < routes.length; i++) {
+        if (routes[i] && routes[i] !== "spa") {
+          if (routes[i] === "posts") {
+            links.push("/spa");
+          } else {
+            // Skip "spa" in the path parts to avoid duplication
+            const pathParts = routes
+              .slice(1, i + 1)
+              .filter((part) => part !== "spa");
+            links.push(`/spa/${pathParts.join("/")}`);
+          }
+        }
+      }
     }
+    links.unshift("/");
+
     return links;
   }, [pathname]);
-
-  // if (breadCrumbLinks.length === 1) {
-  //   breadCrumbLinks.unshift("/spa");
-  // }
 
   const [opened, { toggle }] = useDisclosure();
 
@@ -77,16 +89,21 @@ export function AppLayout({ children }: AppLayoutProps) {
             {breadCrumbLinks.map((link, index) => (
               <Anchor
                 c="inherit"
-                component={Link}
+                component={link === "/" ? "a" : (Link as any)}
                 key={index}
                 td="none"
                 to={link}
+                href={link === "/" ? "/" : link}
                 tt="capitalize"
                 style={{
                   cursor: "pointer",
                 }}
               >
-                {link === "/spa" ? "Home Feed" : link.split("/").pop()}
+                {link === "/"
+                  ? "Home"
+                  : link === "/spa"
+                    ? "Posts Feed"
+                    : link.split("/").pop()}
               </Anchor>
             ))}
           </Breadcrumbs>

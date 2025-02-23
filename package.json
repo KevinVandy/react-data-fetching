@@ -15,6 +15,7 @@
     "dev3-1": "turbo dev --filter 3-1-nextjs-ssr",
     "dev3-2": "turbo dev --filter 3-2-remix-ssr",
     "dev3-3": "turbo dev --filter 3-3-sveltekit-ssr",
+    "dev3-4": "turbo dev --filter 3-4-astro-ssr",
     "dev4-1": "turbo dev --filter 4-1-nextjs-rsc",
     "dev4-2": "turbo dev --filter 4-2-nextjs-rsc-react-query",
     "dev4-3": "turbo dev --filter 4-3-nextjs-rsc-react-query-streaming",

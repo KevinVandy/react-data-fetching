@@ -19,6 +19,7 @@
     "dev4-1": "turbo dev --filter 4-1-nextjs-rsc",
     "dev4-2": "turbo dev --filter 4-2-nextjs-rsc-react-query",
     "dev4-3": "turbo dev --filter 4-3-nextjs-rsc-react-query-streaming",
+    "dev4-4": "turbo dev --filter 4-4-astro-server-islands",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
     "serve": "turbo serve --filter 0-json-server"

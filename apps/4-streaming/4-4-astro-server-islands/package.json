@@ -1,0 +1,16 @@
+{
+  "name": "4-4-astro-server-islands",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --port 3344",
+    "build": "astro build",
+    "preview": "astro preview --port 3344",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.7",
+    "astro": "^5.3.0",
+    "tailwindcss": "^4.0.7"
+  }
+}

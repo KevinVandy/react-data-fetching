@@ -1,0 +1,118 @@
+---
+import { type IComment } from "../api-types";
+
+interface Props {
+  postId: string;
+}
+
+const { postId } = Astro.props;
+
+// Fetch comments for this post with artificial delay
+await new Promise(resolve => setTimeout(resolve, 3000));
+const commentsResponse = await fetch(
+  `http://localhost:3300/posts/${postId}/comments`,
+  {
+    headers: {
+      'Cache-Control': 'public, max-age=60, stale-while-revalidate=30'
+    }
+  }
+);
+const comments = (await commentsResponse.json()) as IComment[];
+---
+
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <h3 class="text-xl font-bold">Comments on this Post</h3>
+    <form method="GET">
+      <button
+        type="submit"
+        class="text-gray-600 hover:text-gray-800"
+        title="Refresh Comments"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
+          <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <div class="space-y-6" id="comments">
+    {
+      comments.map((comment) => (
+        <div
+          class="p-4 rounded-lg border border-gray-200 shadow-sm relative"
+          id={`comment-${comment.id}`}
+        >
+          {comment.email === "user@mailinator.com" && (
+            <form
+              method="POST"
+              action={`/api/delete-comment?redirectHash=comments`}
+              class="absolute right-2 top-2"
+            >
+              <input type="hidden" name="commentId" value={comment.id} />
+              <input type="hidden" name="postId" value={postId} />
+              <button
+                type="submit"
+                class="text-red-600 hover:text-red-800"
+                title="Delete comment"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  fill="none"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 7l16 0" />
+                  <path d="M10 11l0 6" />
+                  <path d="M14 11l0 6" />
+                  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                </svg>
+              </button>
+            </form>
+          )}
+          <h4 class="text-lg font-bold mb-1">{comment.name}</h4>
+          <h5 class="text-md font-medium text-gray-600 mb-2">{comment.email}</h5>
+          <p class="text-gray-700">{comment.body}</p>
+        </div>
+      ))
+    }
+  </div>
+  <form
+    method="POST"
+    action={`/api/add-comment?postId=${postId}&redirectHash=comments`}
+    class="space-y-4"
+    enctype="multipart/form-data"
+  >
+    <div>
+      <label for="comment" class="block text-sm font-medium text-gray-700"
+        >Post a Comment</label
+      >
+      <textarea
+        id="comment"
+        name="body"
+        rows="3"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        required
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      class="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      Post Comment
+    </button>
+  </form>
+</div>

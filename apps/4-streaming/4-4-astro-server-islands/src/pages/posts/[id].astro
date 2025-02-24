@@ -1,0 +1,59 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Comments from "../../components/Comments.astro";
+import { type IPost, type IUser } from "../../api-types";
+
+export async function getStaticPaths() {
+  const response = await fetch(`http://localhost:3300/posts`);
+  const posts = (await response.json()) as IPost[];
+
+  return posts.map((post) => ({
+    params: { id: post.id.toString() },
+  }));
+}
+
+const { id: postId } = Astro.params;
+
+let post: IPost;
+let user: IUser;
+
+try {
+  const [postResponse] = await Promise.all([
+    fetch(`http://localhost:3300/posts/${postId}`),
+  ]);
+
+  post = (await postResponse.json()) as IPost;
+
+  const userResponse = await fetch(
+    `http://localhost:3300/users/${post.userId}`
+  );
+  user = (await userResponse.json()) as IUser;
+} catch (error) {
+  console.error(error);
+  return Astro.redirect("/error");
+}
+---
+
+<Layout title={`Post ${postId}`}>
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-3xl font-bold mb-2">Post: {post.id}</h1>
+      <h2 class="text-2xl font-bold mb-2">{post.title}</h2>
+      <h3 class="text-xl font-bold mb-4">
+        By: <a
+          href={`/users/${user.id}`}
+          class="text-blue-600 hover:text-blue-800 no-underline">{user.name}</a
+        >
+      </h3>
+      <p class="my-6 text-gray-700">
+        {post.body}. {post.body}. {post.body}. {post.body}. {post.body}.
+      </p>
+    </div>
+
+    <Comments postId={postId} server:defer>
+      <div slot="fallback" class="flex justify-center items-center py-8">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      </div>
+    </Comments>
+  </div>
+</Layout>

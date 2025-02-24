@@ -8,13 +8,13 @@ interface Props {
 const { postId } = Astro.props;
 
 // Fetch comments for this post with artificial delay
-await new Promise(resolve => setTimeout(resolve, 3000));
+await new Promise((resolve) => setTimeout(resolve, 1000));
 const commentsResponse = await fetch(
   `http://localhost:3300/posts/${postId}/comments`,
   {
     headers: {
-      'Cache-Control': 'public, max-age=60, stale-while-revalidate=30'
-    }
+      "Cache-Control": "public, max-age=60, stale-while-revalidate=30",
+    },
   }
 );
 const comments = (await commentsResponse.json()) as IComment[];
@@ -54,9 +54,8 @@ const comments = (await commentsResponse.json()) as IComment[];
         >
           {comment.email === "user@mailinator.com" && (
             <form
-              method="POST"
-              action={`/api/delete-comment?redirectHash=comments`}
               class="absolute right-2 top-2"
+              id={`delete-comment-${comment.id}`}
             >
               <input type="hidden" name="commentId" value={comment.id} />
               <input type="hidden" name="postId" value={postId} />
@@ -84,29 +83,27 @@ const comments = (await commentsResponse.json()) as IComment[];
             </form>
           )}
           <h4 class="text-lg font-bold mb-1">{comment.name}</h4>
-          <h5 class="text-md font-medium text-gray-600 mb-2">{comment.email}</h5>
+          <h5 class="text-md font-medium text-gray-600 mb-2">
+            {comment.email}
+          </h5>
           <p class="text-gray-700">{comment.body}</p>
         </div>
       ))
     }
   </div>
-  <form
-    method="POST"
-    action={`/api/add-comment?postId=${postId}&redirectHash=comments`}
-    class="space-y-4"
-    enctype="multipart/form-data"
-  >
+  <form id="comment-form" class="space-y-4">
+    <input type="hidden" name="postId" value={postId} />
     <div>
       <label for="comment" class="block text-sm font-medium text-gray-700"
         >Post a Comment</label
       >
-      <textarea
+      <input
+        type="text"
         id="comment"
-        name="body"
-        rows="3"
+        name="text"
         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
         required
-      ></textarea>
+      />
     </div>
     <button
       type="submit"
@@ -116,3 +113,36 @@ const comments = (await commentsResponse.json()) as IComment[];
     </button>
   </form>
 </div>
+
+<script>
+  import { actions } from "astro:actions";
+
+  const form = document.querySelector("#comment-form") as HTMLFormElement;
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const { error } = await actions.addComment(formData);
+    if (!error) {
+      form.reset();
+      location.reload();
+    }
+  });
+
+  // Handle delete comment forms
+  const deleteForms = document.querySelectorAll(
+    "form[id^='delete-comment-']"
+  ) as NodeListOf<HTMLFormElement>;
+  deleteForms.forEach((form) => {
+    form.addEventListener("submit", async (event: Event) => {
+      event.preventDefault();
+      if (confirm("Are you sure you want to delete this comment?")) {
+        const formData = new FormData(form as HTMLFormElement);
+        const { error } = await actions.deleteComment(formData);
+        if (!error) {
+          form.reset();
+          location.reload();
+        }
+      }
+    });
+  });
+</script>

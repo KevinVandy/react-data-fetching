@@ -18,6 +18,8 @@ let comments: IComment[];
 let user: IUser;
 
 try {
+  //wait 3s
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
   const [postResponse, commentsResponse] = await Promise.all([
     fetch(`http://localhost:3300/posts/${postId}`),
     fetch(`http://localhost:3300/posts/${postId}/comments`),

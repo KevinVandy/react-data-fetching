@@ -8,7 +8,7 @@ interface Props {
 const { postId } = Astro.props;
 
 // Fetch comments for this post with artificial delay
-await new Promise((resolve) => setTimeout(resolve, 1000));
+// await new Promise((resolve) => setTimeout(resolve, 3000));
 const commentsResponse = await fetch(
   `http://localhost:3300/posts/${postId}/comments`,
   {

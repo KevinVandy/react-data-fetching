@@ -4,6 +4,7 @@ import Comments from "../../components/Comments.astro";
 import { type IPost, type IUser } from "../../api-types";
 
 export async function getStaticPaths() {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   const response = await fetch(`http://localhost:3300/posts`);
   const posts = (await response.json()) as IPost[];
 

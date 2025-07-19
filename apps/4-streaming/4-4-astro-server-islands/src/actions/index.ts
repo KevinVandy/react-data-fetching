@@ -55,7 +55,7 @@ export const server = {
           `http://localhost:3300/comments/${commentId}`,
           {
             method: "DELETE",
-          }
+          },
         );
 
         if (!response.ok) {

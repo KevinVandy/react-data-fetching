@@ -32,7 +32,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const redirectUrl = new URL(
       `/posts/${postId}${redirectHash ? "#" + redirectHash : ""}`,
-      url.origin
+      url.origin,
     );
     return Response.redirect(redirectUrl.toString(), 303);
   } catch (error) {

@@ -51,7 +51,7 @@ export const UsersPage = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   return (
@@ -78,7 +78,7 @@ export const UsersPage = () => {
             queryKey: ["users", row.original.id.toString()],
             queryFn: async () => {
               const response = await fetch(
-                `http://localhost:3300/users/${row.original.id}`
+                `http://localhost:3300/users/${row.original.id}`,
               );
               return response.json() as Promise<IUser>;
             },

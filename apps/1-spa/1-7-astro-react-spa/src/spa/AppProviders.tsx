@@ -11,7 +11,7 @@ import { theme } from "./theme";
 const ReactQueryDevtoolsProduction = lazy(() =>
   import("@tanstack/react-query-devtools/production").then((d) => ({
     default: d.ReactQueryDevtools,
-  }))
+  })),
 );
 
 const queryClient = new QueryClient({

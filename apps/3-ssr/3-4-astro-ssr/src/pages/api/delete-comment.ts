@@ -16,14 +16,14 @@ export const POST: APIRoute = async ({ request }) => {
       `http://localhost:3300/comments/${commentId}`,
       {
         method: "DELETE",
-      }
+      },
     );
 
     if (!response.ok) throw new Error("Failed to delete comment");
 
     const redirectUrl = new URL(
       `/posts/${postId}${redirectHash ? "#" + redirectHash : ""}`,
-      url.origin
+      url.origin,
     );
     return Response.redirect(redirectUrl.toString(), 303);
   } catch (error) {

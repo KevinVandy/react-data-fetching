@@ -9,8 +9,10 @@ A repository to showcase different ways to fetch data in React.
 - [1-1-vite-componentdidmount](./apps/1-spa/1-1-vite-componentdidmount) - `pnpm dev1-1` [http://localhost:3311/](http://localhost:3311/)
 - [1-2-vite-useeffect](./apps/1-spa/1-2-vite-useeffect) - `pnpm dev1-2` [http://localhost:3312/](http://localhost:3312/)
 - [1-3-vite-reactquery](./apps/1-spa/1-3-vite-reactquery) - `pnpm dev1-3` [http://localhost:3313/](http://localhost:3313/)
-- [1-4-vite-reactquery-refactor](./apps/1-spa/1-4-vite-reactquery-refactor) - `pnpm dev1-4` [http://localhost:3314/](http://localhost:3314/)
-- [1-5-astro-react-spa](./apps/1-spa/1-5-astro-react-spa) - `pnpm dev1-5` [http://localhost:3315/](http://localhost:3315/)
+- [1-4-vite-reactquery-hooks](./apps/1-spa/1-4-vite-reactquery-hooks) - `pnpm dev1-4` [http://localhost:3314/](http://localhost:3314/)
+- [1-5-vite-reactquery-query-options](./apps/1-spa/1-5-vite-reactquery-query-options) - `pnpm dev1-5` [http://localhost:3315/](http://localhost:3315/)
+- [1-6-vite-tanstack-router](./apps/1-spa/1-6-vite-tanstack-router) - `pnpm dev1-6` [http://localhost:3316/](http://localhost:3316/)
+- [1-7-astro-react-spa](./apps/1-spa/1-7-astro-react-spa) - `pnpm dev1-7` [http://localhost:3317/](http://localhost:3317/)
 
 ## Static Site Generation (SSG)
 

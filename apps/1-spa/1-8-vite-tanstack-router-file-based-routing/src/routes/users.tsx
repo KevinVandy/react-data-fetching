@@ -49,12 +49,12 @@ function UsersPage() {
         ),
       },
     ],
-    []
+    [],
   );
 
   const debouncedPrefetchUser = useDebouncedCallback(
     (userId: number) => queryClient.prefetchQuery(userQueryOptions(userId)),
-    100
+    100,
   );
 
   return (

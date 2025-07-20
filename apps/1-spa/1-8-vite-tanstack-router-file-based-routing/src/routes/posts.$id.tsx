@@ -63,7 +63,7 @@ function PostPage() {
         `http://localhost:3300/comments/${commentId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       return response.json() as Promise<IComment>;
     },
@@ -72,7 +72,7 @@ function PostPage() {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err
+        err,
       );
       alert("Error deleting comment");
     },
@@ -112,7 +112,7 @@ function PostPage() {
       // Optimistically update to the new value
       queryClient.setQueryData(
         postCommentsQueryOptions(postId).queryKey,
-        (oldComments: any) => [...oldComments, newComment]
+        (oldComments: any) => [...oldComments, newComment],
       );
 
       // Return a context object with the snapshot value
@@ -123,7 +123,7 @@ function PostPage() {
     onError: (err, _newComment, context) => {
       queryClient.setQueryData(
         postCommentsQueryOptions(postId).queryKey,
-        context?.previousComments as IComment[]
+        context?.previousComments as IComment[],
       );
       console.error("Error posting comment. Rolling UI back", err);
     },

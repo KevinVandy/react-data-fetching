@@ -10,14 +10,14 @@ import { routeTree } from "./routeTree.gen";
 const ReactQueryDevtoolsProduction = lazy(() =>
   import("@tanstack/react-query-devtools/production").then((d) => ({
     default: d.ReactQueryDevtools,
-  }))
+  })),
 );
 
 const TanStackRouterDevtools = lazy(() =>
   // Lazy load in development
   import("@tanstack/router-devtools").then((res) => ({
     default: res.TanStackRouterDevtools,
-  }))
+  })),
 );
 
 export const queryClient = new QueryClient({

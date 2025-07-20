@@ -74,7 +74,11 @@ export const UsersPage = () => {
       }
       mantineTableBodyRowProps={({ row }) => ({
         onMouseEnter: () => debouncedPrefetchUser(row.original.id),
-        onClick: () => navigate({ to: "/users/$id", params: { id: row.original.id.toString() } }),
+        onClick: () =>
+          navigate({
+            to: "/users/$id",
+            params: { id: row.original.id.toString() },
+          }),
         style: {
           cursor: "pointer",
         },

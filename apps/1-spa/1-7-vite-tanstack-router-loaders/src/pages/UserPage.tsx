@@ -20,7 +20,7 @@ export const UserPage = () => {
   // All data is already loaded by the route loader, so these will resolve immediately
   const { data: user } = useSuspenseQuery(userQueryOptions(userIdNumber));
   const { data: posts, isFetching: isFetchingPosts } = useSuspenseQuery(
-    userPostsQueryOptions(userIdNumber)
+    userPostsQueryOptions(userIdNumber),
   );
 
   return (

@@ -12,7 +12,9 @@ A repository to showcase different ways to fetch data in React.
 - [1-4-vite-reactquery-hooks](./apps/1-spa/1-4-vite-reactquery-hooks) - `pnpm dev1-4` [http://localhost:3314/](http://localhost:3314/)
 - [1-5-vite-reactquery-query-options](./apps/1-spa/1-5-vite-reactquery-query-options) - `pnpm dev1-5` [http://localhost:3315/](http://localhost:3315/)
 - [1-6-vite-tanstack-router](./apps/1-spa/1-6-vite-tanstack-router) - `pnpm dev1-6` [http://localhost:3316/](http://localhost:3316/)
-- [1-7-astro-react-spa](./apps/1-spa/1-7-astro-react-spa) - `pnpm dev1-7` [http://localhost:3317/](http://localhost:3317/)
+- [1-7-vite-tanstack-router-loaders](./apps/1-spa/1-7-vite-tanstack-router-loaders) - `pnpm dev1-7` [http://localhost:3317/](http://localhost:3317/)
+- [1-8-vite-tanstack-router-file-based-routing](./apps/1-spa/1-8-vite-tanstack-router-file-based-routing) - `pnpm dev1-8` [http://localhost:3318/](http://localhost:3318/)
+- [1-9-astro-react-spa](./apps/1-spa/1-9-astro-react-spa) - `pnpm dev1-9` [http://localhost:3319/](http://localhost:3319/)
 
 ## Static Site Generation (SSG)
 

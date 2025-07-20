@@ -448,7 +448,86 @@ importers:
         specifier: ^7.0.5
         version: 7.0.5(@types/node@22.16.5)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5)
 
-  apps/1-spa/1-7-astro-react-spa:
+  apps/1-spa/1-7-vite-tanstack-router-loaders:
+    dependencies:
+      '@mantine/core':
+        specifier: 8.1.3
+        version: 8.1.3(@mantine/hooks@8.1.3(react@19.1.0))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@mantine/hooks':
+        specifier: 8.1.3
+        version: 8.1.3(react@19.1.0)
+      '@tabler/icons-react':
+        specifier: 3.34.0
+        version: 3.34.0(react@19.1.0)
+      '@tanstack/react-query':
+        specifier: ^5.83.0
+        version: 5.83.0(react@19.1.0)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.83.0
+        version: 5.83.0(@tanstack/react-query@5.83.0(react@19.1.0))(react@19.1.0)
+      '@tanstack/react-router':
+        specifier: ^1.106.2
+        version: 1.128.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tanstack/router-devtools':
+        specifier: ^1.106.2
+        version: 1.128.6(@tanstack/react-router@1.128.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@tanstack/router-core@1.128.6)(csstype@3.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(solid-js@1.9.7)(tiny-invariant@1.3.3)
+      mantine-react-table:
+        specifier: ^2.0.0-beta.6
+        version: 2.0.0-beta.8(@mantine/core@8.1.3(@mantine/hooks@8.1.3(react@19.1.0))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mantine/dates@7.11.2(@mantine/core@8.1.3(@mantine/hooks@8.1.3(react@19.1.0))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mantine/hooks@8.1.3(react@19.1.0))(dayjs@1.11.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mantine/hooks@8.1.3(react@19.1.0))(@tabler/icons-react@3.34.0(react@19.1.0))(clsx@2.1.1)(dayjs@1.11.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+      react-dom:
+        specifier: ^19.1.0
+        version: 19.1.0(react@19.1.0)
+      react-error-boundary:
+        specifier: ^6.0.0
+        version: 6.0.0(react@19.1.0)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.16.5
+      '@types/react':
+        specifier: ^19.1.8
+        version: 19.1.8
+      '@types/react-dom':
+        specifier: ^19.1.6
+        version: 19.1.6(@types/react@19.1.8)
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.37.0
+        version: 8.37.0(@typescript-eslint/parser@8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/parser':
+        specifier: ^8.37.0
+        version: 8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      '@vitejs/plugin-react':
+        specifier: ^4.7.0
+        version: 4.7.0(vite@7.0.5(@types/node@22.16.5)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))
+      eslint:
+        specifier: ^9.31.0
+        version: 9.31.0(jiti@2.4.2)
+      eslint-plugin-react-hooks:
+        specifier: ^5.2.0
+        version: 5.2.0(eslint@9.31.0(jiti@2.4.2))
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.20
+        version: 0.4.20(eslint@9.31.0(jiti@2.4.2))
+      postcss:
+        specifier: ^8.5.6
+        version: 8.5.6
+      postcss-preset-mantine:
+        specifier: 1.18.0
+        version: 1.18.0(postcss@8.5.6)
+      postcss-simple-vars:
+        specifier: ^7.0.1
+        version: 7.0.1(postcss@8.5.6)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      vite:
+        specifier: ^7.0.5
+        version: 7.0.5(@types/node@22.16.5)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5)
+
+  apps/1-spa/1-9-astro-react-spa:
     dependencies:
       '@astrojs/react':
         specifier: ^4.3.0
@@ -464,7 +543,7 @@ importers:
         version: 3.34.0(react@19.1.0)
       '@tailwindcss/vite':
         specifier: ^4.1.11
-        version: 4.1.11(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))
+        version: 4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5))
       '@tanstack/react-query':
         specifier: ^5.83.0
         version: 5.83.0(react@19.1.0)
@@ -562,10 +641,10 @@ importers:
     dependencies:
       '@astrojs/vercel':
         specifier: ^8.2.2
-        version: 8.2.2(@remix-run/react@2.16.8(react@19.1.0)(typescript@5.8.3))(@sveltejs/kit@2.25.1(svelte@5.36.8)(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)))(astro@5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5))(next@15.4.2(react@19.1.0))(react@19.1.0)(rollup@4.40.2)(svelte@5.36.8)
+        version: 8.2.2(@remix-run/react@2.16.8(react@19.1.0)(typescript@5.8.3))(@sveltejs/kit@2.25.1(svelte@5.36.8)(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)))(astro@5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5))(next@15.4.2(react@19.1.0))(react@19.1.0)(rollup@4.40.2)(svelte@5.36.8)
       '@tailwindcss/vite':
         specifier: ^4.1.11
-        version: 4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))
+        version: 4.1.11(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5))
       astro:
         specifier: ^5.12.0
         version: 5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5)
@@ -589,7 +668,7 @@ importers:
         version: 3.34.0(react@19.1.0)
       '@tailwindcss/vite':
         specifier: ^4.1.11
-        version: 4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))
+        version: 4.1.11(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5))
       astro:
         specifier: ^5.12.0
         version: 5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5)
@@ -802,7 +881,7 @@ importers:
     dependencies:
       '@tailwindcss/vite':
         specifier: ^4.1.11
-        version: 4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))
+        version: 4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5))
       astro:
         specifier: ^5.12.0
         version: 5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5)
@@ -979,7 +1058,7 @@ importers:
         version: 8.2.2(@remix-run/react@2.16.8(react@19.1.0)(typescript@5.8.3))(@sveltejs/kit@2.25.1(svelte@5.36.8)(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)))(astro@5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5))(next@15.4.2(react@19.1.0))(react@19.1.0)(rollup@4.40.2)(svelte@5.36.8)
       '@tailwindcss/vite':
         specifier: ^4.1.11
-        version: 4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))
+        version: 4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5))
       astro:
         specifier: ^5.12.0
         version: 5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5)
@@ -6732,6 +6811,28 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@astrojs/vercel@8.2.2(@remix-run/react@2.16.8(react@19.1.0)(typescript@5.8.3))(@sveltejs/kit@2.25.1(svelte@5.36.8)(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)))(astro@5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5))(next@15.4.2(react@19.1.0))(react@19.1.0)(rollup@4.40.2)(svelte@5.36.8)':
+    dependencies:
+      '@astrojs/internal-helpers': 0.6.1
+      '@vercel/analytics': 1.5.0(@remix-run/react@2.16.8(react@19.1.0)(typescript@5.8.3))(@sveltejs/kit@2.25.1(svelte@5.36.8)(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)))(next@15.4.2(react@19.1.0))(react@19.1.0)(svelte@5.36.8)
+      '@vercel/edge': 1.2.1
+      '@vercel/nft': 0.29.2(rollup@4.40.2)
+      '@vercel/routing-utils': 5.0.4
+      astro: 5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5)
+      esbuild: 0.25.4
+      tinyglobby: 0.2.13
+    transitivePeerDependencies:
+      - '@remix-run/react'
+      - '@sveltejs/kit'
+      - encoding
+      - next
+      - react
+      - rollup
+      - supports-color
+      - svelte
+      - vue
+      - vue-router
+
   '@astrojs/vercel@8.2.2(@remix-run/react@2.16.8(react@19.1.0)(typescript@5.8.3))(@sveltejs/kit@2.25.1(svelte@5.36.8)(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)))(astro@5.12.0(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.40.2)(sugarss@5.0.0)(terser@5.31.2)(typescript@5.8.3)(yaml@2.4.5))(next@15.4.2(react@19.1.0))(react@19.1.0)(rollup@4.40.2)(svelte@5.36.8)':
     dependencies:
       '@astrojs/internal-helpers': 0.6.1
@@ -8191,14 +8292,14 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.1.11
       '@tailwindcss/oxide-win32-x64-msvc': 4.1.11
 
-  '@tailwindcss/vite@4.1.11(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))':
+  '@tailwindcss/vite@4.1.11(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5))':
     dependencies:
       '@tailwindcss/node': 4.1.11
       '@tailwindcss/oxide': 4.1.11
       tailwindcss: 4.1.11
       vite: 6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)
 
-  '@tailwindcss/vite@4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))':
+  '@tailwindcss/vite@4.1.11(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5))':
     dependencies:
       '@tailwindcss/node': 4.1.11
       '@tailwindcss/oxide': 4.1.11
@@ -8612,6 +8713,14 @@ snapshots:
       - terser
 
   '@vanilla-extract/private@1.0.5': {}
+
+  '@vercel/analytics@1.5.0(@remix-run/react@2.16.8(react@19.1.0)(typescript@5.8.3))(@sveltejs/kit@2.25.1(svelte@5.36.8)(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)))(next@15.4.2(react@19.1.0))(react@19.1.0)(svelte@5.36.8)':
+    optionalDependencies:
+      '@remix-run/react': 2.16.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
+      '@sveltejs/kit': 2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.8)(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5)))(svelte@5.36.8)(vite@6.3.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0(postcss@8.5.6))(terser@5.31.2)(yaml@2.4.5))
+      next: 15.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+      svelte: 5.36.8
 
   '@vercel/analytics@1.5.0(@remix-run/react@2.16.8(react@19.1.0)(typescript@5.8.3))(@sveltejs/kit@2.25.1(svelte@5.36.8)(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sugarss@5.0.0)(terser@5.31.2)(yaml@2.4.5)))(next@15.4.2(react@19.1.0))(react@19.1.0)(svelte@5.36.8)':
     optionalDependencies:

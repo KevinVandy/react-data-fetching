@@ -1,12 +1,12 @@
 import { lazy, Suspense } from "react";
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { 
-  createRouter, 
+import {
+  createRouter,
   RouterProvider,
   createRootRoute,
   createRoute,
-  Outlet
+  Outlet,
 } from "@tanstack/react-router";
 import { theme } from "./theme";
 import { AppLayout } from "./AppLayout";
@@ -18,18 +18,15 @@ import { PostPage } from "./pages/PostPage";
 const ReactQueryDevtoolsProduction = lazy(() =>
   import("@tanstack/react-query-devtools/production").then((d) => ({
     default: d.ReactQueryDevtools,
-  })),
+  }))
 );
 
-const TanStackRouterDevtools =
-  typeof window !== "undefined" 
-    ? lazy(() =>
-        // Lazy load in development
-        import("@tanstack/router-devtools").then((res) => ({
-          default: res.TanStackRouterDevtools,
-        })),
-      )
-    : () => null; // Render nothing on server side
+const TanStackRouterDevtools = lazy(() =>
+  // Lazy load in development
+  import("@tanstack/router-devtools").then((res) => ({
+    default: res.TanStackRouterDevtools,
+  }))
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,25 +47,25 @@ const rootRoute = createRootRoute({
 
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/',
+  path: "/",
   component: HomePage,
 });
 
 const usersRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/users',
+  path: "/users",
   component: UsersPage,
 });
 
 const userRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/users/$id',
+  path: "/users/$id",
   component: UserPage,
 });
 
 const postRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/posts/$id',
+  path: "/posts/$id",
   component: PostPage,
 });
 
@@ -101,9 +98,7 @@ export const AppProviders = ({}: Props) => {
         <RouterProvider router={router} />
         <Suspense fallback={null}>
           <ReactQueryDevtoolsProduction />
-        </Suspense>
-        <Suspense fallback={null}>
-          <TanStackRouterDevtools />
+          <TanStackRouterDevtools router={router} />
         </Suspense>
       </MantineProvider>
     </QueryClientProvider>

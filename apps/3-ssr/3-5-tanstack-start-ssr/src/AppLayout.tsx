@@ -9,17 +9,18 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconHome, IconUsersGroup } from "@tabler/icons-react";
 import { useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { prefetchUsers } from "./hooks/useGetUsers";
+import { Link, useRouter } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { prefetchPosts } from "./hooks/useGetPosts";
+import { usersQueryOptions } from "./queries/users";
+import { postsQueryOptions } from "./queries/posts";
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
 export function AppLayout({ children }: AppLayoutProps) {
-  const { pathname } = useLocation();
+  const router = useRouter();
+  const pathname = router.state.location.pathname;
   const queryClient = useQueryClient();
 
   const links = [
@@ -28,14 +29,14 @@ export function AppLayout({ children }: AppLayoutProps) {
       color: "blue",
       label: "Home Feed",
       href: "/",
-      prefetch: () => prefetchPosts(queryClient),
+      prefetch: () => queryClient.prefetchQuery(postsQueryOptions),
     },
     {
       icon: <IconUsersGroup size="1rem" />,
       color: "teal",
       label: "Users",
       href: "/users",
-      prefetch: () => prefetchUsers(queryClient),
+      prefetch: () => queryClient.prefetchQuery(usersQueryOptions),
     },
   ];
 
@@ -67,7 +68,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} size="sm" />
-          Vite with React Query Hooks
+          TanStack Start SSR
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">

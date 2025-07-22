@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import "mantine-react-table/styles.css";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { AppLayout } from "./components/AppLayout";

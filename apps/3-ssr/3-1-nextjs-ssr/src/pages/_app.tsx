@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import "mantine-react-table/styles.css";
 import { Suspense, useState } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -11,7 +12,7 @@ import dynamic from "next/dynamic";
 const ReactQueryDevtoolsProduction = dynamic(() =>
   import("@tanstack/react-query-devtools/production").then((d) => ({
     default: d.ReactQueryDevtools,
-  })),
+  }))
 );
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -23,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
             staleTime: 1000 * 10, // 10 seconds
           },
         },
-      }),
+      })
   );
 
   return (

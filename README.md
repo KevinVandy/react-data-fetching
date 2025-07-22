@@ -6,11 +6,11 @@ A repository to showcase different ways to fetch data in React.
 
 ## Single Page Applications (Client-Side Only)
 
-- [1-1-vite-componentdidmount](./apps/1-spa/1-1-vite-componentdidmount) - `pnpm dev1-1` [http://localhost:3311/](http://localhost:3311/)
-- [1-2-vite-useeffect](./apps/1-spa/1-2-vite-useeffect) - `pnpm dev1-2` [http://localhost:3312/](http://localhost:3312/)
-- [1-3-vite-reactquery](./apps/1-spa/1-3-vite-reactquery) - `pnpm dev1-3` [http://localhost:3313/](http://localhost:3313/)
-- [1-4-vite-reactquery-hooks](./apps/1-spa/1-4-vite-reactquery-hooks) - `pnpm dev1-4` [http://localhost:3314/](http://localhost:3314/)
-- [1-5-vite-reactquery-query-options](./apps/1-spa/1-5-vite-reactquery-query-options) - `pnpm dev1-5` [http://localhost:3315/](http://localhost:3315/)
+- [1-1-vite-react-router-componentdidmount](./apps/1-spa/1-1-vite-react-router-componentdidmount) - `pnpm dev1-1` [http://localhost:3311/](http://localhost:3311/)
+- [1-2-vite-react-router-useeffect](./apps/1-spa/1-2-vite-react-router-useeffect) - `pnpm dev1-2` [http://localhost:3312/](http://localhost:3312/)
+- [1-3-vite-react-router-react-query](./apps/1-spa/1-3-vite-react-router-react-query) - `pnpm dev1-3` [http://localhost:3313/](http://localhost:3313/)
+- [1-4-vite-react-router-react-query-hooks](./apps/1-spa/1-4-vite-react-router-react-query-hooks) - `pnpm dev1-4` [http://localhost:3314/](http://localhost:3314/)
+- [1-5-vite-react-router-react-query-query-options](./apps/1-spa/1-5-vite-react-router-react-query-query-options) - `pnpm dev1-5` [http://localhost:3315/](http://localhost:3315/)
 - [1-6-vite-tanstack-router](./apps/1-spa/1-6-vite-tanstack-router) - `pnpm dev1-6` [http://localhost:3316/](http://localhost:3316/)
 - [1-7-vite-tanstack-router-loaders](./apps/1-spa/1-7-vite-tanstack-router-loaders) - `pnpm dev1-7` [http://localhost:3317/](http://localhost:3317/)
 - [1-8-vite-tanstack-router-file-based-routing](./apps/1-spa/1-8-vite-tanstack-router-file-based-routing) - `pnpm dev1-8` [http://localhost:3318/](http://localhost:3318/)

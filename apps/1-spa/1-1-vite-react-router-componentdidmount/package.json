@@ -1,10 +1,10 @@
 {
-  "name": "1-3-vite-reactquery",
+  "name": "1-1-vite-react-router-componentdidmount",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3313",
+    "dev": "vite --port 3311",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -13,8 +13,6 @@
     "@mantine/core": "8.1.3",
     "@mantine/hooks": "8.1.3",
     "@tabler/icons-react": "3.17.0",
-    "@tanstack/react-query": "^5.83.0",
-    "@tanstack/react-query-devtools": "^5.83.0",
     "mantine-react-table": "^2.0.0-beta.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

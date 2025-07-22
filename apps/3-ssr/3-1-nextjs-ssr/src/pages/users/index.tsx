@@ -85,7 +85,7 @@ export default function UsersPage({ users, error }: UsersPageProps) {
         ),
       },
     ],
-    []
+    [],
   );
 
   const debouncedPrefetchUser = useDebouncedCallback(
@@ -97,7 +97,7 @@ export default function UsersPage({ users, error }: UsersPageProps) {
           return response.json() as Promise<IUser>;
         },
       }),
-    100
+    100,
   );
 
   if (error) {

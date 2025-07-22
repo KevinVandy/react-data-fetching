@@ -77,7 +77,7 @@ export default function UserPage({
     queryKey: [`/users/${userIdNumber}`],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/users/${userIdNumber}`
+        `http://localhost:3300/users/${userIdNumber}`,
       );
       return response.json() as Promise<IUser>;
     },
@@ -94,7 +94,7 @@ export default function UserPage({
     queryKey: [`/users/${userIdNumber}/posts`],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/users/${userIdNumber}/posts`
+        `http://localhost:3300/users/${userIdNumber}/posts`,
       );
       return response.json() as Promise<IPost[]>;
     },

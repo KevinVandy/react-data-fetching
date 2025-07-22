@@ -24,17 +24,29 @@ import { IComment } from "../api-types";
 import { postQueryOptions } from "../queries/posts";
 import { postCommentsQueryOptions } from "../queries/comments";
 import { userQueryOptions } from "../queries/users";
+import { getPost } from "../server-functions/posts";
+import { getUser } from "../server-functions/users";
+import {
+  getPostComments,
+  createComment,
+  deleteComment,
+} from "../server-functions/comments";
 
 export const Route = createFileRoute("/posts/$id")({
   loader: async ({ context: { queryClient }, params: { id } }) => {
-    // First load the post
-    const post = await queryClient.ensureQueryData(postQueryOptions(id));
+    // First load the post using server function
+    const post = await getPost({ data: id });
+    queryClient.setQueryData(postQueryOptions(id).queryKey, post);
 
-    // Then load user and comments in parallel
-    await Promise.all([
-      queryClient.ensureQueryData(userQueryOptions(post.userId)),
-      queryClient.ensureQueryData(postCommentsQueryOptions(id)),
+    // Then load user and comments in parallel using server functions
+    const [user, comments] = await Promise.all([
+      getUser({ data: post.userId }),
+      getPostComments({ data: id }),
     ]);
+
+    // Set the data in the query client
+    queryClient.setQueryData(userQueryOptions(post.userId).queryKey, user);
+    queryClient.setQueryData(postCommentsQueryOptions(id).queryKey, comments);
   },
   component: PostPage,
 });
@@ -54,19 +66,11 @@ function PostPage() {
 
   //delete comment, refresh comments after delete
   const {
-    mutate: deleteComment,
+    mutate: deleteCommentMutation,
     isPending: isDeletingComment,
     context: deletingCommentContext,
   } = useMutation({
-    mutationFn: async (commentId: number) => {
-      const response = await fetch(
-        `http://localhost:3300/comments/${commentId}`,
-        {
-          method: "DELETE",
-        },
-      );
-      return response.json() as Promise<IComment>;
-    },
+    mutationFn: (commentId: number) => deleteComment({ data: commentId }),
     //record which comment is being deleted so we can give it lower opacity
     onMutate: async (commentId) => ({ commentId }),
     onError: (err, commentId) => {
@@ -87,16 +91,8 @@ function PostPage() {
   const [commentText, setCommentText] = useState("");
 
   const { mutate: postComment, isPending: isPostingComment } = useMutation({
-    mutationFn: async (comment: Omit<IComment, "id">) => {
-      const response = await fetch(`http://localhost:3300/comments`, {
-        method: "POST",
-        body: JSON.stringify(comment),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      return response.json() as Promise<IComment>;
-    },
+    mutationFn: (comment: Omit<IComment, "id">) =>
+      createComment({ data: comment }),
     //optimistic client-side update
     onMutate: async (newComment) => {
       await queryClient.cancelQueries({
@@ -201,7 +197,7 @@ function PostPage() {
                 right={10}
                 top={10}
                 variant="subtle"
-                onClick={() => deleteComment(comment.id)}
+                onClick={() => deleteCommentMutation(comment.id)}
               >
                 <IconTrash />
               </ActionIcon>

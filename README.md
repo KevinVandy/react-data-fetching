@@ -29,6 +29,7 @@ A repository to showcase different ways to fetch data in React.
 - [3-3-sveltekit-ssr](./apps/3-ssr/3-3-sveltekit-ssr) - `pnpm dev3-3` [http://localhost:3333/](http://localhost:3333/)
 - [3-4-astro-ssr](./apps/3-ssr/3-4-astro-ssr) - `pnpm dev3-4` [http://localhost:3334/](http://localhost:3334/)
 - [3-5-tanstack-start-ssr](./apps/3-ssr/3-5-tanstack-start-ssr) - `pnpm dev3-5` [http://localhost:3335/](http://localhost:3335/)
+- [3-6-tanstack-start-ssr-server-functions](./apps/3-ssr/3-6-tanstack-start-ssr-server-functions) - `pnpm dev3-6` [http://localhost:3336/](http://localhost:3336/)
 
 ## HTML Streaming (RSC / Astro Server Islands)
 

@@ -17,7 +17,7 @@
     "dev2-2": "turbo dev --filter 2-2-astro-ssg",
     "dev2-3": "turbo dev --filter 2-3-astro-react-ssg",
     "dev3-1": "turbo dev --filter 3-1-nextjs-ssr",
-    "dev3-2": "turbo dev --filter 3-2-remix-ssr",
+    "dev3-2": "turbo dev --filter 3-2-react-router-ssr",
     "dev3-3": "turbo dev --filter 3-3-sveltekit-ssr",
     "dev3-4": "turbo dev --filter 3-4-astro-ssr",
     "dev3-5": "turbo dev --filter 3-5-tanstack-start-ssr",

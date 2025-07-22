@@ -25,7 +25,7 @@ A repository to showcase different ways to fetch data in React.
 ## Server-Side Rendering (SSR)
 
 - [3-1-nextjs-ssr](./apps/3-ssr/3-1-nextjs-ssr) - `pnpm dev3-1` [http://localhost:3331/](http://localhost:3331/)
-- [3-2-remix-ssr](./apps/3-ssr/3-2-remix-ssr) - `pnpm dev3-2` [http://localhost:3332/](http://localhost:3332/)
+- [3-2-react-router-ssr](./apps/3-ssr/3-2-react-router-ssr) - `pnpm dev3-2` [http://localhost:3332/](http://localhost:3332/)
 - [3-3-sveltekit-ssr](./apps/3-ssr/3-3-sveltekit-ssr) - `pnpm dev3-3` [http://localhost:3333/](http://localhost:3333/)
 - [3-4-astro-ssr](./apps/3-ssr/3-4-astro-ssr) - `pnpm dev3-4` [http://localhost:3334/](http://localhost:3334/)
 - [3-5-tanstack-start-ssr](./apps/3-ssr/3-5-tanstack-start-ssr) - `pnpm dev3-5` [http://localhost:3335/](http://localhost:3335/)

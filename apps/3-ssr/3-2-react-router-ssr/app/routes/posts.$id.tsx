@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  ActionFunction,
-  json,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
+import { ActionFunction, LoaderFunction, MetaFunction } from "react-router";
 import {
   Form,
   Link,
@@ -12,7 +7,7 @@ import {
   useLoaderData,
   useNavigation,
   useParams,
-} from "@remix-run/react";
+} from "react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ActionIcon,
@@ -47,19 +42,19 @@ export const loader: LoaderFunction = async ({ params }) => {
       commentsResponse.json(),
     ]);
 
-    return json({
+    return {
       initialPost,
       initialComments,
       error: false,
-    });
+    };
   } catch (error) {
     console.error(error);
 
-    return json({
+    return {
       initialPost: null,
       initialComments: null,
       error: true,
-    });
+    };
   }
 };
 
@@ -88,7 +83,7 @@ export const action: ActionFunction = async ({ request }) => {
       comment: "Error posting comment",
     };
   }
-  return json(returnData);
+  return returnData;
 };
 
 interface IPostPageProps {
@@ -108,7 +103,7 @@ export default function PostPage() {
     error: pageError,
   } = useLoaderData<IPostPageProps>();
 
-  const actionData = useActionData<typeof action>();
+  const actionData: any = useActionData<typeof action>();
 
   useEffect(() => {
     refetchComments(); //refresh comments after posting
@@ -149,7 +144,7 @@ export default function PostPage() {
     queryKey: ["comments", postId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/posts/${postId}/comments`,
+        `http://localhost:3300/posts/${postId}/comments`
       );
       return response.json() as Promise<IComment[]>;
     },
@@ -167,7 +162,7 @@ export default function PostPage() {
     queryKey: ["user", post?.userId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/users/${post?.userId}`,
+        `http://localhost:3300/users/${post?.userId}`
       );
       return response.json() as Promise<IUser>;
     },
@@ -184,7 +179,7 @@ export default function PostPage() {
         `http://localhost:3300/comments/${commentId}`,
         {
           method: "DELETE",
-        },
+        }
       );
       return response.json() as Promise<IComment>;
     },
@@ -193,7 +188,7 @@ export default function PostPage() {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err,
+        err
       );
       alert("Error deleting comment");
     },
@@ -206,7 +201,7 @@ export default function PostPage() {
     (commentId: number) => {
       deleteComment(commentId);
     },
-    [deleteComment],
+    [deleteComment]
   );
 
   // Post new comment - with optimistic updates!

@@ -1,8 +1,7 @@
-import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, href } from "react-router";
 import { Alert, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "react-router";
 import { IPost } from "../api-types";
 
 interface LoaderData {
@@ -16,17 +15,17 @@ export const loader: LoaderFunction = async () => {
     const response = await fetch(fetchUrl.href);
     const fetchedPosts = (await response.json()) as IPost[];
 
-    return json<LoaderData>({
+    return {
       posts: fetchedPosts,
       error: false,
-    });
+    };
   } catch (error) {
     console.error(error);
 
-    return json<LoaderData>({
+    return {
       posts: [],
       error: true,
-    });
+    };
   }
 };
 
@@ -53,7 +52,7 @@ export default function HomePage() {
           posts?.map((post) => (
             <Link
               key={post.id}
-              to={`/posts/${post.id}`}
+              to={href("/posts/:id", { id: post.id.toString() })}
               style={{ textDecoration: "none" }}
             >
               <Card

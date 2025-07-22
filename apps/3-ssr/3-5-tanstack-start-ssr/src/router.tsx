@@ -16,8 +16,13 @@ export function createRouter() {
       routeTree,
       context: { queryClient },
       defaultPreload: "intent",
-      defaultErrorComponent: (props) => <ErrorBoundary {...props} />,
+      defaultErrorComponent: (props) => (
+        <ErrorBoundary fallback={<div>Error</div>} />
+      ),
       defaultNotFoundComponent: () => <div>Not Found</div>,
+      // hydrate: () => {
+      //   window.__APP_HYDRATED = true;
+      // },
     }),
     queryClient
   );

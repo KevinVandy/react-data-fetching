@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js React Server Components (RSC)
 
-## Getting Started
+This example demonstrates Next.js App Router with React Server Components, showing how server components handle data fetching and streaming while client components manage interactivity with server actions and optimistic updates.
 
-First, run the development server:
+## Key Learning Points
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **React Server Components**: Components that run only on the server
+- **Server Actions**: Functions that run on server, called from client components
+- **Optimistic Updates**: `useOptimistic` for instant UI feedback
+- **Server/Client Boundary**: Clear separation with "use client" directive
+- **Progressive Enhancement**: Forms work without JavaScript
+- **Streaming**: Automatic streaming of server-rendered content
+
+## Code Examples
+
+### Server Component with Data Fetching
+```tsx
+// src/app/page.tsx:13-48
+export default async function HomePage() {
+  const posts = await fetchPosts(); // Fetch directly in server component
+
+  return (
+    <Stack>
+      <Title order={2}>Your Home Feed</Title>
+      <Flex gap="md" wrap="wrap">
+        <Suspense fallback={<Loader />}>
+          {posts.map((post) => (
+            <Link key={post.id} href={`/posts/${post.id}`}>
+              <Card>
+                <Title order={3}>{post.title}</Title>
+                <Text>{post.body}</Text>
+                <Text c="blue" pt="md">Go to post</Text>
+              </Card>
+            </Link>
+          ))}
+        </Suspense>
+      </Flex>
+    </Stack>
+  );
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Server Component with Parallel Data Fetching
+```tsx
+// src/app/posts/[id]/page.tsx:6-22
+const fetchPostAndComments = async (postId: number) => {
+  // Parallel data fetching on server
+  const [post, comments] = await Promise.all([
+    fetch(`http://localhost:3300/posts/${postId}`).then((res) => res.json()),
+    fetch(`http://localhost:3300/posts/${postId}/comments`).then((res) => res.json()),
+  ]);
+  
+  // Sequential fetch for user data
+  const user = await fetch(`http://localhost:3300/users/${post.userId}`).then(
+    (res) => res.json(),
+  );
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  return { post, user, comments };
+};
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+export default async function PostPage({ params }: PostPageProps) {
+  const { post, user, comments } = await fetchPostAndComments(+params.id);
+  // Server component passes data to client component
+  return <CommentSection comments={comments} postId={post.id} />;
+}
+```
 
-## Learn More
+### Server Actions
+```tsx
+// src/app/posts/[id]/actions.tsx:16-30
+"use server";
 
-To learn more about Next.js, take a look at the following resources:
+export const submitPostComment = async (formData: FormData) => {
+  const comment = Object.fromEntries(formData.entries()) as unknown as IComment;
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  const response = await fetch(`http://localhost:3300/comments`, {
+    method: "POST",
+    body: JSON.stringify(comment),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  revalidatePath(`/posts/${comment.postId}`); // Revalidate server component
+  return response.json() as Promise<IComment>;
+};
+```
 
-## Deploy on Vercel
+### Client Component with Optimistic Updates
+```tsx
+// src/app/posts/[id]/CommentSection.tsx:33-52
+"use client";
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export default function CommentSection({ comments, postId }: CommentSectionProps) {
+  const [optimisticComments, addOptimisticComment] = useOptimistic(
+    comments,
+    (currentComments: IComment[], newComment: IComment) => {
+      return [...currentComments, newComment];
+    },
+  );
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  async function optimisticallyPostComment(formData: FormData) {
+    // Add optimistic comment immediately
+    addOptimisticComment({
+      postId,
+      id: 0,
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      body: formData.get("body") as string,
+      sending: true,
+    });
+    formRef.current?.reset();
+    await submitPostComment(formData); // Call server action
+  }
+
+  return (
+    <form action={optimisticallyPostComment}>
+      {/* Form content */}
+    </form>
+  );
+}
+```
+
+## React Server Components Architecture
+
+**Server Components:**
+- Run only on server during build/request
+- Can directly access databases and APIs
+- Cannot use client-side features (useState, useEffect, etc.)
+- Automatically streamed to client
+
+**Client Components:**
+- Run on both server (for SSR) and client
+- Handle interactivity and browser APIs
+- Must be marked with "use client" directive
+- Receive props from server components
+
+**Server Actions:**
+- Functions that run on server but are called from client
+- Marked with "use server" directive
+- Enable form submissions and mutations
+- Can revalidate server component data
+
+## RSC vs Traditional SSR
+
+**Server Components:**
+- Zero JavaScript sent for server components
+- Direct server data access (no API layer needed)
+- Automatic code splitting and streaming
+- Server-side rendering with client interactivity
+
+**Traditional SSR:**
+- Full page hydration with JavaScript
+- API calls needed for data fetching
+- Manual optimization for performance
+- Waterfall requests for nested data
+
+## When to Use RSC
+
+**Perfect For:**
+- Applications with mix of static and interactive content
+- Reducing client-side JavaScript bundle size
+- Direct database access without API layer
+- SEO-critical applications with rich interactivity
+
+React Server Components provide the best of both worlds: server-side performance with seamless client-side interactivity.

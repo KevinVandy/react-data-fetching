@@ -69,11 +69,17 @@ const postRoute = createRoute({
     // First load the post
     const post = await queryClient.ensureQueryData(postQueryOptions(id));
 
-    // Then load user and comments in parallel
-    await Promise.all([
-      queryClient.ensureQueryData(userQueryOptions(post.userId)),
-      queryClient.ensureQueryData(postCommentsQueryOptions(id)),
-    ]);
+    // Load user immediately
+    await queryClient.ensureQueryData(userQueryOptions(post.userId));
+
+    // Defer comments loading - return the promise without awaiting
+    const deferredComments = queryClient.ensureQueryData(
+      postCommentsQueryOptions(id),
+    );
+
+    return {
+      deferredComments,
+    };
   },
   component: PostPage,
 });

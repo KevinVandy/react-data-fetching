@@ -5,7 +5,7 @@ This example demonstrates Next.js's Static Site Generation capabilities, where p
 ## Key Learning Points
 
 - **getStaticProps**: Fetch data at build time and pass to page component as props
-- **getStaticPaths**: Generate dynamic routes statically at build time  
+- **getStaticPaths**: Generate dynamic routes statically at build time
 - **Static HTML Generation**: Pages are pre-rendered as HTML files
 - **Build-Time Data Fetching**: Data is fetched once during build, not at runtime
 - **Incremental Static Regeneration (ISR)**: Pages can be regenerated with `revalidate`
@@ -14,6 +14,7 @@ This example demonstrates Next.js's Static Site Generation capabilities, where p
 ## Code Examples
 
 ### Static Props for Homepage
+
 ```tsx
 // pages/index.tsx:7-30
 export const getStaticProps: GetStaticProps = async () => {
@@ -42,6 +43,7 @@ export const getStaticProps: GetStaticProps = async () => {
 ```
 
 ### Dynamic Route Generation
+
 ```tsx
 // pages/posts/[id].tsx:8-22
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -60,6 +62,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 ```
 
 ### Static Props for Dynamic Pages
+
 ```tsx
 // pages/posts/[id].tsx:25-64
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -78,7 +81,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     ]);
 
     // Sequential fetch for user (depends on post data)
-    const userResponse = await fetch(`http://localhost:3300/users/${post.userId}`);
+    const userResponse = await fetch(
+      `http://localhost:3300/users/${post.userId}`,
+    );
     const user = await userResponse.json();
 
     return {
@@ -102,6 +107,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 ```
 
 ### Component Receiving Static Props
+
 ```tsx
 // pages/index.tsx:37-68
 export default function HomePage({ posts, error }: HomePageProps) {
@@ -110,11 +116,23 @@ export default function HomePage({ posts, error }: HomePageProps) {
       <Title order={2}>Your Home Feed</Title>
       <Flex gap="md" wrap="wrap">
         {posts?.map((post) => (
-          <Link key={post.id} href={`/posts/${post.id}`} style={{ textDecoration: "none" }}>
-            <Card mih={320} shadow="md" w={300} withBorder style={{ cursor: "pointer" }}>
+          <Link
+            key={post.id}
+            href={`/posts/${post.id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <Card
+              mih={320}
+              shadow="md"
+              w={300}
+              withBorder
+              style={{ cursor: "pointer" }}
+            >
               <Title order={3}>{post.title}</Title>
               <Text>{post.body}</Text>
-              <Text c="blue" pt="md">Go to post</Text>
+              <Text c="blue" pt="md">
+                Go to post
+              </Text>
             </Card>
           </Link>
         ))}
@@ -127,21 +145,25 @@ export default function HomePage({ posts, error }: HomePageProps) {
 ## Benefits of SSG
 
 **1. Performance**
+
 - Pages served as static HTML files
 - Minimal JavaScript hydration required
 - Fast loading times from CDN
 
 **2. SEO Optimization**
+
 - Complete HTML content available for crawlers
 - Meta tags and structured data pre-rendered
 - Better search engine rankings
 
 **3. Scalability**
+
 - Static files can be cached indefinitely
 - No server-side processing per request
 - Cost-effective hosting
 
 **4. Reliability**
+
 - No database or API dependencies at runtime
 - Pages remain available even if data sources fail
 - High availability through CDN distribution
@@ -158,6 +180,7 @@ return {
 ```
 
 **How ISR Works:**
+
 1. Initial request serves cached static page
 2. After revalidate time, next request triggers regeneration
 3. New page is generated in background
@@ -166,12 +189,14 @@ return {
 ## When to Use SSG
 
 **Perfect For:**
+
 - Blogs and content sites
 - E-commerce product pages
 - Documentation sites
 - Marketing pages
 
 **Requirements:**
+
 - Data available at build time
 - Content doesn't change frequently
 - Same content for all users

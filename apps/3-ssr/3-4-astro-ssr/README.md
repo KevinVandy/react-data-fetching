@@ -14,6 +14,7 @@ This example demonstrates Astro's server-side rendering capabilities with API en
 ## Code Examples
 
 ### Astro Config for SSR Mode
+
 ```javascript
 // astro.config.mjs:7-12
 export default defineConfig({
@@ -25,6 +26,7 @@ export default defineConfig({
 ```
 
 ### Server-Side Data Fetching in Frontmatter
+
 ```astro
 ---
 // src/pages/index.astro:5-16
@@ -44,6 +46,7 @@ const { posts, error } = await fetchPosts();
 ```
 
 ### Dynamic Route with Hybrid Generation
+
 ```astro
 ---
 // src/pages/posts/[id].astro:5-40
@@ -87,6 +90,7 @@ try {
 ```
 
 ### API Route for Comment Creation
+
 ```typescript
 // src/pages/api/add-comment.ts:3-42
 export const POST: APIRoute = async ({ request }) => {
@@ -132,6 +136,7 @@ export const POST: APIRoute = async ({ request }) => {
 ```
 
 ### API Route for Comment Deletion
+
 ```typescript
 // src/pages/api/delete-comment.ts:3-33
 export const POST: APIRoute = async ({ request }) => {
@@ -168,6 +173,7 @@ export const POST: APIRoute = async ({ request }) => {
 ```
 
 ### Form-Based Comment Submission
+
 ```astro
 <!-- src/pages/posts/[id].astro:130-153 -->
 <form
@@ -196,6 +202,7 @@ export const POST: APIRoute = async ({ request }) => {
 ```
 
 ### Form-Based Comment Deletion
+
 ```astro
 <!-- src/pages/posts/[id].astro:91-119 -->
 {comment.email === "user@mailinator.com" && (
@@ -234,24 +241,28 @@ export const POST: APIRoute = async ({ request }) => {
 ## Benefits of Astro SSR
 
 **1. Traditional Web Model Enhanced**
+
 - HTML forms work without JavaScript
 - Progressive enhancement approach
 - Server-side processing with modern tooling
 - SEO-friendly by default
 
 **2. Performance Characteristics**
+
 - Zero client-side JavaScript by default
 - Server-side rendering for all content
 - Optimal loading performance
 - Minimal bandwidth usage
 
 **3. Developer Experience**
+
 - Familiar component frontmatter patterns
 - File-based API routing
 - TypeScript support throughout
 - Simple deployment model
 
 **4. Hybrid Approach**
+
 - Mix static and dynamic generation strategies
 - API routes for server-side logic
 - Form-based interactions with redirects
@@ -260,18 +271,21 @@ export const POST: APIRoute = async ({ request }) => {
 ## Astro SSR Patterns
 
 **1. Frontmatter Data Fetching**
+
 - Server-side data loading in component script
 - Async operations before rendering
 - Error handling with redirects
 - Direct variable access in templates
 
 **2. API Route Architecture**
+
 - RESTful endpoints with Astro conventions
 - FormData processing for HTML forms
 - Server-side redirects after mutations
 - Standard HTTP response patterns
 
 **3. Form-First Interactions**
+
 - HTML forms as primary interaction method
 - Server-side validation and processing
 - Redirect-after-POST pattern
@@ -280,18 +294,21 @@ export const POST: APIRoute = async ({ request }) => {
 ## Comparison with Other SSR Approaches
 
 **vs SvelteKit SSR (3-3):**
+
 - Zero-JS by default vs. selective hydration
 - Form-based interactions vs. reactive components
 - Traditional server patterns vs. modern reactive patterns
 - API routes vs. server actions
 
 **vs React Router SSR (3-2):**
+
 - No client-side JavaScript framework overhead
-- HTML forms vs. React component interactions  
+- HTML forms vs. React component interactions
 - Server redirects vs. programmatic navigation
 - Simple request/response vs. complex state management
 
 **vs Next.js SSR (3-1):**
+
 - Component-first vs. page-first architecture
 - API routes integrated vs. separate API layer
 - Zero JavaScript vs. React hydration
@@ -300,6 +317,7 @@ export const POST: APIRoute = async ({ request }) => {
 ## When to Use Astro SSR
 
 **Perfect For:**
+
 - Content-heavy websites with minimal interactivity
 - Performance-critical applications
 - Sites requiring zero JavaScript
@@ -307,12 +325,14 @@ export const POST: APIRoute = async ({ request }) => {
 - SEO-focused content sites
 
 **Requirements:**
+
 - Minimal client-side interactivity needs
 - Performance is the primary concern
 - Traditional web development preferences
 - Server-side processing capabilities
 
 **Avoid When:**
+
 - Rich interactive applications needed
 - Real-time features required
 - Complex client-side state management

@@ -16,6 +16,7 @@ This example demonstrates the native React hooks approach to data fetching using
 ## Code Examples
 
 ### Basic Data Fetching with useEffect
+
 ```tsx
 // HomePage.tsx:45-47
 useEffect(() => {
@@ -44,6 +45,7 @@ const fetchPosts = async () => {
 ```
 
 ### useState for State Management
+
 ```tsx
 // HomePage.tsx:18-22
 const [posts, setPosts] = useState<IPost[]>([]);
@@ -53,6 +55,7 @@ const [isFetchingPosts, setIsFetchingPosts] = useState(false);
 ```
 
 ### Using useParams for Route Parameters
+
 ```tsx
 // PostPage.tsx:23
 const { id: postId } = useParams();
@@ -66,4 +69,5 @@ useEffect(() => {
 ```
 
 ### Problem: Missing Dependency Arrays
+
 Notice this example has a potential issue - the useEffect calls functions that depend on `postId` but doesn't include dependencies, which could cause stale closure problems when route parameters change.

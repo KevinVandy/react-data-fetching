@@ -14,6 +14,7 @@ This example demonstrates Next.js's Server-Side Rendering capabilities using `ge
 ## Code Examples
 
 ### Server-Side Props for Homepage
+
 ```tsx
 // pages/index.tsx:7-29
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -41,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 ```
 
 ### Dynamic Route Server-Side Rendering
+
 ```tsx
 // pages/posts/[id].tsx:8-45
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -59,7 +61,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ]);
 
     // Sequential fetch for user data
-    const userResponse = await fetch(`http://localhost:3300/users/${post.userId}`);
+    const userResponse = await fetch(
+      `http://localhost:3300/users/${post.userId}`,
+    );
     const user = await userResponse.json();
 
     return {
@@ -83,6 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 ```
 
 ### Component Receiving Server Data
+
 ```tsx
 // pages/index.tsx:31-62
 interface HomePageProps {
@@ -97,11 +102,23 @@ export default function HomePage({ posts, error }: HomePageProps) {
         <Title order={2}>Your Home Feed</Title>
         <Flex gap="md" wrap="wrap">
           {posts?.map((post) => (
-            <Link key={post.id} href={`/posts/${post.id}`} style={{ textDecoration: "none" }}>
-              <Card mih={320} shadow="md" w={300} withBorder style={{ cursor: "pointer" }}>
+            <Link
+              key={post.id}
+              href={`/posts/${post.id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Card
+                mih={320}
+                shadow="md"
+                w={300}
+                withBorder
+                style={{ cursor: "pointer" }}
+              >
                 <Title order={3}>{post.title}</Title>
                 <Text>{post.body}</Text>
-                <Text c="blue" pt="md">Go to post</Text>
+                <Text c="blue" pt="md">
+                  Go to post
+                </Text>
               </Card>
             </Link>
           ))}
@@ -113,19 +130,20 @@ export default function HomePage({ posts, error }: HomePageProps) {
 ```
 
 ### Request Context Access
+
 ```tsx
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res, params, query } = context;
-  
+
   // Access cookies, headers, user session
-  const userAgent = req.headers['user-agent'];
+  const userAgent = req.headers["user-agent"];
   const cookies = req.headers.cookie;
-  
+
   // Redirect based on conditions
   if (!userIsAuthenticated) {
     return {
       redirect: {
-        destination: '/login',
+        destination: "/login",
         permanent: false,
       },
     };
@@ -138,21 +156,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 ## Benefits of SSR
 
 **1. Fresh Data**
+
 - Always shows current data from APIs/database
 - Perfect for user-specific or frequently changing content
 - No stale data issues
 
 **2. SEO with Dynamic Content**
+
 - Search engines see fully rendered HTML
 - Dynamic meta tags and content
 - Good for personalized or time-sensitive pages
 
 **3. Personalization**
+
 - User-specific content rendered on server
 - Access to cookies, headers, and session data
 - Secure data fetching with server-side credentials
 
 **4. Security**
+
 - API keys and sensitive data stay on server
 - No exposure of internal APIs to client
 - Server-side authentication and authorization
@@ -160,24 +182,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 ## SSR vs SSG Comparison
 
 **SSR Advantages:**
+
 - Real-time data (always fresh)
 - User personalization
 - Access to request context
 - No build-time data requirements
 
 **SSR Disadvantages:**
+
 - Slower response times (server processing)
 - Higher server load and costs
 - No CDN caching benefits
 - More complex deployment
 
 **SSG Advantages:**
+
 - Faster loading (static files)
 - Lower server costs
 - Excellent CDN caching
 - High scalability
 
 **SSG Disadvantages:**
+
 - Data can be stale
 - No personalization
 - Build-time data requirements
@@ -186,6 +212,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 ## When to Use SSR
 
 **Perfect For:**
+
 - User dashboards and accounts
 - E-commerce cart/checkout pages
 - Social media feeds
@@ -194,6 +221,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 - Content that changes frequently
 
 **Avoid SSR When:**
+
 - Content is mostly static
 - Performance is critical
 - High traffic with cacheable content
@@ -202,6 +230,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 ## Performance Considerations
 
 **Optimize SSR Performance:**
+
 - Use parallel data fetching with Promise.all
 - Implement proper caching strategies
 - Consider hybrid approach (SSR + client-side updates)

@@ -14,6 +14,7 @@ This example demonstrates Astro's server islands feature with deferred HTML stre
 ## Code Examples
 
 ### Server Island with Deferred Loading
+
 ```astro
 <!-- src/pages/index.astro:6-13 -->
 <Layout>
@@ -27,6 +28,7 @@ This example demonstrates Astro's server islands feature with deferred HTML stre
 ```
 
 ### Server Component with Artificial Delay
+
 ```astro
 ---
 // src/components/HomeFeed.astro:4-17
@@ -48,6 +50,7 @@ const { posts, error } = await fetchPosts();
 ```
 
 ### Nested Server Islands
+
 ```astro
 <!-- src/pages/posts/[id].astro:54-58 -->
 <Comments postId={postId} server:defer>
@@ -58,6 +61,7 @@ const { posts, error } = await fetchPosts();
 ```
 
 ### Server Component with Caching Headers
+
 ```astro
 ---
 // src/components/Comments.astro:10-20
@@ -75,6 +79,7 @@ const comments = (await commentsResponse.json()) as IComment[];
 ```
 
 ### Astro Actions for Form Handling
+
 ```typescript
 // src/actions/index.ts:4-44
 export const server = {
@@ -110,6 +115,7 @@ export const server = {
 ```
 
 ### Client-Side Enhancement Script
+
 ```javascript
 // src/components/Comments.astro:117-129
 <script>
@@ -131,24 +137,28 @@ export const server = {
 ## Astro Server Islands Benefits
 
 **1. Streaming Performance**
+
 - Components render independently on server
 - Progressive page loading with fallback content
 - Reduced time to first contentful paint
 - Better perceived performance during loading
 
 **2. Zero JavaScript by Default**
+
 - Server islands render pure HTML
 - No client-side hydration overhead
 - Optional JavaScript enhancement
 - Minimal browser processing required
 
 **3. Flexible Caching**
+
 - Per-component cache control headers
 - Independent cache invalidation
 - Server-side performance optimization
 - CDN-friendly architecture
 
 **4. Progressive Enhancement**
+
 - Forms work without JavaScript
 - Enhanced with Astro actions
 - Graceful degradation patterns
@@ -157,6 +167,7 @@ export const server = {
 ## Server Islands vs React Server Components
 
 **Astro Server Islands:**
+
 - Pure HTML streaming without client hydration
 - Component-level caching strategies
 - `server:defer` directive for deferred loading
@@ -164,6 +175,7 @@ export const server = {
 - Astro actions for server mutations
 
 **React Server Components:**
+
 - Server components with client component hydration
 - Server actions and optimistic updates
 - `use server` directive patterns
@@ -180,6 +192,7 @@ export const server = {
 ## When to Use Astro Server Islands
 
 **Perfect For:**
+
 - Content-heavy sites with dynamic sections
 - Applications prioritizing performance over interactivity
 - Sites requiring minimal JavaScript
@@ -187,6 +200,7 @@ export const server = {
 - SEO-critical applications with some dynamic content
 
 **Limitations:**
+
 - Limited client-side interactivity compared to RSC
 - No optimistic updates or advanced state management
 - Less mature ecosystem for complex interactions

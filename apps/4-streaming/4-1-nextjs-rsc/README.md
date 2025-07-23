@@ -14,6 +14,7 @@ This example demonstrates Next.js App Router with React Server Components, showi
 ## Code Examples
 
 ### Server Component with Data Fetching
+
 ```tsx
 // src/app/page.tsx:13-48
 export default async function HomePage() {
@@ -29,7 +30,9 @@ export default async function HomePage() {
               <Card>
                 <Title order={3}>{post.title}</Title>
                 <Text>{post.body}</Text>
-                <Text c="blue" pt="md">Go to post</Text>
+                <Text c="blue" pt="md">
+                  Go to post
+                </Text>
               </Card>
             </Link>
           ))}
@@ -41,15 +44,18 @@ export default async function HomePage() {
 ```
 
 ### Server Component with Parallel Data Fetching
+
 ```tsx
 // src/app/posts/[id]/page.tsx:6-22
 const fetchPostAndComments = async (postId: number) => {
   // Parallel data fetching on server
   const [post, comments] = await Promise.all([
     fetch(`http://localhost:3300/posts/${postId}`).then((res) => res.json()),
-    fetch(`http://localhost:3300/posts/${postId}/comments`).then((res) => res.json()),
+    fetch(`http://localhost:3300/posts/${postId}/comments`).then((res) =>
+      res.json(),
+    ),
   ]);
-  
+
   // Sequential fetch for user data
   const user = await fetch(`http://localhost:3300/users/${post.userId}`).then(
     (res) => res.json(),
@@ -66,6 +72,7 @@ export default async function PostPage({ params }: PostPageProps) {
 ```
 
 ### Server Actions
+
 ```tsx
 // src/app/posts/[id]/actions.tsx:16-30
 "use server";
@@ -87,11 +94,15 @@ export const submitPostComment = async (formData: FormData) => {
 ```
 
 ### Client Component with Optimistic Updates
+
 ```tsx
 // src/app/posts/[id]/CommentSection.tsx:33-52
 "use client";
 
-export default function CommentSection({ comments, postId }: CommentSectionProps) {
+export default function CommentSection({
+  comments,
+  postId,
+}: CommentSectionProps) {
   const [optimisticComments, addOptimisticComment] = useOptimistic(
     comments,
     (currentComments: IComment[], newComment: IComment) => {
@@ -113,29 +124,28 @@ export default function CommentSection({ comments, postId }: CommentSectionProps
     await submitPostComment(formData); // Call server action
   }
 
-  return (
-    <form action={optimisticallyPostComment}>
-      {/* Form content */}
-    </form>
-  );
+  return <form action={optimisticallyPostComment}>{/* Form content */}</form>;
 }
 ```
 
 ## React Server Components Architecture
 
 **Server Components:**
+
 - Run only on server during build/request
 - Can directly access databases and APIs
 - Cannot use client-side features (useState, useEffect, etc.)
 - Automatically streamed to client
 
 **Client Components:**
+
 - Run on both server (for SSR) and client
 - Handle interactivity and browser APIs
 - Must be marked with "use client" directive
 - Receive props from server components
 
 **Server Actions:**
+
 - Functions that run on server but are called from client
 - Marked with "use server" directive
 - Enable form submissions and mutations
@@ -144,12 +154,14 @@ export default function CommentSection({ comments, postId }: CommentSectionProps
 ## RSC vs Traditional SSR
 
 **Server Components:**
+
 - Zero JavaScript sent for server components
 - Direct server data access (no API layer needed)
 - Automatic code splitting and streaming
 - Server-side rendering with client interactivity
 
 **Traditional SSR:**
+
 - Full page hydration with JavaScript
 - API calls needed for data fetching
 - Manual optimization for performance
@@ -158,6 +170,7 @@ export default function CommentSection({ comments, postId }: CommentSectionProps
 ## When to Use RSC
 
 **Perfect For:**
+
 - Applications with mix of static and interactive content
 - Reducing client-side JavaScript bundle size
 - Direct database access without API layer

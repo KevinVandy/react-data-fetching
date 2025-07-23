@@ -8,7 +8,7 @@ Based on the [TanStack Router overview](https://tanstack.com/router/latest/docs/
 
 - **100% Type Safety**: Complete TypeScript inference across all routes, parameters, and navigation
 - **Advanced Search Parameter Management**: Treats search params as a powerful state manager with JSON serialization
-- **Built-in Data Loading**: Lightweight caching layer with flexible data lifecycle APIs  
+- **Built-in Data Loading**: Lightweight caching layer with flexible data lifecycle APIs
 - **Flexible Architecture**: Supports both file-based and code-based routing patterns
 - **Future-Ready**: Designed to be upgradable to a full-stack framework
 
@@ -24,6 +24,7 @@ Based on the [TanStack Router overview](https://tanstack.com/router/latest/docs/
 ## Code Examples
 
 ### Type-Safe Navigation with Parameters
+
 ```tsx
 // pages/HomePage.tsx:53-57
 <Link
@@ -34,12 +35,14 @@ Based on the [TanStack Router overview](https://tanstack.com/router/latest/docs/
 ```
 
 ### Type-Safe Parameter Access
+
 ```tsx
 // pages/PostPage.tsx:28
 const { id: postId } = useParams({ from: "/posts/$id" });
 ```
 
 ### Code-Based Route Definition
+
 ```tsx
 // AppRoutes.tsx:43-47
 const postRoute = createRoute({
@@ -50,6 +53,7 @@ const postRoute = createRoute({
 ```
 
 ### Router Context Configuration
+
 ```tsx
 // AppRoutes.tsx:58-69
 export const createAppRouter = (queryClient: QueryClient) => {
@@ -61,12 +65,13 @@ export const createAppRouter = (queryClient: QueryClient) => {
       queryClient, // Shared context across routes
     },
   });
-  
+
   return router;
 };
 ```
 
 ### Type Registration for Full Type Safety
+
 ```tsx
 // AppRoutes.tsx:72-76
 declare module "@tanstack/react-router" {
@@ -77,6 +82,7 @@ declare module "@tanstack/react-router" {
 ```
 
 ### Nested Route Tree Structure
+
 ```tsx
 // AppRoutes.tsx:49-55
 const routeTree = rootRoute.addChildren([
@@ -90,6 +96,7 @@ const routeTree = rootRoute.addChildren([
 ## Benefits Compared to React Router
 
 **Type Safety**: Every route, parameter, and navigation is fully typed
+
 ```tsx
 // TanStack Router - Fully typed
 <Link to="/posts/$id" params={{ id: "123" }} />
@@ -99,6 +106,7 @@ const routeTree = rootRoute.addChildren([
 ```
 
 **Better Parameter Handling**: Type-safe parameter extraction
+
 ```tsx
 // TanStack Router - Typed parameters
 const { id } = useParams({ from: "/posts/$id" });

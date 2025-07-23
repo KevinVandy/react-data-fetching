@@ -14,6 +14,7 @@ This example demonstrates combining React Server Components with React Query, sh
 ## Code Examples
 
 ### Server Component with Query Prefetching
+
 ```tsx
 // src/app/page.tsx:19-37
 export default async function HomePage() {
@@ -39,6 +40,7 @@ export default async function HomePage() {
 ```
 
 ### Client Component Using Prefetched Data
+
 ```tsx
 // src/app/PostsFeed.tsx:9-17
 "use client";
@@ -61,6 +63,7 @@ export function PostsFeed() {
 ```
 
 ### Mixed Architecture Pattern
+
 ```tsx
 // Server component handles initial data
 export default async function PostPage({ params }: PostPageProps) {
@@ -71,7 +74,7 @@ export default async function PostPage({ params }: PostPageProps) {
       {/* Server-rendered content */}
       <Title>Post: {post?.id}</Title>
       <Title>{post?.title}</Title>
-      
+
       {/* Client component with server data */}
       <CommentSection comments={comments} postId={post.id} />
     </Stack>
@@ -80,6 +83,7 @@ export default async function PostPage({ params }: PostPageProps) {
 ```
 
 ### Query Client Setup
+
 ```tsx
 // Server-side query client creation
 const queryClient = new QueryClient();
@@ -92,30 +96,34 @@ await queryClient.prefetchQuery({
 // Transfer state to client
 <HydrationBoundary state={dehydrate(queryClient)}>
   <PostsFeed />
-</HydrationBoundary>
+</HydrationBoundary>;
 ```
 
 ## RSC + React Query Benefits
 
 **1. Performance Optimization**
+
 - Eliminate loading states with server prefetching
 - Instant data availability on client
 - Reduced time to interactive
 - Streaming server responses
 
 **2. Enhanced User Experience**
+
 - Server-rendered initial content
 - Client-side refetching and caching
 - Optimistic updates for mutations
 - Background data refreshing
 
 **3. Development Experience**
+
 - Same query functions work on server and client
 - Type-safe data flow
 - Familiar React Query patterns
 - Server/client code sharing
 
 **4. Flexible Architecture**
+
 - Choose per-component whether to use server or client rendering
 - Progressive enhancement approach
 - Granular control over data fetching strategy
@@ -130,12 +138,14 @@ await queryClient.prefetchQuery({
 ## vs Pure RSC (4-1)
 
 **Added Benefits:**
+
 - Client-side caching and refetching
 - Background updates and revalidation
 - Optimistic updates for better UX
 - Query invalidation and synchronization
 
 **Trade-offs:**
+
 - Larger client bundle (React Query)
 - More complex hydration setup
 - Additional abstraction layer
@@ -143,6 +153,7 @@ await queryClient.prefetchQuery({
 ## When to Use RSC + React Query
 
 **Perfect For:**
+
 - Apps needing both server performance and rich client interactivity
 - Complex data synchronization requirements
 - Applications with frequent data updates

@@ -14,6 +14,7 @@ This example demonstrates legacy React data fetching patterns using class compon
 ## Code Examples
 
 ### Basic Data Fetching in componentDidMount
+
 ```tsx
 // HomePage.tsx:53-55
 componentDidMount() {
@@ -23,7 +24,7 @@ componentDidMount() {
 // HomePage.tsx:32-51
 fetchPosts = async () => {
   const { posts } = this.state;
-  
+
   if (!posts.length) {
     this.setState({ isLoadingPosts: true });
   }
@@ -44,6 +45,7 @@ fetchPosts = async () => {
 ```
 
 ### Refetching on Route Parameter Changes
+
 ```tsx
 // PostPage.tsx:83-89
 componentDidUpdate(prevProps: PostPageProps) {
@@ -56,6 +58,7 @@ componentDidUpdate(prevProps: PostPageProps) {
 ```
 
 ### Manual State Management Pattern
+
 ```tsx
 // PostPage.tsx:17-42
 interface HomePageState {

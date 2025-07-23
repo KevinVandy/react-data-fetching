@@ -8,11 +8,13 @@ This example demonstrates TanStack Start's server functions - logic that runs on
 - **Automatic Compilation**: Functions automatically extracted from client bundles
 - **Runtime Validation**: Zod integration for input validation and type safety
 - **Universal Calling**: Call from server-side loaders, client-side code, or other server functions
+- **Deferred Data Loading**: Stream non-critical data with skeleton states
 - **Seamless Integration**: Works naturally with React Query patterns
 
 ## Code Examples
 
 ### Basic Server Function
+
 ```typescript
 // src/server-functions/posts.ts:7-13
 export const getPosts = createServerFn({
@@ -25,6 +27,7 @@ export const getPosts = createServerFn({
 ```
 
 ### Server Function with Validation
+
 ```typescript
 // src/server-functions/posts.ts:16-24
 export const getPost = createServerFn({
@@ -39,6 +42,7 @@ export const getPost = createServerFn({
 ```
 
 ### Zod Schema Validation
+
 ```typescript
 // src/server-functions/comments.ts:10-25
 const CreateCommentSchema = z.object({
@@ -65,30 +69,36 @@ export const createComment = createServerFn({
   });
 ```
 
-### Route Loader Using Server Functions
+### Route Loader with Deferred Data
+
 ```tsx
-// src/routes/posts.$id.tsx:36-50
+// src/routes/posts.$id.tsx:37-56
 export const Route = createFileRoute("/posts/$id")({
   loader: async ({ context: { queryClient }, params: { id } }) => {
-    // Call server functions directly from loader
+    // First load the post using server function
     const post = await getPost({ data: id });
     queryClient.setQueryData(postQueryOptions(id).queryKey, post);
 
-    // Parallel server function calls
-    const [user, comments] = await Promise.all([
-      getUser({ data: post.userId }),
-      getPostComments({ data: id }),
-    ]);
-
-    // Populate query cache with server function results
+    // Load user immediately
+    const user = await getUser({ data: post.userId });
     queryClient.setQueryData(userQueryOptions(post.userId).queryKey, user);
-    queryClient.setQueryData(postCommentsQueryOptions(id).queryKey, comments);
+
+    // Defer comments loading - return the promise without awaiting
+    const deferredComments = getPostComments({ data: id }).then((comments) => {
+      queryClient.setQueryData(postCommentsQueryOptions(id).queryKey, comments);
+      return comments;
+    });
+
+    return {
+      deferredComments,
+    };
   },
   component: PostPage,
 });
 ```
 
 ### React Query Integration
+
 ```typescript
 // src/queries/posts.ts:4-8
 export const postsQueryOptions = queryOptions({
@@ -97,9 +107,64 @@ export const postsQueryOptions = queryOptions({
 });
 ```
 
-### Client-Side Mutations
+### Deferred Data with Suspense and Skeletons
+
 ```tsx
-// src/routes/posts.$id.tsx:93-95
+// src/routes/posts.$id.tsx:243-284
+function PostPage() {
+  const queryClient = useQueryClient();
+  const { id: postId } = useParams({ from: "/posts/$id" });
+  const { deferredComments } = Route.useLoaderData();
+
+  // Post and user data is already loaded by the route loader, so these will resolve immediately
+  const { data: post } = useSuspenseQuery(postQueryOptions(postId));
+  const { data: user } = useSuspenseQuery(userQueryOptions(post.userId));
+
+  return (
+    <Stack>
+      {/* Post content renders immediately */}
+      <Box>
+        <Title order={1}>Post: {post.id}</Title>
+        <Title order={2}>{post.title}</Title>
+        <Text my="lg">{post.body}</Text>
+      </Box>
+
+      {/* Comments load asynchronously with skeleton loading state */}
+      <Suspense fallback={<CommentsSkeleton />}>
+        <Await promise={deferredComments}>
+          {() => <CommentsSection postId={postId} queryClient={queryClient} />}
+        </Await>
+      </Suspense>
+    </Stack>
+  );
+}
+```
+
+### Skeleton Loading Component
+
+```tsx
+// src/routes/posts.$id.tsx:60-74
+function CommentsSkeleton() {
+  return (
+    <Stack gap="xl">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <Card withBorder key={index}>
+          <Stack gap="xs">
+            <Skeleton height={20} width="30%" />
+            <Skeleton height={16} width="50%" />
+            <Skeleton height={60} />
+          </Stack>
+        </Card>
+      ))}
+    </Stack>
+  );
+}
+```
+
+### Client-Side Mutations
+
+```tsx
+// src/routes/posts.$id.tsx:115-117
 const { mutate: postComment } = useMutation({
   mutationFn: (comment: Omit<IComment, "id">) =>
     createComment({ data: comment }), // Server function in mutation
@@ -109,6 +174,7 @@ const { mutate: postComment } = useMutation({
 ## Server Functions vs Next.js
 
 **TanStack Start Server Functions:**
+
 - Universal calling (server + client)
 - Automatic compilation and extraction
 - Built-in validation with type inference
@@ -116,6 +182,7 @@ const { mutate: postComment } = useMutation({
 - Framework-agnostic HTTP requests
 
 **Next.js Server Functions:**
+
 - Server components and actions only
 - Manual "use server" directive placement
 - Form-based or manual validation
@@ -125,23 +192,28 @@ const { mutate: postComment } = useMutation({
 ## Benefits
 
 **1. Type Safety**
+
 - Full type inference from validator to handler
 - Compile-time checks for parameter types
 - Runtime validation with Zod schemas
 
 **2. Developer Experience**
+
 - Call server functions like regular functions
 - Automatic client/server boundary handling
 - No manual serialization/deserialization
 
 **3. Flexibility**
+
 - Use in loaders, queries, mutations, anywhere
 - Support for various data types (JSON, FormData, primitives)
 - Built-in error handling and redirects
+- Deferred loading for progressive data streaming
 
 ## When to Use Server Functions
 
 **Perfect For:**
+
 - Type-safe server/client communication
 - Replacing traditional API routes
 - Validated data mutations

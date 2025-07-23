@@ -1,4 +1,9 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  useParams,
+  Await,
+} from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 import {
   ActionIcon,
@@ -8,6 +13,7 @@ import {
   Collapse,
   Flex,
   Loader,
+  Skeleton,
   Stack,
   Text,
   Textarea,
@@ -21,6 +27,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { IComment } from "../api-types";
+import { Suspense } from "react";
 import { postQueryOptions } from "../queries/posts";
 import { postCommentsQueryOptions } from "../queries/comments";
 import { userQueryOptions } from "../queries/users";
@@ -38,26 +45,46 @@ export const Route = createFileRoute("/posts/$id")({
     const post = await getPost({ data: id });
     queryClient.setQueryData(postQueryOptions(id).queryKey, post);
 
-    // Then load user and comments in parallel using server functions
-    const [user, comments] = await Promise.all([
-      getUser({ data: post.userId }),
-      getPostComments({ data: id }),
-    ]);
-
-    // Set the data in the query client
+    // Load user immediately
+    const user = await getUser({ data: post.userId });
     queryClient.setQueryData(userQueryOptions(post.userId).queryKey, user);
-    queryClient.setQueryData(postCommentsQueryOptions(id).queryKey, comments);
+
+    // Defer comments loading - return the promise without awaiting
+    const deferredComments = getPostComments({ data: id }).then((comments) => {
+      queryClient.setQueryData(postCommentsQueryOptions(id).queryKey, comments);
+      return comments;
+    });
+
+    return {
+      deferredComments,
+    };
   },
   component: PostPage,
 });
 
-function PostPage() {
-  const queryClient = useQueryClient();
-  const { id: postId } = useParams({ from: "/posts/$id" });
+function CommentsSkeleton() {
+  return (
+    <Stack gap="xl">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <Card withBorder key={index}>
+          <Stack gap="xs">
+            <Skeleton height={20} width="30%" />
+            <Skeleton height={16} width="50%" />
+            <Skeleton height={60} />
+          </Stack>
+        </Card>
+      ))}
+    </Stack>
+  );
+}
 
-  // All data is already loaded by the route loader, so these will resolve immediately
-  const { data: post } = useSuspenseQuery(postQueryOptions(postId));
-  const { data: user } = useSuspenseQuery(userQueryOptions(post.userId));
+function CommentsSection({
+  postId,
+  queryClient,
+}: {
+  postId: string;
+  queryClient: any;
+}) {
   const {
     data: comments,
     isFetching: isFetchingComments,
@@ -145,24 +172,7 @@ function PostPage() {
   }, [commentText, postId, postComment]);
 
   return (
-    <Stack>
-      <Box>
-        <Title order={1}>Post: {post.id}</Title>
-        <Title order={2}>{post.title}</Title>
-        <Title order={3}>
-          By:{" "}
-          <Link
-            to="/users/$id"
-            params={{ id: user.id.toString() }}
-            style={{ textDecoration: "none" }}
-          >
-            {user.name}
-          </Link>
-        </Title>
-        <Text my="lg">
-          {post.body}. {post.body}. {post.body}. {post.body}. {post.body}.
-        </Text>
-      </Box>
+    <>
       <Flex justify="space-between" align="center">
         <Title mt="lg" order={3}>
           Comments on this Post
@@ -231,6 +241,44 @@ function PostPage() {
           Post Comment
         </Button>
       </Stack>
+    </>
+  );
+}
+
+function PostPage() {
+  const queryClient = useQueryClient();
+  const { id: postId } = useParams({ from: "/posts/$id" });
+  const { deferredComments } = Route.useLoaderData();
+
+  // Post and user data is already loaded by the route loader, so these will resolve immediately
+  const { data: post } = useSuspenseQuery(postQueryOptions(postId));
+  const { data: user } = useSuspenseQuery(userQueryOptions(post.userId));
+
+  return (
+    <Stack>
+      <Box>
+        <Title order={1}>Post: {post.id}</Title>
+        <Title order={2}>{post.title}</Title>
+        <Title order={3}>
+          By:{" "}
+          <Link
+            to="/users/$id"
+            params={{ id: user.id.toString() }}
+            style={{ textDecoration: "none" }}
+          >
+            {user.name}
+          </Link>
+        </Title>
+        <Text my="lg">
+          {post.body}. {post.body}. {post.body}. {post.body}. {post.body}.
+        </Text>
+      </Box>
+
+      <Suspense fallback={<CommentsSkeleton />}>
+        <Await promise={deferredComments}>
+          {() => <CommentsSection postId={postId} queryClient={queryClient} />}
+        </Await>
+      </Suspense>
     </Stack>
   );
 }

@@ -14,6 +14,7 @@ This example demonstrates the experimental React Query streaming integration wit
 ## Code Examples
 
 ### Experimental Provider Setup
+
 ```tsx
 // src/app/ReactQueryProvider.tsx:46-61
 export function ReactQueryProvider(props: { children: React.ReactNode }) {
@@ -31,6 +32,7 @@ export function ReactQueryProvider(props: { children: React.ReactNode }) {
 ```
 
 ### Query Client Factory Pattern
+
 ```tsx
 // src/app/ReactQueryProvider.tsx:18-44
 function makeQueryClient() {
@@ -59,6 +61,7 @@ function getQueryClient() {
 ```
 
 ### Client Component with Streaming
+
 ```tsx
 // src/app/page.tsx:20-29
 export default function HomePage() {
@@ -74,6 +77,7 @@ export default function HomePage() {
 ```
 
 ### Suspense Query Pattern
+
 ```tsx
 // src/app/page.tsx:31-47
 function Posts() {
@@ -99,6 +103,7 @@ function Posts() {
 ```
 
 ### Edge Runtime Configuration
+
 ```tsx
 // src/app/page.tsx:18
 export const runtime = "edge";
@@ -107,24 +112,28 @@ export const runtime = "edge";
 ## Experimental Streaming Benefits
 
 **1. Progressive Loading**
+
 - Components stream in as data becomes available
 - Improved perceived performance
 - Reduced time to first contentful paint
 - Better user experience during loading
 
 **2. Automatic State Transfer**
+
 - Seamless server-to-client query state hydration
 - No manual dehydration/rehydration needed
 - Streaming query results during SSR
 - Automatic cache population
 
 **3. Edge Runtime Support**
+
 - Faster cold starts with edge computing
 - Reduced latency for global users
 - Optimized for serverless environments
 - Enhanced performance characteristics
 
 **4. Future-Ready Architecture**
+
 - Experimental features for next React versions
 - Progressive enhancement patterns
 - Streaming-first design
@@ -133,12 +142,14 @@ export const runtime = "edge";
 ## Streaming vs Standard RSC + React Query
 
 **Streaming Advantages:**
+
 - Automatic hydration without manual setup
 - Progressive component loading
 - Better performance with edge runtime
 - Simplified client/server state management
 
 **Standard Approach Advantages:**
+
 - More stable, production-ready APIs
 - Manual control over prefetching strategy
 - Explicit hydration boundaries
@@ -154,12 +165,14 @@ export const runtime = "edge";
 ## When to Use Experimental Streaming
 
 **Perfect For:**
+
 - Cutting-edge applications willing to use experimental features
 - Performance-critical applications needing progressive loading
 - Edge-deployed applications requiring fast cold starts
 - Teams wanting simplified RSC + React Query integration
 
 **Considerations:**
+
 - Experimental API may change
 - Limited production battle-testing
 - Potential breaking changes in updates

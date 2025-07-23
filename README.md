@@ -58,7 +58,7 @@ This repository explores data fetching across multiple meta-frameworks and libra
 - **Astro** - Multi-framework static site generator with server rendering
 - **TanStack Router** - Type-safe routing with built-in data loading
 - **TanStack Start** - Full-stack React framework built on TanStack Router
-- **SvelteKit** - *bonus* Full-stack Svelte framework for comparison
+- **SvelteKit** - _bonus_ Full-stack Svelte framework for comparison
 
 ## Getting Started
 

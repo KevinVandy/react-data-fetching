@@ -8,162 +8,162 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from "@tanstack/react-start/server";
+import { createServerRootRoute } from '@tanstack/react-start/server'
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as UsersRouteImport } from "./routes/users";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as UsersIdRouteImport } from "./routes/users.$id";
-import { Route as PostsIdRouteImport } from "./routes/posts.$id";
-import { ServerRoute as HelloServerRouteImport } from "./routes/hello";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as UsersRouteImport } from './routes/users'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as UsersIdRouteImport } from './routes/users.$id'
+import { Route as PostsIdRouteImport } from './routes/posts.$id'
+import { ServerRoute as HelloServerRouteImport } from './routes/hello'
 
-const rootServerRouteImport = createServerRootRoute();
+const rootServerRouteImport = createServerRootRoute()
 
 const UsersRoute = UsersRouteImport.update({
-  id: "/users",
-  path: "/users",
+  id: '/users',
+  path: '/users',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const UsersIdRoute = UsersIdRouteImport.update({
-  id: "/$id",
-  path: "/$id",
+  id: '/$id',
+  path: '/$id',
   getParentRoute: () => UsersRoute,
-} as any);
+} as any)
 const PostsIdRoute = PostsIdRouteImport.update({
-  id: "/posts/$id",
-  path: "/posts/$id",
+  id: '/posts/$id',
+  path: '/posts/$id',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const HelloServerRoute = HelloServerRouteImport.update({
-  id: "/hello",
-  path: "/hello",
+  id: '/hello',
+  path: '/hello',
   getParentRoute: () => rootServerRouteImport,
-} as any);
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/users": typeof UsersRouteWithChildren;
-  "/posts/$id": typeof PostsIdRoute;
-  "/users/$id": typeof UsersIdRoute;
+  '/': typeof IndexRoute
+  '/users': typeof UsersRouteWithChildren
+  '/posts/$id': typeof PostsIdRoute
+  '/users/$id': typeof UsersIdRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/users": typeof UsersRouteWithChildren;
-  "/posts/$id": typeof PostsIdRoute;
-  "/users/$id": typeof UsersIdRoute;
+  '/': typeof IndexRoute
+  '/users': typeof UsersRouteWithChildren
+  '/posts/$id': typeof PostsIdRoute
+  '/users/$id': typeof UsersIdRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
-  "/users": typeof UsersRouteWithChildren;
-  "/posts/$id": typeof PostsIdRoute;
-  "/users/$id": typeof UsersIdRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/users': typeof UsersRouteWithChildren
+  '/posts/$id': typeof PostsIdRoute
+  '/users/$id': typeof UsersIdRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/users" | "/posts/$id" | "/users/$id";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/users" | "/posts/$id" | "/users/$id";
-  id: "__root__" | "/" | "/users" | "/posts/$id" | "/users/$id";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/users' | '/posts/$id' | '/users/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/users' | '/posts/$id' | '/users/$id'
+  id: '__root__' | '/' | '/users' | '/posts/$id' | '/users/$id'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  UsersRoute: typeof UsersRouteWithChildren;
-  PostsIdRoute: typeof PostsIdRoute;
+  IndexRoute: typeof IndexRoute
+  UsersRoute: typeof UsersRouteWithChildren
+  PostsIdRoute: typeof PostsIdRoute
 }
 export interface FileServerRoutesByFullPath {
-  "/hello": typeof HelloServerRoute;
+  '/hello': typeof HelloServerRoute
 }
 export interface FileServerRoutesByTo {
-  "/hello": typeof HelloServerRoute;
+  '/hello': typeof HelloServerRoute
 }
 export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport;
-  "/hello": typeof HelloServerRoute;
+  __root__: typeof rootServerRouteImport
+  '/hello': typeof HelloServerRoute
 }
 export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath;
-  fullPaths: "/hello";
-  fileServerRoutesByTo: FileServerRoutesByTo;
-  to: "/hello";
-  id: "__root__" | "/hello";
-  fileServerRoutesById: FileServerRoutesById;
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/hello'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/hello'
+  id: '__root__' | '/hello'
+  fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
-  HelloServerRoute: typeof HelloServerRoute;
+  HelloServerRoute: typeof HelloServerRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/users": {
-      id: "/users";
-      path: "/users";
-      fullPath: "/users";
-      preLoaderRoute: typeof UsersRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/users/$id": {
-      id: "/users/$id";
-      path: "/$id";
-      fullPath: "/users/$id";
-      preLoaderRoute: typeof UsersIdRouteImport;
-      parentRoute: typeof UsersRoute;
-    };
-    "/posts/$id": {
-      id: "/posts/$id";
-      path: "/posts/$id";
-      fullPath: "/posts/$id";
-      preLoaderRoute: typeof PostsIdRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/users': {
+      id: '/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users/$id': {
+      id: '/users/$id'
+      path: '/$id'
+      fullPath: '/users/$id'
+      preLoaderRoute: typeof UsersIdRouteImport
+      parentRoute: typeof UsersRoute
+    }
+    '/posts/$id': {
+      id: '/posts/$id'
+      path: '/posts/$id'
+      fullPath: '/posts/$id'
+      preLoaderRoute: typeof PostsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
-declare module "@tanstack/react-start/server" {
+declare module '@tanstack/react-start/server' {
   interface ServerFileRoutesByPath {
-    "/hello": {
-      id: "/hello";
-      path: "/hello";
-      fullPath: "/hello";
-      preLoaderRoute: typeof HelloServerRouteImport;
-      parentRoute: typeof rootServerRouteImport;
-    };
+    '/hello': {
+      id: '/hello'
+      path: '/hello'
+      fullPath: '/hello'
+      preLoaderRoute: typeof HelloServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
   }
 }
 
 interface UsersRouteChildren {
-  UsersIdRoute: typeof UsersIdRoute;
+  UsersIdRoute: typeof UsersIdRoute
 }
 
 const UsersRouteChildren: UsersRouteChildren = {
   UsersIdRoute: UsersIdRoute,
-};
+}
 
-const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren);
+const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   UsersRoute: UsersRouteWithChildren,
   PostsIdRoute: PostsIdRoute,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   HelloServerRoute: HelloServerRoute,
-};
+}
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>();
+  ._addFileTypes<FileServerRouteTypes>()

@@ -15,6 +15,7 @@ This example demonstrates the modern, recommended approach to organizing React Q
 ## Code Examples
 
 ### Basic queryOptions Definition
+
 ```tsx
 // queries/posts.ts:7-13
 export const postsQueryOptions = queryOptions({
@@ -27,6 +28,7 @@ export const postsQueryOptions = queryOptions({
 ```
 
 ### Parameterized queryOptions
+
 ```tsx
 // queries/posts.ts:16-23
 export const postQueryOptions = (postId: string) =>
@@ -40,6 +42,7 @@ export const postQueryOptions = (postId: string) =>
 ```
 
 ### Using queryOptions with Different Hooks
+
 ```tsx
 // pages/HomePage.tsx:50 - With useSuspenseQuery
 const { data: posts } = useSuspenseQuery(postsQueryOptions);
@@ -49,15 +52,21 @@ const { data: post, isLoading, isError } = useQuery(postQueryOptions(postId!));
 ```
 
 ### Extending queryOptions for Dependent Queries
+
 ```tsx
 // pages/PostPage.tsx:42-45
-const { data: user, isLoading: isLoadingUser, isError: isErrorLoadingUser } = useQuery({
+const {
+  data: user,
+  isLoading: isLoadingUser,
+  isError: isErrorLoadingUser,
+} = useQuery({
   ...userQueryOptions(post?.userId!), // Spread the base options
   enabled: !!post?.userId, // Add additional configuration
 });
 ```
 
 ### Query Key Access for Cache Management
+
 ```tsx
 // pages/PostPage.tsx:81-84
 onSettled: () => {
@@ -68,6 +77,7 @@ onSettled: () => {
 ```
 
 ### Complex Query Options with Additional Configuration
+
 ```tsx
 // queries/comments.ts:7-15
 export const postCommentsQueryOptions = (postId: string) =>
@@ -84,21 +94,25 @@ export const postCommentsQueryOptions = (postId: string) =>
 ## Advantages Over Custom Hooks Pattern
 
 **1. Better TypeScript Support**
+
 - Improved type inference
 - Consistent typing across different hooks
 - Better intellisense and autocomplete
 
 **2. More Flexible**
+
 - Works with any React Query hook (`useQuery`, `useSuspenseQuery`, `useInfiniteQuery`, etc.)
 - Easy to extend with additional options
 - Framework-agnostic definitions
 
 **3. Official Recommendation**
+
 - Current best practice from TanStack team
 - Future-proof approach
 - Better documentation and community support
 
 **4. Cleaner Code**
+
 - Less boilerplate than custom hooks
 - More declarative approach
 - Easier to test and mock

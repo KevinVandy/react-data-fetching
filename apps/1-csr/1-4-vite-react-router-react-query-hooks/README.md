@@ -15,6 +15,7 @@ This example demonstrates how to organize React Query code into reusable custom 
 ## Code Examples
 
 ### Custom Hook Structure
+
 ```tsx
 // hooks/useGetPosts.ts:7-22
 export const getPostsQueryKey = () => [ENDPOINT];
@@ -40,6 +41,7 @@ export function prefetchPosts(queryClient: QueryClient) {
 ```
 
 ### Using Custom Hooks in Components
+
 ```tsx
 // pages/HomePage.tsx:48-49
 function HomePagePosts() {
@@ -49,6 +51,7 @@ function HomePagePosts() {
 ```
 
 ### Query Key Management
+
 ```tsx
 // hooks/useGetPostComments.ts:7
 export const getPostCommentsQueryKey = (postId: string) => [ENDPOINT(postId)];
@@ -63,14 +66,12 @@ onSettled: () => {
 ```
 
 ### Suspense-Based Loading with Error Boundaries
+
 ```tsx
 // pages/HomePage.tsx:14-25
 <QueryErrorResetBoundary>
   {({ reset }) => (
-    <ErrorBoundary
-      fallbackRender={() => <HomePageError />}
-      onReset={reset}
-    >
+    <ErrorBoundary fallbackRender={() => <HomePageError />} onReset={reset}>
       <Suspense fallback={<HomePageSkeleton />}>
         <HomePagePosts />
       </Suspense>
@@ -80,6 +81,7 @@ onSettled: () => {
 ```
 
 ### Dependent Queries with Enabled Option
+
 ```tsx
 // hooks/useGetUser.ts:19-24
 export function useGetUser(userId?: number) {

@@ -14,6 +14,7 @@ This example demonstrates Astro's built-in static site generation capabilities, 
 ## Code Examples
 
 ### Frontmatter Data Fetching for Homepage
+
 ```astro
 ---
 // src/pages/index.astro:2-8
@@ -45,6 +46,7 @@ const posts = (await response.json()) as IPost[];
 ```
 
 ### Dynamic Route Generation
+
 ```astro
 ---
 // src/pages/posts/[id].astro:3-18
@@ -66,6 +68,7 @@ const { id } = Astro.params;
 ```
 
 ### Parallel Data Fetching in Dynamic Pages
+
 ```astro
 ---
 // src/pages/posts/[id].astro:20-32
@@ -94,6 +97,7 @@ const comments = (await commentsResponse.json()) as IComment[];
 ```
 
 ### Static Comments Section
+
 ```astro
 <!-- src/pages/posts/[id].astro:54-69 -->
 <section class="bg-gray-50 py-8">
@@ -115,21 +119,25 @@ const comments = (await commentsResponse.json()) as IComment[];
 ## Benefits of Astro SSG
 
 **1. Minimal JavaScript**
+
 - Zero JavaScript shipped by default
 - Only hydrate components that need interactivity
 - Drastically smaller bundle sizes
 
 **2. Excellent Performance**
+
 - Static HTML files served directly
 - No hydration overhead for static content
 - Perfect Core Web Vitals scores
 
 **3. Developer Experience**
+
 - Use any UI framework (React, Vue, Svelte, etc.)
 - Component islands for selective hydration
 - TypeScript support out of the box
 
 **4. SEO Optimization**
+
 - All content is server-rendered at build time
 - Complete HTML available for search crawlers
 - Fast loading times improve rankings
@@ -137,12 +145,14 @@ const comments = (await commentsResponse.json()) as IComment[];
 ## Astro vs Next.js SSG
 
 **Astro Advantages:**
+
 - Zero JavaScript by default
 - Use multiple frameworks in one project
 - Better performance for content-heavy sites
 - Simpler mental model for static sites
 
 **Next.js Advantages:**
+
 - More mature ecosystem
 - Better for React-heavy applications
 - ISR (Incremental Static Regeneration)
@@ -151,6 +161,7 @@ const comments = (await commentsResponse.json()) as IComment[];
 ## When to Use Astro SSG
 
 **Perfect For:**
+
 - Content-heavy websites
 - Blogs and documentation
 - Marketing sites
@@ -158,6 +169,7 @@ const comments = (await commentsResponse.json()) as IComment[];
 - Any site that doesn't need much interactivity
 
 **Consider Next.js Instead When:**
+
 - You need extensive client-side interactivity
 - Building a React-centric application
 - You need ISR or other advanced Next.js features

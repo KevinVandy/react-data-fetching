@@ -23,6 +23,7 @@ This example demonstrates a unique hybrid architecture where a React SPA lives w
 ## Code Examples
 
 ### Static Entry Page
+
 ```astro
 <!-- src/pages/index.astro:8-20 -->
 <div class="text-center">
@@ -37,6 +38,7 @@ This example demonstrates a unique hybrid architecture where a React SPA lives w
 ```
 
 ### SPA Portal with Catch-All Routing
+
 ```astro
 <!-- src/pages/spa/[...slug].astro:25-27 -->
 <Layout>
@@ -45,6 +47,7 @@ This example demonstrates a unique hybrid architecture where a React SPA lives w
 ```
 
 ### Pre-generating SPA Routes for SEO
+
 ```astro
 <!-- src/pages/spa/[...slug].astro:6-20 -->
 export async function getStaticPaths() {
@@ -56,10 +59,10 @@ export async function getStaticPaths() {
   const paths = [
     { params: { slug: undefined } },           // /spa
     { params: { slug: "users" } },             // /spa/users
-    ...usersData.map((user) => ({ 
+    ...usersData.map((user) => ({
       params: { slug: `users/${user.id}` }    // /spa/users/1
     })),
-    ...postsData.map((post) => ({ 
+    ...postsData.map((post) => ({
       params: { slug: `posts/${post.id}` }    // /spa/posts/1
     })),
   ];
@@ -69,6 +72,7 @@ export async function getStaticPaths() {
 ```
 
 ### Client-Only React Component
+
 ```tsx
 // src/spa/App.tsx:6-12
 export const App = () => {
@@ -81,6 +85,7 @@ export const App = () => {
 ```
 
 ### SPA Router Configuration
+
 ```tsx
 // src/spa/AppRoutes.tsx:8-21
 export const AppRoutes = () => {
@@ -100,6 +105,7 @@ export const AppRoutes = () => {
 ```
 
 ### Data Fetching within SPA
+
 ```tsx
 // src/spa/pages/HomePage.tsx:18-32
 const {
@@ -120,21 +126,25 @@ const {
 ## Benefits of This Architecture
 
 **1. Static Performance**
+
 - Landing page loads instantly as static HTML
 - Excellent SEO and Core Web Vitals
 - No JavaScript needed for content pages
 
 **2. Dynamic Interactivity**
+
 - Full React SPA capabilities within the portal
 - Client-side routing and state management
 - Rich user interactions and real-time updates
 
 **3. SEO Optimization**
+
 - Static paths generated for known SPA routes
 - Search engines can crawl SPA pages
 - Better indexing than pure client-side SPAs
 
 **4. Flexible Deployment**
+
 - Static pages can be served from CDN
 - SPA portal handles dynamic functionality
 - Optimal caching strategies for different content types
@@ -142,12 +152,14 @@ const {
 ## When to Use This Pattern
 
 **Ideal For:**
+
 - Marketing sites with embedded applications
-- Documentation sites with interactive demos  
+- Documentation sites with interactive demos
 - E-commerce sites with product configurators
 - Content sites with user dashboards
 
 **Example Use Cases:**
+
 - Static marketing pages + customer portal
 - Documentation + interactive API explorer
 - Blog + comment management system
@@ -159,9 +171,9 @@ const {
 // astro.config.mjs:9-15
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   },
-  integrations: [react()] // Enable React integration
+  integrations: [react()], // Enable React integration
 });
 ```
 

@@ -14,6 +14,7 @@ This example demonstrates React Router v7 framework mode with server-side render
 ## Code Examples
 
 ### Route Loader for Homepage
+
 ```tsx
 // app/routes/_index.tsx:12-30
 export const loader: LoaderFunction = async () => {
@@ -38,6 +39,7 @@ export const loader: LoaderFunction = async () => {
 ```
 
 ### Dynamic Route with Parallel Data Loading
+
 ```tsx
 // app/routes/posts.$id.tsx:31-59
 export const loader: LoaderFunction = async ({ params }) => {
@@ -72,6 +74,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 ```
 
 ### Server Action for Form Handling
+
 ```tsx
 // app/routes/posts.$id.tsx:62-87
 export const action: ActionFunction = async ({ request }) => {
@@ -103,6 +106,7 @@ export const action: ActionFunction = async ({ request }) => {
 ```
 
 ### Hybrid SSR + React Query Pattern
+
 ```tsx
 // app/routes/posts.$id.tsx:122-153
 // Load post - with initial data from SSR
@@ -140,6 +144,7 @@ const {
 ```
 
 ### Progressive Enhancement Form
+
 ```tsx
 // app/routes/posts.$id.tsx:316-341
 <Form method="post">
@@ -170,6 +175,7 @@ const {
 ```
 
 ### Action Data Handling
+
 ```tsx
 // app/routes/posts.$id.tsx:106-117
 const actionData: any = useActionData<typeof action>();
@@ -188,24 +194,28 @@ const isPostingComment = navigation.state === "submitting";
 ## Benefits of React Router v7 SSR
 
 **1. Full-Stack Framework**
+
 - Server-side rendering with data loading
 - Progressive enhancement out of the box
 - Form handling without JavaScript required
 - Type-safe data loading and mutations
 
 **2. Performance Advantages**
+
 - No loading states for initial page data
 - Instant page transitions with prefetched data
 - Progressive enhancement reduces JavaScript dependency
 - Optimized bundle splitting
 
 **3. Developer Experience**
+
 - File-based routing convention
 - Type-safe loaders and actions
 - Built-in form state management
 - Hot module replacement during development
 
 **4. Hybrid Architecture**
+
 - Server data loading + client-side enhancements
 - React Query for advanced caching and mutations
 - Progressive enhancement patterns
@@ -216,16 +226,19 @@ const isPostingComment = navigation.state === "submitting";
 This example demonstrates a powerful pattern:
 
 **1. Server-Side Initial Load**
+
 - Route loaders fetch critical data on server
 - No loading states for initial render
 - SEO-friendly with complete HTML
 
 **2. Client-Side Enhancement**
+
 - React Query uses server data as `initialData`
 - Enables real-time updates, polling, optimistic updates
 - Advanced caching and invalidation strategies
 
 **3. Progressive Enhancement**
+
 - Forms work without JavaScript via actions
 - Enhanced with React Query mutations for better UX
 - Graceful degradation for low-JS environments
@@ -233,18 +246,21 @@ This example demonstrates a powerful pattern:
 ## Comparison with Other SSR Approaches
 
 **vs Next.js SSR (3-1):**
+
 - More explicit data loading patterns
 - Better form handling with progressive enhancement
 - Type-safe loaders vs getServerSideProps
 - Built-in navigation states and pending UI
 
 **vs Pure React Query SPA:**
+
 - Eliminates initial loading states
 - Better SEO and perceived performance
 - Server-side form handling as fallback
 - Maintains all React Query benefits
 
 **vs Traditional SSR:**
+
 - Modern React patterns with hooks
 - Enhanced client-side functionality
 - Type-safe data contracts
@@ -253,6 +269,7 @@ This example demonstrates a powerful pattern:
 ## When to Use React Router v7 SSR
 
 **Perfect For:**
+
 - Full-stack React applications
 - Apps requiring both SSR performance and SPA features
 - E-commerce sites with server-side cart logic
@@ -260,6 +277,7 @@ This example demonstrates a powerful pattern:
 - Content management systems
 
 **Requirements:**
+
 - Node.js deployment environment
 - Need for server-side data processing
 - Progressive enhancement requirements

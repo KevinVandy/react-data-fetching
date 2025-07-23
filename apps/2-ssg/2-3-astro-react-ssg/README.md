@@ -14,6 +14,7 @@ This example demonstrates how to combine Astro's static site generation with Rea
 ## Code Examples
 
 ### Astro Page with React Component Integration
+
 ```astro
 ---
 // src/pages/index.astro:2-16
@@ -43,6 +44,7 @@ const { posts, error } = await fetchPosts();
 ```
 
 ### React Component Receiving Server Data
+
 ```tsx
 // src/components/HomePage.tsx:5-30
 interface HomePageProps {
@@ -57,11 +59,23 @@ export default function HomePage({ posts, error }: HomePageProps) {
         <Title order={2}>Your Home Feed</Title>
         <Flex gap="md" wrap="wrap">
           {posts?.map((post) => (
-            <Link key={post.id} href={`/posts/${post.id}`} style={{ textDecoration: "none" }}>
-              <Card mih={320} shadow="md" w={300} withBorder style={{ cursor: "pointer" }}>
+            <Link
+              key={post.id}
+              href={`/posts/${post.id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Card
+                mih={320}
+                shadow="md"
+                w={300}
+                withBorder
+                style={{ cursor: "pointer" }}
+              >
                 <Title order={3}>{post.title}</Title>
                 <Text>{post.body}</Text>
-                <Text c="blue" pt="md">Go to post</Text>
+                <Text c="blue" pt="md">
+                  Go to post
+                </Text>
               </Card>
             </Link>
           ))}
@@ -73,6 +87,7 @@ export default function HomePage({ posts, error }: HomePageProps) {
 ```
 
 ### Dynamic Route with React Component
+
 ```astro
 ---
 // src/pages/posts/[id].astro:5-39
@@ -117,6 +132,7 @@ try {
 ```
 
 ### React Component with Props from Server
+
 ```tsx
 // src/components/PostPage.tsx:8-45
 interface PostPageProps {
@@ -133,14 +149,17 @@ export default function PostPage({ post, user, comments }: PostPageProps) {
           <Title order={1}>Post: {post.id}</Title>
           <Title order={2}>{post.title}</Title>
           <Title order={3}>
-            By: <Link href={`/users/${user.id}`} style={{ textDecoration: "none" }}>
+            By:{" "}
+            <Link href={`/users/${user.id}`} style={{ textDecoration: "none" }}>
               {user.name}
             </Link>
           </Title>
           <Text my="lg">{post.body}</Text>
         </Box>
 
-        <Title mt="lg" order={3}>Comments on this Post</Title>
+        <Title mt="lg" order={3}>
+          Comments on this Post
+        </Title>
         <Stack gap="xl">
           {comments.map((comment) => (
             <Card withBorder key={comment.id}>
@@ -177,21 +196,25 @@ Astro provides several client directives for controlling when React components h
 ## Benefits of Astro + React SSG
 
 **1. Performance + Interactivity**
+
 - Static HTML generation for fast initial loads
 - React components hydrated only when needed
 - Selective interactivity without full SPA overhead
 
 **2. Developer Experience**
+
 - Use familiar React component patterns
 - Server data easily passed as props
 - Rich component ecosystem available
 
 **3. SEO Optimization**
+
 - All content server-rendered at build time
 - Fast loading times improve rankings
 - Complete HTML for search crawlers
 
 **4. Flexible Architecture**
+
 - Mix static content with interactive components
 - Choose hydration strategy per component
 - Gradual enhancement approach
@@ -199,16 +222,19 @@ Astro provides several client directives for controlling when React components h
 ## Comparison with Other Approaches
 
 **vs Pure Astro (2-2):**
+
 - More interactivity with React components
 - Familiar React development patterns
 - Larger bundle size (but still minimal)
 
 **vs Next.js SSG (2-1):**
+
 - Better performance (selective hydration)
 - More control over JavaScript loading
 - Less mature ecosystem than Next.js
 
 **vs Pure React SPA (1-x):**
+
 - Better SEO and initial load performance
 - Reduced JavaScript bundle size
 - Data pre-fetched at build time
@@ -216,6 +242,7 @@ Astro provides several client directives for controlling when React components h
 ## When to Use Astro + React SSG
 
 **Perfect For:**
+
 - Content sites that need some interactivity
 - Marketing sites with interactive demos
 - Blogs with comment systems
@@ -223,6 +250,7 @@ Astro provides several client directives for controlling when React components h
 - E-commerce with product filters
 
 **Requirements:**
+
 - Need React component ecosystem
 - Want selective hydration control
 - Data available at build time

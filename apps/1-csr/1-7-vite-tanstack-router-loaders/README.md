@@ -14,6 +14,7 @@ This example demonstrates TanStack Router's built-in data loading capabilities u
 ## Code Examples
 
 ### Basic Route Loader
+
 ```tsx
 // AppRoutes.tsx:34-40
 const indexRoute = createRoute({
@@ -26,6 +27,7 @@ const indexRoute = createRoute({
 ```
 
 ### Route Loader with Parameters
+
 ```tsx
 // AppRoutes.tsx:50-63
 const userRoute = createRoute({
@@ -33,7 +35,7 @@ const userRoute = createRoute({
   path: "/users/$id",
   loader: async ({ context: { queryClient }, params: { id } }) => {
     const userId = parseInt(id);
-    
+
     // Load both user and their posts in parallel
     await Promise.all([
       queryClient.ensureQueryData(userQueryOptions(userId)),
@@ -44,7 +46,8 @@ const userRoute = createRoute({
 });
 ```
 
-### Dependent Route Loading
+### Dependent Route Loading with Deferred Data
+
 ```tsx
 // AppRoutes.tsx:65-79
 const postRoute = createRoute({
@@ -53,31 +56,79 @@ const postRoute = createRoute({
   loader: async ({ context: { queryClient }, params: { id } }) => {
     // First load the post
     const post = await queryClient.ensureQueryData(postQueryOptions(id));
-    
-    // Then load user and comments in parallel using the post data
-    await Promise.all([
-      queryClient.ensureQueryData(userQueryOptions(post.userId)),
-      queryClient.ensureQueryData(postCommentsQueryOptions(id)),
-    ]);
+
+    // Load user immediately
+    await queryClient.ensureQueryData(userQueryOptions(post.userId));
+
+    // Defer comments loading - return the promise without awaiting
+    const deferredComments = queryClient.ensureQueryData(
+      postCommentsQueryOptions(id),
+    );
+
+    return {
+      deferredComments,
+    };
   },
   component: PostPage,
 });
 ```
 
-### Simplified Component Code
+### Deferred Data with Suspense and Skeletons
+
 ```tsx
-// pages/PostPage.tsx:32-39
-// All data is already loaded by the route loader, so these will resolve immediately
-const { data: post } = useSuspenseQuery(postQueryOptions(postId));
-const { data: user } = useSuspenseQuery(userQueryOptions(post.userId));
-const {
-  data: comments,
-  isFetching: isFetchingComments,
-  refetch: refetchComments,
-} = useSuspenseQuery(postCommentsQueryOptions(postId));
+// pages/PostPage.tsx:243-284
+export const PostPage = () => {
+  const queryClient = useQueryClient();
+  const { id: postId } = useParams({ from: "/posts/$id" });
+  const { deferredComments } = useLoaderData({ from: "/posts/$id" });
+
+  // Post and user data is already loaded by the route loader, so these will resolve immediately
+  const { data: post } = useSuspenseQuery(postQueryOptions(postId));
+  const { data: user } = useSuspenseQuery(userQueryOptions(post.userId));
+
+  return (
+    <Stack>
+      {/* Post content renders immediately */}
+      <Box>
+        <Title order={1}>Post: {post.id}</Title>
+        <Title order={2}>{post.title}</Title>
+        <Text my="lg">{post.body}</Text>
+      </Box>
+
+      {/* Comments load asynchronously with skeleton loading state */}
+      <Suspense fallback={<CommentsSkeleton />}>
+        <Await promise={deferredComments}>
+          {() => <CommentsSection postId={postId} queryClient={queryClient} />}
+        </Await>
+      </Suspense>
+    </Stack>
+  );
+};
+```
+
+### Skeleton Loading Component
+
+```tsx
+// pages/PostPage.tsx:60-74
+function CommentsSkeleton() {
+  return (
+    <Stack gap="xl">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <Card withBorder key={index}>
+          <Stack gap="xs">
+            <Skeleton height={20} width="30%" />
+            <Skeleton height={16} width="50%" />
+            <Skeleton height={60} />
+          </Stack>
+        </Card>
+      ))}
+    </Stack>
+  );
+}
 ```
 
 ### Route Context Configuration
+
 ```tsx
 // AppRoutes.tsx:23-32
 const rootRoute = createRootRoute({
@@ -93,6 +144,7 @@ const rootRoute = createRootRoute({
 ```
 
 ### Loader Configuration for React Query Integration
+
 ```tsx
 // AppRoutes.tsx:90-104
 export const createAppRouter = (queryClient: QueryClient) => {
@@ -106,7 +158,7 @@ export const createAppRouter = (queryClient: QueryClient) => {
       queryClient,
     },
   });
-  
+
   return router;
 };
 ```
@@ -114,21 +166,26 @@ export const createAppRouter = (queryClient: QueryClient) => {
 ## Benefits of Route Loaders
 
 **1. Eliminated Loading States**
+
 - Components receive data immediately
 - No more spinner components or skeleton screens
 - Smoother user experience
 
 **2. Coordinated Data Loading**
+
 - Load related data together in parallel
 - Handle data dependencies at the route level
 - Better performance with reduced waterfalls
+- Deferred loading for progressive data streaming
 
 **3. Preloading Support**
+
 - Data loads on hover/focus with `defaultPreload: "intent"`
 - Instant navigation when user clicks
 - Better perceived performance
 
 **4. Error Boundaries**
+
 - Route-level error handling
 - Failed data loads are caught before components render
 - More consistent error states
@@ -136,12 +193,14 @@ export const createAppRouter = (queryClient: QueryClient) => {
 ## Comparison with Previous Examples
 
 **1-6 (Component-level loading):**
+
 ```tsx
 const { data: post, isLoading } = useQuery(postQueryOptions(postId!));
 if (isLoading) return <Spinner />;
 ```
 
 **1-7 (Route-level loading):**
+
 ```tsx
 // Route loader pre-fetches data
 const { data: post } = useSuspenseQuery(postQueryOptions(postId)); // Resolves immediately

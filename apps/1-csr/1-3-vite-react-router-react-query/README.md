@@ -15,6 +15,7 @@ This example demonstrates professional-grade data fetching using TanStack Query 
 ## Code Examples
 
 ### Basic Query Usage
+
 ```tsx
 // HomePage.tsx:19-32
 const {
@@ -33,6 +34,7 @@ const {
 ```
 
 ### Dependent Queries with Enabled Option
+
 ```tsx
 // PostPage.tsx:41-54
 const {
@@ -50,6 +52,7 @@ const {
 ```
 
 ### Background Refetching
+
 ```tsx
 // PostPage.tsx:57-72
 const {
@@ -61,7 +64,9 @@ const {
 } = useQuery({
   queryKey: ["posts", postId, "comments"],
   queryFn: async () => {
-    const response = await fetch(`http://localhost:3300/posts/${postId}/comments`);
+    const response = await fetch(
+      `http://localhost:3300/posts/${postId}/comments`,
+    );
     return response.json() as Promise<IComment[]>;
   },
   refetchInterval: 10000, // Auto-refetch every 10 seconds
@@ -69,6 +74,7 @@ const {
 ```
 
 ### Mutations with Optimistic Updates
+
 ```tsx
 // PostPage.tsx:108-160
 const { mutate: postComment, isPending: isPostingComment } = useMutation({
@@ -82,20 +88,30 @@ const { mutate: postComment, isPending: isPostingComment } = useMutation({
   },
   // Optimistic update - UI changes immediately
   onMutate: async (newComment) => {
-    await queryClient.cancelQueries({ queryKey: ["posts", postId, "comments"] });
-    
-    const previousComments = queryClient.getQueryData(["posts", postId, "comments"]);
-    
+    await queryClient.cancelQueries({
+      queryKey: ["posts", postId, "comments"],
+    });
+
+    const previousComments = queryClient.getQueryData([
+      "posts",
+      postId,
+      "comments",
+    ]);
+
     // Update UI optimistically
-    queryClient.setQueryData(["posts", postId, "comments"], 
-      (oldComments: any) => [...oldComments, newComment]
+    queryClient.setQueryData(
+      ["posts", postId, "comments"],
+      (oldComments: any) => [...oldComments, newComment],
     );
-    
+
     return { previousComments };
   },
   // Rollback on error
   onError: (err, _newComment, context) => {
-    queryClient.setQueryData(["posts", postId, "comments"], context?.previousComments);
+    queryClient.setQueryData(
+      ["posts", postId, "comments"],
+      context?.previousComments,
+    );
   },
   // Refresh data after success/error
   onSettled: () => {
@@ -105,6 +121,7 @@ const { mutate: postComment, isPending: isPostingComment } = useMutation({
 ```
 
 ### Query Invalidation for Cache Management
+
 ```tsx
 // PostPage.tsx:98-102
 onSettled: () => {

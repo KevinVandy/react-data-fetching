@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { Link, useParams } from "@tanstack/react-router";
+import { useCallback, useState, Suspense } from "react";
+import { Link, useParams, Await, useLoaderData } from "@tanstack/react-router";
 import {
   ActionIcon,
   Box,
@@ -8,6 +8,7 @@ import {
   Collapse,
   Flex,
   Loader,
+  Skeleton,
   Stack,
   Text,
   Textarea,
@@ -25,13 +26,29 @@ import { postQueryOptions } from "../queries/posts";
 import { postCommentsQueryOptions } from "../queries/comments";
 import { userQueryOptions } from "../queries/users";
 
-export const PostPage = () => {
-  const queryClient = useQueryClient();
-  const { id: postId } = useParams({ from: "/posts/$id" });
+function CommentsSkeleton() {
+  return (
+    <Stack gap="xl">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <Card withBorder key={index}>
+          <Stack gap="xs">
+            <Skeleton height={20} width="30%" />
+            <Skeleton height={16} width="50%" />
+            <Skeleton height={60} />
+          </Stack>
+        </Card>
+      ))}
+    </Stack>
+  );
+}
 
-  // All data is already loaded by the route loader, so these will resolve immediately
-  const { data: post } = useSuspenseQuery(postQueryOptions(postId));
-  const { data: user } = useSuspenseQuery(userQueryOptions(post.userId));
+function CommentsSection({
+  postId,
+  queryClient,
+}: {
+  postId: string;
+  queryClient: any;
+}) {
   const {
     data: comments,
     isFetching: isFetchingComments,
@@ -135,24 +152,7 @@ export const PostPage = () => {
   }, [commentText, postId, postComment]);
 
   return (
-    <Stack>
-      <Box>
-        <Title order={1}>Post: {post.id}</Title>
-        <Title order={2}>{post.title}</Title>
-        <Title order={3}>
-          By:{" "}
-          <Link
-            to="/users/$id"
-            params={{ id: user.id.toString() }}
-            style={{ textDecoration: "none" }}
-          >
-            {user.name}
-          </Link>
-        </Title>
-        <Text my="lg">
-          {post.body}. {post.body}. {post.body}. {post.body}. {post.body}.
-        </Text>
-      </Box>
+    <>
       <Flex justify="space-between" align="center">
         <Title mt="lg" order={3}>
           Comments on this Post
@@ -221,6 +221,44 @@ export const PostPage = () => {
           Post Comment
         </Button>
       </Stack>
+    </>
+  );
+}
+
+export const PostPage = () => {
+  const queryClient = useQueryClient();
+  const { id: postId } = useParams({ from: "/posts/$id" });
+  const { deferredComments } = useLoaderData({ from: "/posts/$id" });
+
+  // Post and user data is already loaded by the route loader, so these will resolve immediately
+  const { data: post } = useSuspenseQuery(postQueryOptions(postId));
+  const { data: user } = useSuspenseQuery(userQueryOptions(post.userId));
+
+  return (
+    <Stack>
+      <Box>
+        <Title order={1}>Post: {post.id}</Title>
+        <Title order={2}>{post.title}</Title>
+        <Title order={3}>
+          By:{" "}
+          <Link
+            to="/users/$id"
+            params={{ id: user.id.toString() }}
+            style={{ textDecoration: "none" }}
+          >
+            {user.name}
+          </Link>
+        </Title>
+        <Text my="lg">
+          {post.body}. {post.body}. {post.body}. {post.body}. {post.body}.
+        </Text>
+      </Box>
+
+      <Suspense fallback={<CommentsSkeleton />}>
+        <Await promise={deferredComments}>
+          {() => <CommentsSection postId={postId} queryClient={queryClient} />}
+        </Await>
+      </Suspense>
     </Stack>
   );
 };

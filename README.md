@@ -63,7 +63,7 @@ This repository explores data fetching across multiple meta-frameworks and libra
 ## Getting Started
 
 1. Install dependencies: `pnpm install`
-2. Start the backend: `pnpm serve` (runs json-server on port 3000)
+2. Start the backend: `pnpm serve` (runs json-server on port 3300)
 3. Run any example app using the commands listed above
 4. Each app fetches data from the same API to demonstrate different approaches
 

@@ -1,10 +1,12 @@
 # React Data Fetching
 
-A repository to showcase different ways to fetch data in React.
+This repository demonstrates the four main data-fetching strategies in modern React applications: Client-Side Rendering (CSR), Static Site Generation (SSG), Server-Side Rendering (SSR), and Streaming with React Server Components. Each approach is implemented across multiple frameworks to show real-world patterns and trade-offs.
 
 - [0-json-server](./apps/0-json-server) - backend server for the apps - `pnpm serve`
 
-## Single Page Applications (Client-Side Only)
+## Table of Contents
+
+## Client-Side Rendering (CSR/SPAs)
 
 - [1-1-vite-react-router-componentdidmount](./apps/1-spa/1-1-vite-react-router-componentdidmount) - `pnpm dev1-1` [http://localhost:3311/](http://localhost:3311/)
 - [1-2-vite-react-router-useeffect](./apps/1-spa/1-2-vite-react-router-useeffect) - `pnpm dev1-2` [http://localhost:3312/](http://localhost:3312/)
@@ -37,3 +39,32 @@ A repository to showcase different ways to fetch data in React.
 - [4-2-nextjs-rsc-react-query](./apps/4-streaming/4-2-nextjs-rsc-react-query) - `pnpm dev4-2` [http://localhost:3342/](http://localhost:3342/)
 - [4-3-nextjs-rsc-react-query-streaming](./apps/4-streaming/4-3-nextjs-rsc-react-query-streaming) - `pnpm dev4-3` [http://localhost:3343/](http://localhost:3343/)
 - [4-4-astro-server-islands](./apps/4-streaming/4-4-astro-server-islands) - `pnpm dev4-4` [http://localhost:3344/](http://localhost:3344/)
+
+## Understanding Data-Fetching Strategies
+
+Each directory contains a README explaining the core concepts, pros and cons, and use cases:
+
+- **[apps/1-csr/](./apps/1-csr/)** - Client-Side Rendering: JavaScript fetches data in the browser
+- **[apps/2-ssg/](./apps/2-ssg/)** - Static Site Generation: Pages built at build time with data pre-fetched
+- **[apps/3-ssr/](./apps/3-ssr/)** - Server-Side Rendering: HTML generated on server per request
+- **[apps/4-streaming/](./apps/4-streaming/)** - Streaming: Progressive page delivery with React Server Components
+
+## Frameworks Covered
+
+This repository explores data fetching across multiple meta-frameworks and libraries:
+
+- **React Router** - Client-side and server-side routing
+- **Next.js** - Full-stack React framework with SSG, SSR, and RSC
+- **Astro** - Multi-framework static site generator with server rendering
+- **TanStack Router** - Type-safe routing with built-in data loading
+- **TanStack Start** - Full-stack React framework built on TanStack Router
+- **SvelteKit** - *bonus* Full-stack Svelte framework for comparison
+
+## Getting Started
+
+1. Install dependencies: `pnpm install`
+2. Start the backend: `pnpm serve` (runs json-server on port 3000)
+3. Run any example app using the commands listed above
+4. Each app fetches data from the same API to demonstrate different approaches
+
+The examples progress from basic patterns to more advanced implementations, showing how each strategy evolves with different tools and frameworks. **TanStack Query (React Query)** is heavily featured throughout, demonstrating how this powerful data-fetching library integrates with various meta-frameworks - from pure client-side apps to server-rendered applications with hydration, and even alongside React Server Components for optimal user experiences.

@@ -122,7 +122,7 @@ export default function PostPage() {
   // Load post - with initial data from SSR
   const {
     data: post,
-    isLoading: isLoadingPost,
+    isPending: isPendingPost,
     isError: isErrorLoadingPosts,
   } = useQuery({
     queryKey: ["post", postId],
@@ -136,7 +136,7 @@ export default function PostPage() {
   // Load comments - with initial data from SSR
   const {
     data: comments,
-    isLoading: isLoadingComments,
+    isPending: isPendingComments,
     isFetching: isFetchingComments,
     isError: isErrorLoadingComments,
     refetch: refetchComments,
@@ -144,7 +144,7 @@ export default function PostPage() {
     queryKey: ["comments", postId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/posts/${postId}/comments`,
+        `http://localhost:3300/posts/${postId}/comments`
       );
       return response.json() as Promise<IComment[]>;
     },
@@ -155,14 +155,14 @@ export default function PostPage() {
   //load user - depends on user id from post so client-side only
   const {
     data: user,
-    isLoading: isLoadingUser,
+    isPending: isPendingUser,
     isError: isErrorLoadingUser,
   } = useQuery({
     enabled: !!post?.userId,
     queryKey: ["user", post?.userId],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/users/${post?.userId}`,
+        `http://localhost:3300/users/${post?.userId}`
       );
       return response.json() as Promise<IUser>;
     },
@@ -179,7 +179,7 @@ export default function PostPage() {
         `http://localhost:3300/comments/${commentId}`,
         {
           method: "DELETE",
-        },
+        }
       );
       return response.json() as Promise<IComment>;
     },
@@ -188,7 +188,7 @@ export default function PostPage() {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err,
+        err
       );
       alert("Error deleting comment");
     },
@@ -201,7 +201,7 @@ export default function PostPage() {
     (commentId: number) => {
       deleteComment(commentId);
     },
-    [deleteComment],
+    [deleteComment]
   );
 
   // Post new comment - with optimistic updates!

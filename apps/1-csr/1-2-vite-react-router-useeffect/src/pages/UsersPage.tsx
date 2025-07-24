@@ -63,7 +63,7 @@ export const UsersPage = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -71,7 +71,7 @@ export const UsersPage = () => {
       data={users}
       columns={columns}
       state={{
-        isLoading: isLoadingUser,
+        isPending: isPendingUser,
         showProgressBars: isFetchingUser,
         showAlertBanner: isErrorLoadingUser,
       }}

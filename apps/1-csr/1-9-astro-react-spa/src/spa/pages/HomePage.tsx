@@ -20,7 +20,7 @@ export function HomePage() {
     data: posts,
     isError: isErrorLoadingPosts,
     isFetching: isFetchingPosts,
-    isLoading: isLoadingPosts,
+    isPending: isPendingPosts,
   } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {

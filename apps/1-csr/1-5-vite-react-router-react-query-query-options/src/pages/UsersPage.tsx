@@ -16,7 +16,7 @@ export const UsersPage = () => {
     data: users = [],
     isError: isErrorLoadingUser,
     isFetching: isFetchingUser,
-    isLoading: isLoadingUser,
+    isPending: isPendingUser,
   } = useQuery(usersQueryOptions);
 
   const columns = useMemo<MRT_ColumnDef<IUser>[]>(
@@ -47,12 +47,12 @@ export const UsersPage = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   const debouncedPrefetchUser = useDebouncedCallback(
     (userId: number) => queryClient.prefetchQuery(userQueryOptions(userId)),
-    100,
+    100
   );
 
   return (
@@ -60,7 +60,7 @@ export const UsersPage = () => {
       data={users}
       columns={columns}
       state={{
-        isLoading: isLoadingUser,
+        isPending: isPendingUser,
         showProgressBars: isFetchingUser,
         showAlertBanner: isErrorLoadingUser,
       }}

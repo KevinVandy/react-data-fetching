@@ -22,7 +22,7 @@ const {
   data: posts,
   isError: isErrorLoadingPosts,
   isFetching: isFetchingPosts,
-  isLoading: isLoadingPosts,
+  isPending: isPendingPosts,
 } = useQuery({
   queryKey: ["posts"],
   queryFn: async () => {
@@ -39,7 +39,7 @@ const {
 // PostPage.tsx:41-54
 const {
   data: user,
-  isLoading: isLoadingUser,
+  isPending: isPendingUser,
   isError: isErrorLoadingUser,
 } = useQuery({
   enabled: !!post?.userId, // Only run when post.userId exists
@@ -57,7 +57,7 @@ const {
 // PostPage.tsx:57-72
 const {
   data: comments,
-  isLoading: isLoadingComments,
+  isPending: isPendingComments,
   isFetching: isFetchingComments,
   isError: isErrorLoadingComments,
   refetch: refetchComments,
@@ -65,7 +65,7 @@ const {
   queryKey: ["posts", postId, "comments"],
   queryFn: async () => {
     const response = await fetch(
-      `http://localhost:3300/posts/${postId}/comments`,
+      `http://localhost:3300/posts/${postId}/comments`
     );
     return response.json() as Promise<IComment[]>;
   },
@@ -101,7 +101,7 @@ const { mutate: postComment, isPending: isPostingComment } = useMutation({
     // Update UI optimistically
     queryClient.setQueryData(
       ["posts", postId, "comments"],
-      (oldComments: any) => [...oldComments, newComment],
+      (oldComments: any) => [...oldComments, newComment]
     );
 
     return { previousComments };
@@ -110,7 +110,7 @@ const { mutate: postComment, isPending: isPostingComment } = useMutation({
   onError: (err, _newComment, context) => {
     queryClient.setQueryData(
       ["posts", postId, "comments"],
-      context?.previousComments,
+      context?.previousComments
     );
   },
   // Refresh data after success/error

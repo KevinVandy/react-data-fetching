@@ -57,7 +57,7 @@ const { data: post, isLoading, isError } = useQuery(postQueryOptions(postId!));
 // pages/PostPage.tsx:42-45
 const {
   data: user,
-  isLoading: isLoadingUser,
+  isPending: isPendingUser,
   isError: isErrorLoadingUser,
 } = useQuery({
   ...userQueryOptions(post?.userId!), // Spread the base options

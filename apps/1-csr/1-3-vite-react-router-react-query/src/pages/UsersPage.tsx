@@ -14,7 +14,7 @@ export const UsersPage = () => {
     data: users = [],
     isError: isErrorLoadingUser,
     isFetching: isFetchingUser,
-    isLoading: isLoadingUser,
+    isPending: isPendingUser,
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -51,7 +51,7 @@ export const UsersPage = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -59,7 +59,7 @@ export const UsersPage = () => {
       data={users}
       columns={columns}
       state={{
-        isLoading: isLoadingUser,
+        isPending: isPendingUser,
         showProgressBars: isFetchingUser,
         showAlertBanner: isErrorLoadingUser,
       }}
@@ -78,7 +78,7 @@ export const UsersPage = () => {
             queryKey: ["users", row.original.id.toString()],
             queryFn: async () => {
               const response = await fetch(
-                `http://localhost:3300/users/${row.original.id}`,
+                `http://localhost:3300/users/${row.original.id}`
               );
               return response.json() as Promise<IUser>;
             },

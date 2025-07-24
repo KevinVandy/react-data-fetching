@@ -33,21 +33,21 @@ export const PostPage = () => {
   //load post
   const {
     data: post,
-    isLoading: isLoadingPost,
+    isPending: isPendingPost,
     isError: isErrorLoadingPosts,
   } = useGetPost(postId!);
 
   //load user - depends on user id from post
   const {
     data: user,
-    isLoading: isLoadingUser,
+    isPending: isPendingUser,
     isError: isErrorLoadingUser,
   } = useGetUser(post?.userId);
 
   //load comments
   const {
     data: comments,
-    isLoading: isLoadingComments,
+    isPending: isPendingComments,
     isFetching: isFetchingComments,
     isError: isErrorLoadingComments,
     refetch: refetchComments,
@@ -64,7 +64,7 @@ export const PostPage = () => {
         `http://localhost:3300/comments/${commentId}`,
         {
           method: "DELETE",
-        },
+        }
       );
       return response.json() as Promise<IComment>;
     },
@@ -73,7 +73,7 @@ export const PostPage = () => {
     onError: (err, commentId) => {
       console.error(
         `Error deleting comment ${commentId}. Rolling UI back`,
-        err,
+        err
       );
       alert("Error deleting comment");
     },
@@ -113,7 +113,7 @@ export const PostPage = () => {
       // Optimistically update to the new value
       queryClient.setQueryData(
         getPostCommentsQueryKey(postId!),
-        (oldComments: any) => [...oldComments, newComment],
+        (oldComments: any) => [...oldComments, newComment]
       );
 
       // Return a context object with the snapshot value
@@ -124,7 +124,7 @@ export const PostPage = () => {
     onError: (err, _newComment, context) => {
       queryClient.setQueryData(
         getPostCommentsQueryKey(postId!),
-        context?.previousComments,
+        context?.previousComments
       );
       console.error("Error posting comment. Rolling UI back", err);
     },

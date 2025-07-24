@@ -112,7 +112,7 @@ export const action: ActionFunction = async ({ request }) => {
 // Load post - with initial data from SSR
 const {
   data: post,
-  isLoading: isLoadingPost,
+  isPending: isPendingPost,
   isError: isErrorLoadingPosts,
 } = useQuery({
   queryKey: ["post", postId],
@@ -126,7 +126,7 @@ const {
 // Load comments - with initial data from SSR
 const {
   data: comments,
-  isLoading: isLoadingComments,
+  isPending: isPendingComments,
   isFetching: isFetchingComments,
   isError: isErrorLoadingComments,
   refetch: refetchComments,
@@ -134,7 +134,7 @@ const {
   queryKey: ["comments", postId],
   queryFn: async () => {
     const response = await fetch(
-      `http://localhost:3300/posts/${postId}/comments`,
+      `http://localhost:3300/posts/${postId}/comments`
     );
     return response.json() as Promise<IComment[]>;
   },

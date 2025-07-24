@@ -69,13 +69,13 @@ export default function UserPage() {
   // Load user - with initial data from SSR
   const {
     data: user,
-    isLoading: isLoadingUser,
+    isPending: isPendingUser,
     isError: isErrorLoadingUser,
   } = useQuery({
     queryKey: ["user", userIdNumber],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/users/${userIdNumber}`,
+        `http://localhost:3300/users/${userIdNumber}`
       );
       return response.json() as Promise<IUser>;
     },
@@ -85,14 +85,14 @@ export default function UserPage() {
   // Load user posts - with initial data from SSR
   const {
     data: posts,
-    isLoading: isLoadingPosts,
+    isPending: isPendingPosts,
     isError: isErrorLoadingPosts,
     isFetching: isFetchingPosts,
   } = useQuery({
     queryKey: ["userPosts", userIdNumber],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/users/${userIdNumber}/posts`,
+        `http://localhost:3300/users/${userIdNumber}/posts`
       );
       return response.json() as Promise<IPost[]>;
     },

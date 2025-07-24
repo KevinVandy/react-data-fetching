@@ -21,7 +21,7 @@ export const UserPage = () => {
   //load user
   const {
     data: user,
-    isLoading: isLoadingUser,
+    isPending: isPendingUser,
     isError: isErrorLoadingUser,
   } = useQuery({
     enabled: !!userId,
@@ -35,7 +35,7 @@ export const UserPage = () => {
   //load user posts
   const {
     data: posts,
-    isLoading: isLoadingPosts,
+    isPending: isPendingPosts,
     isFetching: isFetchingPosts,
     isError: isErrorLoadingPosts,
   } = useQuery({

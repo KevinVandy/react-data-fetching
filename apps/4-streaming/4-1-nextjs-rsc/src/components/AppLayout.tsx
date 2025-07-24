@@ -36,7 +36,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} size="sm" />
-          {document.title}
+          Next.js RSC
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">

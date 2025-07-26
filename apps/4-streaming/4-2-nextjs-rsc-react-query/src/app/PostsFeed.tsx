@@ -3,8 +3,21 @@
 import { ActionIcon, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { fetchPosts } from "./page";
 import { IconRefresh } from "@tabler/icons-react";
+import { IPost } from "@/api-types";
+
+const fetchPosts = async (): Promise<IPost[]> => {
+  console.log("fetching posts");
+  const fetchUrl = new URL(`http://localhost:3300/posts`);
+  const response = await fetch(fetchUrl.href);
+  
+  if (!response.ok) {
+    throw new Error("Failed to fetch posts");
+  }
+  
+  const fetchedPosts = (await response.json()) as IPost[];
+  return fetchedPosts;
+};
 
 export function PostsFeed() {
   const { data: posts, refetch: refetchPosts } = useSuspenseQuery({

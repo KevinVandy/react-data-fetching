@@ -28,6 +28,7 @@
     "dev4-4": "turbo dev --filter 4-4-astro-server-islands",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
+    "test": "turbo typecheck",
     "serve": "turbo serve --filter 0-json-server",
     "generate-fake-data": "node scripts/generate-fake-data.js"
   },

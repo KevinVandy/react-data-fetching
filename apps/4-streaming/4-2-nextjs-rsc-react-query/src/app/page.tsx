@@ -8,7 +8,7 @@ import { IPost } from "@/api-types";
 import { PostsFeed } from "./PostsFeed";
 import { Suspense } from "react";
 
-export const fetchPosts = async () => {
+const fetchPosts = async () => {
   console.log("fetching posts");
   const fetchUrl = new URL(`http://localhost:3300/posts`);
   const response = await fetch(fetchUrl.href);

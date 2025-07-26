@@ -8,6 +8,7 @@ import vercel from "@astrojs/vercel";
 // https://astro.build/config
 export default defineConfig({
   vite: {
+    // @ts-ignore
     plugins: [tailwindcss()],
   },
   adapter: vercel({

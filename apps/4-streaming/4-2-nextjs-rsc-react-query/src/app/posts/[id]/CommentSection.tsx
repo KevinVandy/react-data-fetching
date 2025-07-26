@@ -13,8 +13,25 @@ import {
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { deleteComment, submitPostComment } from "./actions";
-import { useState, useOptimistic, useRef, LegacyRef } from "react";
+import { useState, useOptimistic, useRef } from "react";
 import { useFormStatus } from "react-dom";
+
+function SubmitButton() {
+  const { pending: isPostingComment } = useFormStatus();
+  
+  return (
+    <Button
+      type="submit"
+      leftSection={
+        isPostingComment ? (
+          <Loader variant="oval" color="white" size="xs" />
+        ) : null
+      }
+    >
+      Post Comment
+    </Button>
+  );
+}
 
 interface CommentSectionProps {
   comments: IComment[];
@@ -26,9 +43,8 @@ export default function CommentSection({
   postId,
 }: CommentSectionProps) {
   const [commentText, setCommentText] = useState("");
-  const { pending: isPostingComment } = useFormStatus();
 
-  const formRef = useRef<HTMLFormElement>();
+  const formRef = useRef<HTMLFormElement>(null);
 
   // wrap our submitPostComment server action with client side optimistic update logic
   async function optimisticallyPostComment(formData: FormData) {
@@ -78,7 +94,7 @@ export default function CommentSection({
       ))}
       <form
         action={optimisticallyPostComment}
-        ref={formRef as LegacyRef<HTMLFormElement>}
+        ref={formRef}
       >
         <Stack gap="md">
           <input type="hidden" name="postId" value={postId} />
@@ -88,19 +104,9 @@ export default function CommentSection({
             value={commentText}
             onChange={(event) => setCommentText(event.currentTarget.value)}
             name="body"
-            disabled={isPostingComment}
             label="Post a Comment"
           />
-          <Button
-            type="submit"
-            leftSection={
-              isPostingComment ? (
-                <Loader variant="oval" color="white" size="xs" />
-              ) : null
-            }
-          >
-            Post Comment
-          </Button>
+          <SubmitButton />
         </Stack>
       </form>
     </Stack>

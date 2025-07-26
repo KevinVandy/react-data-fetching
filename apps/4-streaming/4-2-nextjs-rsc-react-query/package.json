@@ -6,7 +6,8 @@
     "dev": "next dev -p 3342",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@mantine/core": "8.1.3",

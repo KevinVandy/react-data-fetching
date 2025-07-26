@@ -6,7 +6,8 @@
     "dev": "astro dev --port 3344",
     "build": "astro build",
     "preview": "astro preview --port 3344",
-    "astro": "astro"
+    "astro": "astro",
+    "typecheck": "astro check"
   },
   "dependencies": {
     "@astrojs/vercel": "^8.2.2",

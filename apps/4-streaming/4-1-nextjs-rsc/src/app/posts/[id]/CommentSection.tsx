@@ -28,7 +28,7 @@ export default function CommentSection({
   const [commentText, setCommentText] = useState("");
   const { pending: isPostingComment } = useFormStatus();
 
-  const formRef = useRef<HTMLFormElement>();
+  const formRef = useRef<HTMLFormElement>(null);
 
   // wrap our submitPostComment server action with client side optimistic update logic
   async function optimisticallyPostComment(formData: FormData) {

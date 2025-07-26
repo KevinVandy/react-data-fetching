@@ -22,7 +22,7 @@ const fetchPostAndComments = async (postId: number) => {
 };
 
 interface PostPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 // Server Component

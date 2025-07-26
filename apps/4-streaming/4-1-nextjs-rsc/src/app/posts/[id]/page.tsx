@@ -22,12 +22,12 @@ const fetchPostAndComments = async (postId: number) => {
 };
 
 interface PostPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 // Server Component
 export default async function PostPage({ params }: PostPageProps) {
-  const { id: postId } = params;
+  const { id: postId } = await params;
 
   const { post, user, comments } = await fetchPostAndComments(+postId);
 

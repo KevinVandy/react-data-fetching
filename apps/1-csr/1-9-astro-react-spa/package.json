@@ -6,7 +6,8 @@
     "dev": "astro dev --port 3319",
     "build": "astro build",
     "preview": "astro preview --port 3319",
-    "astro": "astro"
+    "astro": "astro",
+    "typecheck": "astro check"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",

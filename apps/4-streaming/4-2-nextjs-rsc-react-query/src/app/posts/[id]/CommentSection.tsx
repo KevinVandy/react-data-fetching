@@ -18,7 +18,7 @@ import { useFormStatus } from "react-dom";
 
 function SubmitButton() {
   const { pending: isPostingComment } = useFormStatus();
-  
+
   return (
     <Button
       type="submit"
@@ -92,10 +92,7 @@ export default function CommentSection({
           <Text>{comment.body}</Text>
         </Card>
       ))}
-      <form
-        action={optimisticallyPostComment}
-        ref={formRef}
-      >
+      <form action={optimisticallyPostComment} ref={formRef}>
         <Stack gap="md">
           <input type="hidden" name="postId" value={postId} />
           <input type="hidden" name="email" value="user@mailinator.com" />

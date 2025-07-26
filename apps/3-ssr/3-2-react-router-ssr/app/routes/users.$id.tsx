@@ -75,7 +75,7 @@ export default function UserPage() {
     queryKey: ["user", userIdNumber],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/users/${userIdNumber}`
+        `http://localhost:3300/users/${userIdNumber}`,
       );
       if (!response.ok) {
         throw new Error("Failed to fetch user");
@@ -95,7 +95,7 @@ export default function UserPage() {
     queryKey: ["userPosts", userIdNumber],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3300/users/${userIdNumber}/posts`
+        `http://localhost:3300/users/${userIdNumber}/posts`,
       );
       if (!response.ok) {
         throw new Error("Failed to fetch posts");

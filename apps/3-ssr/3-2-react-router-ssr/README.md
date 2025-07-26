@@ -134,7 +134,7 @@ const {
   queryKey: ["comments", postId],
   queryFn: async () => {
     const response = await fetch(
-      `http://localhost:3300/posts/${postId}/comments`
+      `http://localhost:3300/posts/${postId}/comments`,
     );
     return response.json() as Promise<IComment[]>;
   },

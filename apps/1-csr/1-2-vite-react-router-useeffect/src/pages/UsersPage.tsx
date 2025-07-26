@@ -63,7 +63,7 @@ export const UsersPage = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   return (

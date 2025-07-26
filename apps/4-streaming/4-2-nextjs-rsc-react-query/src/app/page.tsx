@@ -12,11 +12,11 @@ const fetchPosts = async () => {
   console.log("fetching posts");
   const fetchUrl = new URL(`http://localhost:3300/posts`);
   const response = await fetch(fetchUrl.href);
-  
+
   if (!response.ok) {
     throw new Error("Failed to fetch posts");
   }
-  
+
   const fetchedPosts = (await response.json()) as IPost[];
   return fetchedPosts;
 };

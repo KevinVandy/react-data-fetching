@@ -128,6 +128,9 @@ export default function PostPage() {
     queryKey: ["post", postId],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3300/posts/${postId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch post");
+      }
       return response.json() as Promise<IPost>;
     },
     initialData: initialPost, // SSR, with refresh
@@ -146,6 +149,9 @@ export default function PostPage() {
       const response = await fetch(
         `http://localhost:3300/posts/${postId}/comments`
       );
+      if (!response.ok) {
+        throw new Error("Failed to fetch comments");
+      }
       return response.json() as Promise<IComment[]>;
     },
     initialData: initialComments, // SSR, with refresh
@@ -164,6 +170,9 @@ export default function PostPage() {
       const response = await fetch(
         `http://localhost:3300/users/${post?.userId}`
       );
+      if (!response.ok) {
+        throw new Error("Failed to fetch user");
+      }
       return response.json() as Promise<IUser>;
     },
   });
@@ -226,7 +235,7 @@ export default function PostPage() {
           >
             There was an error loading this post
           </Alert>
-        ) : !post || isLoadingPost || isLoadingUser ? (
+        ) : !post || isPendingPost || isPendingUser ? (
           <>
             <Skeleton animate height="20px" width="50%" mb="md" />
             <Skeleton animate height="40px" width="100%" mb="md" />
@@ -274,7 +283,7 @@ export default function PostPage() {
           >
             There was an error loading comments for this post
           </Alert>
-        ) : isLoadingComments ? (
+        ) : isPendingComments ? (
           [...Array(5)].map((_, index) => (
             <Card withBorder key={index}>
               <Skeleton animate height="20px" width="25%" mb="md" />

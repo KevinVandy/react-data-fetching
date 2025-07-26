@@ -37,6 +37,9 @@ function Posts() {
       const response = await fetch(fetchUrl.href, {
         cache: "no-store",
       });
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
       const fetchedPosts = (await response.json()) as IPost[];
       return fetchedPosts;
     },

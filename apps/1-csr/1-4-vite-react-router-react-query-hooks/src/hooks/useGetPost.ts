@@ -11,6 +11,9 @@ export function useGetPost(postId: string) {
     queryKey: getPostQueryKey(postId),
     queryFn: async () => {
       const response = await fetch(`${API_URL}${ENDPOINT(postId)}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch post");
+      }
       return response.json() as Promise<IPost>;
     },
   });

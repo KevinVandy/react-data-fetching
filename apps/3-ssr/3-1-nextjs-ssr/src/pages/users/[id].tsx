@@ -79,6 +79,9 @@ export default function UserPage({
       const response = await fetch(
         `http://localhost:3300/users/${userIdNumber}`
       );
+      if (!response.ok) {
+        throw new Error("Failed to fetch user");
+      }
       return response.json() as Promise<IUser>;
     },
   });
@@ -96,6 +99,9 @@ export default function UserPage({
       const response = await fetch(
         `http://localhost:3300/users/${userIdNumber}/posts`
       );
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
       return response.json() as Promise<IPost[]>;
     },
   });
@@ -119,7 +125,7 @@ export default function UserPage({
           >
             There was an error loading this user
           </Alert>
-        ) : !user || isLoadingUser ? (
+        ) : !user || isPendingUser ? (
           <>
             <Skeleton animate height="20px" width="50%" mb="md" />
             <Skeleton animate height="40px" width="100%" mb="md" />
@@ -161,7 +167,7 @@ export default function UserPage({
           >
             There was an error loading posts for this user
           </Alert>
-        ) : isLoadingPosts ? (
+        ) : isPendingPosts ? (
           <Stack gap="md">
             {[...Array(3)].map((_, index) => (
               <Card withBorder key={index}>

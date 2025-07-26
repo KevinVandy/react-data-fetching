@@ -15,6 +15,9 @@
 		queryKey: [`/posts/${postId}`],
 		queryFn: async () => {
 			const response = await fetch(`http://localhost:3300/posts/${postId}`);
+			if (!response.ok) {
+				throw new Error('Failed to fetch post');
+			}
 			return response.json() as Promise<IPost>;
 		},
 		initialData: initialPost
@@ -24,6 +27,9 @@
 		queryKey: [`/users/${$postQuery.data?.userId}`],
 		queryFn: async () => {
 			const response = await fetch(`http://localhost:3300/users/${$postQuery.data?.userId}`);
+			if (!response.ok) {
+				throw new Error('Failed to fetch user');
+			}
 			return response.json() as Promise<IUser>;
 		},
 		enabled: !!$postQuery.data?.userId
@@ -33,6 +39,9 @@
 		queryKey: [`/posts/${postId}/comments`],
 		queryFn: async () => {
 			const response = await fetch(`http://localhost:3300/posts/${postId}/comments`);
+			if (!response.ok) {
+				throw new Error('Failed to fetch comments');
+			}
 			return response.json() as Promise<IComment[]>;
 		},
 		initialData: initialComments,
@@ -105,7 +114,7 @@
 			<span class="font-medium">Bummer!</span>
 			There was an error loading this post
 		</Alert>
-	{:else if $postQuery.isLoading || $userQuery.isLoading}
+	{:else if $postQuery.isPending || $userQuery.isPending}
 		<div class="animate-pulse">
 			<div class="mb-4 h-4 w-1/2 rounded-full bg-gray-200"></div>
 			<div class="mb-4 h-8 w-full rounded-full bg-gray-200"></div>
@@ -120,7 +129,7 @@
 		<h2 class="mb-2 text-2xl font-semibold">{$postQuery.data.title}</h2>
 		<h3 class="mb-4 text-xl">
 			By:
-			{#if $userQuery.isLoading}
+			{#if $userQuery.isPending}
 				<span class="animate-pulse">Loading...</span>
 			{:else if $userQuery.isError}
 				<span class="text-red-500">Error loading user</span>
@@ -135,7 +144,7 @@
 		<h3 class="mb-4 text-xl font-semibold">Comments on this Post</h3>
 
 		<div class="mb-8 w-full space-y-4">
-			{#if $commentsQuery.isLoading}
+			{#if $commentsQuery.isPending}
 				<div class="animate-pulse">
 					<div class="mb-4 h-4 w-1/2 rounded-full bg-gray-200"></div>
 					<div class="mb-4 h-8 w-full rounded-full bg-gray-200"></div>
@@ -170,7 +179,7 @@
 
 		<Textarea
 			bind:value={commentText}
-			label="Post a Comment"
+			placeholder="Post a Comment"
 			rows={4}
 			class="mb-4"
 			disabled={$postCommentMutation.isPending}

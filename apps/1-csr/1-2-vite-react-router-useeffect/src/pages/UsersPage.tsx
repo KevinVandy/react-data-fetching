@@ -71,7 +71,7 @@ export const UsersPage = () => {
       data={users}
       columns={columns}
       state={{
-        isPending: isPendingUser,
+        isLoading: isLoadingUser,
         showProgressBars: isFetchingUser,
         showAlertBanner: isErrorLoadingUser,
       }}

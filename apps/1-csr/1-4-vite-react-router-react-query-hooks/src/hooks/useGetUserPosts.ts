@@ -19,6 +19,9 @@ export const useGetUserPosts = (userId: number) => {
     queryFn: async () => {
       const fetchUrl = new URL(`${API_URL}${ENDPOINT(userId)}`);
       const response = await fetch(fetchUrl.href);
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
       return response.json() as Promise<IPost[]>;
     },
   });

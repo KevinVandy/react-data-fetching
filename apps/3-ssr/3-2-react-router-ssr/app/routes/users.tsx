@@ -50,6 +50,9 @@ export default function UsersPage() {
     queryKey: ["users"],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3300/users`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
       return response.json() as Promise<IUser[]>;
     },
     initialData: initialUsers, // SSR, with refresh
@@ -92,6 +95,9 @@ export default function UsersPage() {
         queryKey: ["user", userId],
         queryFn: async () => {
           const response = await fetch(`http://localhost:3300/users/${userId}`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch user");
+          }
           return response.json() as Promise<IUser>;
         },
       }),

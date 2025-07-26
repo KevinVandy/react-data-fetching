@@ -19,6 +19,9 @@ export const UsersPage = () => {
     queryKey: ["users"],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3300/users`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
       return response.json() as Promise<IUser[]>;
     },
   });
@@ -80,6 +83,9 @@ export const UsersPage = () => {
               const response = await fetch(
                 `http://localhost:3300/users/${row.original.id}`
               );
+              if (!response.ok) {
+                throw new Error("Failed to fetch user");
+              }
               return response.json() as Promise<IUser>;
             },
           });

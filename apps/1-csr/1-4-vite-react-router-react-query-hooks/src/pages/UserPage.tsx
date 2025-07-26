@@ -41,7 +41,7 @@ export const UserPage = () => {
     );
   }
 
-  if (isLoadingUser) {
+  if (isPendingUser) {
     return (
       <Flex w="100%" justify="center">
         <Loader />
@@ -80,7 +80,7 @@ export const UserPage = () => {
             >
               There was an error fetching posts
             </Alert>
-          ) : isLoadingPosts ? (
+          ) : isPendingPosts ? (
             [...Array(5)].map((_, index) => (
               <Card withBorder key={index}>
                 <Skeleton animate height="20px" width="50%" mb="md" />

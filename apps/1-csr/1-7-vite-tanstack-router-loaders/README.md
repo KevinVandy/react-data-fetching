@@ -195,8 +195,8 @@ export const createAppRouter = (queryClient: QueryClient) => {
 **1-6 (Component-level loading):**
 
 ```tsx
-const { data: post, isLoading } = useQuery(postQueryOptions(postId!));
-if (isLoading) return <Spinner />;
+const { data: post, isPending } = useQuery(postQueryOptions(postId!));
+if (isPending) return <Spinner />;
 ```
 
 **1-7 (Route-level loading):**

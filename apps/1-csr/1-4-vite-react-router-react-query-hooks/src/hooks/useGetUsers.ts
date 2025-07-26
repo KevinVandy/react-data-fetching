@@ -11,6 +11,9 @@ function commonOptions() {
     queryKey: getUsersQueryKey(),
     queryFn: async () => {
       const response = await fetch(`${API_URL}${ENDPOINT}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
       return response.json() as Promise<IUser[]>;
     },
   };

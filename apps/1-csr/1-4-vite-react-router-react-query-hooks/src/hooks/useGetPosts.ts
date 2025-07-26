@@ -12,6 +12,9 @@ function commonOptions() {
     queryFn: async () => {
       const fetchUrl = new URL(`${API_URL}${ENDPOINT}`);
       const response = await fetch(fetchUrl.href);
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
       return response.json() as Promise<IPost[]>;
     },
   };

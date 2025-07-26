@@ -9,6 +9,9 @@ export const getPosts = createServerFn({
   response: "data",
 }).handler(async () => {
   const response = await fetch(`${API_URL}/posts`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch posts");
+  }
   return response.json() as Promise<IPost[]>;
 });
 
@@ -20,6 +23,9 @@ export const getPost = createServerFn({
   .validator((data: string) => data)
   .handler(async (ctx) => {
     const response = await fetch(`${API_URL}/posts/${ctx.data}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch post");
+    }
     return response.json() as Promise<IPost>;
   });
 
@@ -32,5 +38,8 @@ export const getUserPosts = createServerFn({
   .handler(async (ctx) => {
     const fetchUrl = new URL(`${API_URL}/posts?userId=${ctx.data}`);
     const response = await fetch(fetchUrl.href);
+    if (!response.ok) {
+      throw new Error("Failed to fetch posts");
+    }
     return response.json() as Promise<IPost[]>;
   });

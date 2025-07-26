@@ -11,6 +11,9 @@ export function useGetPostComments(postId: string) {
     queryKey: getPostCommentsQueryKey(postId),
     queryFn: async () => {
       const response = await fetch(`${API_URL}${ENDPOINT(postId)}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch comments");
+      }
       return response.json() as Promise<IComment[]>;
     },
     refetchInterval: 10000, // 10 seconds

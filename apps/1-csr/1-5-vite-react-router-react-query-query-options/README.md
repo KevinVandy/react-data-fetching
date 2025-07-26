@@ -48,7 +48,7 @@ export const postQueryOptions = (postId: string) =>
 const { data: posts } = useSuspenseQuery(postsQueryOptions);
 
 // pages/PostPage.tsx:35 - With useQuery
-const { data: post, isLoading, isError } = useQuery(postQueryOptions(postId!));
+const { data: post, isPending, isError } = useQuery(postQueryOptions(postId!));
 ```
 
 ### Extending queryOptions for Dependent Queries

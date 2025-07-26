@@ -8,6 +8,9 @@ export const postsQueryOptions = queryOptions({
   queryKey: ["/posts"],
   queryFn: async () => {
     const response = await fetch(`${API_URL}/posts`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch posts");
+    }
     return response.json() as Promise<IPost[]>;
   },
 });
@@ -18,6 +21,9 @@ export const postQueryOptions = (postId: string) =>
     queryKey: ["/posts", postId],
     queryFn: async () => {
       const response = await fetch(`${API_URL}/posts/${postId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch post");
+      }
       return response.json() as Promise<IPost>;
     },
   });
@@ -29,6 +35,9 @@ export const userPostsQueryOptions = (userId: number) =>
     queryFn: async () => {
       const fetchUrl = new URL(`${API_URL}/posts?userId=${userId}`);
       const response = await fetch(fetchUrl.href);
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
       return response.json() as Promise<IPost[]>;
     },
   });

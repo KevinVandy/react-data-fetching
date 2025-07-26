@@ -27,6 +27,11 @@ export function HomePage() {
       const fetchUrl = new URL(`http://localhost:3300/posts`);
 
       const response = await fetch(fetchUrl.href);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
+
       return response.json() as Promise<IPost[]>;
     },
   });
@@ -48,7 +53,7 @@ export function HomePage() {
           >
             There was an error fetching posts
           </Alert>
-        ) : isLoadingPosts ? (
+        ) : isPendingPosts ? (
           [...Array(5)].map((_, index) => (
             <Card w={300} mih={300} withBorder shadow="md" key={index}>
               <Skeleton animate height="20px" width="50%" mb="md" />

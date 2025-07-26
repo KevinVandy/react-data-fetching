@@ -160,7 +160,7 @@ export const PostPage = () => {
           >
             There was an error loading this post
           </Alert>
-        ) : !post || isLoadingPost || isLoadingUser ? (
+        ) : !post || isPendingPost || isPendingUser ? (
           <>
             <Skeleton animate height="20px" width="50%" mb="md" />
             <Skeleton animate height="40px" width="100%" mb="md" />
@@ -208,7 +208,7 @@ export const PostPage = () => {
           >
             There was an error loading comments for this post
           </Alert>
-        ) : isLoadingComments ? (
+        ) : isPendingComments ? (
           [...Array(5)].map((_, index) => (
             <Card withBorder key={index}>
               <Skeleton animate height="20px" width="25%" mb="md" />

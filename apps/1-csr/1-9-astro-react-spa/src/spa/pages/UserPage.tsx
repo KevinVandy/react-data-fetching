@@ -28,6 +28,9 @@ export const UserPage = () => {
     queryKey: ["users", userId],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3300/users/${userId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch user");
+      }
       return response.json() as Promise<IUser>;
     },
   });
@@ -43,6 +46,9 @@ export const UserPage = () => {
     queryFn: async () => {
       const fetchUrl = new URL(`http://localhost:3300/posts?userId=${userId}`);
       const response = await fetch(fetchUrl.href);
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
       return response.json() as Promise<IPost[]>;
     },
   });
@@ -55,7 +61,7 @@ export const UserPage = () => {
     );
   }
 
-  if (isLoadingUser) {
+  if (isPendingUser) {
     return (
       <Flex w="100%" justify="center">
         <Loader />
@@ -94,7 +100,7 @@ export const UserPage = () => {
             >
               There was an error fetching posts
             </Alert>
-          ) : isLoadingPosts ? (
+          ) : isPendingPosts ? (
             [...Array(5)].map((_, index) => (
               <Card withBorder key={index}>
                 <Skeleton animate height="20px" width="50%" mb="md" />

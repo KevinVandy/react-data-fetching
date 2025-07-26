@@ -184,7 +184,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 ```svelte
 <!-- src/routes/posts/[id]/+page.svelte:137-169 -->
 <div class="mb-8 w-full space-y-4">
-	{#if $commentsQuery.isLoading}
+	{#if $commentsQuery.isPending}
 		<div class="animate-pulse">
 			<div class="mb-4 h-4 w-1/2 rounded-full bg-gray-200"></div>
 			<div class="mb-4 h-8 w-full rounded-full bg-gray-200"></div>

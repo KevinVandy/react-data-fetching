@@ -26,6 +26,9 @@ export const getPostComments = createServerFn({
   })
   .handler(async (ctx) => {
     const response = await fetch(`${API_URL}/posts/${ctx.data}/comments`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch comments");
+    }
     return response.json() as Promise<IComment[]>;
   });
 
@@ -45,6 +48,9 @@ export const createComment = createServerFn({
         "Content-type": "application/json; charset=UTF-8",
       },
     });
+    if (!response.ok) {
+      throw new Error("Failed to create comment");
+    }
     return response.json() as Promise<IComment>;
   });
 
@@ -60,5 +66,8 @@ export const deleteComment = createServerFn({
     const response = await fetch(`${API_URL}/comments/${ctx.data}`, {
       method: "DELETE",
     });
+    if (!response.ok) {
+      throw new Error("Failed to delete comment");
+    }
     return response.json() as Promise<IComment>;
   });

@@ -8,6 +8,9 @@ export const usersQueryOptions = queryOptions({
   queryKey: ["/users"],
   queryFn: async () => {
     const response = await fetch(`${API_URL}/users`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch users");
+    }
     return response.json() as Promise<IUser[]>;
   },
 });
@@ -18,6 +21,9 @@ export const userQueryOptions = (userId: number) =>
     queryKey: ["/users", userId],
     queryFn: async () => {
       const response = await fetch(`${API_URL}/users/${userId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch user");
+      }
       return response.json() as Promise<IUser>;
     },
   });
